@@ -3,6 +3,7 @@ package algoritmos;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import interfaz.*;
 
 public class Temp {
 
@@ -40,6 +41,7 @@ public class Temp {
             }
             else if (op==2){
                 System.out.println("Binah");
+                new Interfaz();
             }
             else if (op==3){
                 System.out.println("Chokhmah");
