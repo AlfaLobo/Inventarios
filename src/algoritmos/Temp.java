@@ -46,8 +46,12 @@ public class Temp {
             } else if (op == 3) {
                 System.out.println("Chokhmah");
                 Lista l = new Lista();
-                l.productos.add(new Producto("35135312", "Conejo", "UvU", 3, 5, 10));
-                System.out.println("Mi nombre es: ");
+                l.productos.add(new Producto("22124124", "Conejo", "UvU", 1000, 5, 10));
+                l.productos.add(new Producto("22124125", "Conejo ty", "UvUvU", 1000, 6, 12));
+                for(int i = 0; i < l.productos.size(); i++) {
+                    System.out.println(l.productos.get(i).nombre+"   "+i);
+                }
+                System.out.println("Mi nombre es: "+l.productos.get(0).nombre);
             } else if (op == 4) {
                 System.out.println("Da'at");
             } else if (op == 5) {
