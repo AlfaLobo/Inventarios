@@ -1,7 +1,6 @@
 package algoritmos;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 import algoritmos.*;
 import interfaz.*;
@@ -50,11 +49,44 @@ public class Temp {
                 l.productos.add(new Producto("22124125", "Conejo ty", "UvUvU", 1000, 6, 12));
                 for(int i = 0; i < l.productos.size(); i++) {
                     System.out.println("Mi nombre es "+l.productos.get(i).nombre+" y soy el elemento "+i+" de la ArrayList.");
+                    String directorio = System.getProperty("user.dir");
+                    directorio = directorio + "\\productos.txt";
+                    System.out.println("Mi directorio es: " + directorio);
+                    try {
+                        FileOutputStream fos = new FileOutputStream(directorio);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(l);
+                        oos.close();
+                        fos.close();
+                        System.out.print("El archivo fue creado.");
+                    } catch (IOException e) {
+                        System.out.print("El archivo no pudo ser creado.");
+                    }
                 }
             } else if (op == 4) {
                 System.out.println("Da'at");
+                Lista l;
+                String directorio = System.getProperty("user.dir");
+                directorio = directorio + "\\productos.txt";
+                try {
+                    FileInputStream fis = new FileInputStream(directorio);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    l = (Lista) ois.readObject();
+                    fis.close();
+                    ois.close();
+                } catch (IOException i) {
+                    System.out.println("Algo salió mal.");
+                    return;
+                } catch (ClassNotFoundException c) {
+                    System.out.println("Clase no encontrada.");
+                    return;
+                }
+                for(int i = 0; i < l.productos.size(); i++) {
+                    System.out.println("Mi nombre es "+l.productos.get(i).nombre+" y soy el elemento "+i+" de la ArrayList.");
+                }
             } else if (op == 5) {
                 System.out.println("Gevurah");
+
             } else if (op == 6) {
                 System.out.println("Chesed");
             } else if (op == 7) {
@@ -70,5 +102,6 @@ public class Temp {
             }
         }
         System.out.println("Gehinnom");
+        sc.close();
     }
 }
