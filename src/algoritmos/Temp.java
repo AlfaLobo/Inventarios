@@ -1,6 +1,5 @@
 package algoritmos;
 
-import java.io.*;
 import java.util.Scanner;
 import algoritmos.*;
 import interfaz.*;
@@ -8,28 +7,11 @@ import datos.*;
 
 public class Temp {
 
-    public static void crearArchivo() {
-        String directorio = System.getProperty("user.dir");
-        System.out.println("El directorio actual es: " + directorio);
-        directorio = directorio + "\\archivo.txt";
-        try {
-            File myObj = new File(directorio);
-            if (myObj.createNewFile()) {
-                System.out.println("El archivo " + myObj.getName() + " ha sido creado en " + directorio);
-            } else {
-                System.out.println("El archivo ya existe en: " + directorio);
-            }
-        } catch (IOException e) {
-            System.out.println("Sucedió un error.");
-            e.printStackTrace();
-        }
-    }
-
     public static void menu() {
         int op = -1;
         Scanner sc = new Scanner(System.in);
         int nop = 12;
-        System.out.println("1.- Test 1\n2.- Test 2\n3.- Test 3\n4.- Test 4\n5.- Test 5\n6.- Test 6\n7.- Test 7\n8.- Test 8\n9.- Test 9\n10.- Test 10\n11.- Test 11\n" + nop + ".- Fin\n");
+        System.out.println("1.- Keter\n2.- Binah\n3.- Chokhmah\n4.- Da'at\n5.- Gevurah\n6.- Chesed\n7.- Tiferet\n8.- Hod\n9.- Netzach\n10.- Yesod\n11.- Malkuth\n" + nop + ".- Gehinnom\n");
         while (op != nop) {
             op = sc.nextInt();
             while (op < 1 || op > nop) {
@@ -37,71 +19,39 @@ public class Temp {
                 op = sc.nextInt();
             }
             if (op == 1) {
-                System.out.println("Keter");
+                System.out.println("Test 1");
                 new Interfaz();
             } else if (op == 2) {
-                System.out.println("Binah");
-                crearArchivo();
+                System.out.println("Test 2");
+                Usuario u = new Usuario("12324","UvU");
+                u.productos.add(new Producto("22124124", "Conejo", "UvU", 1000, 5, 10));
+                u.productos.add(new Producto("22124125", "Conejo ty", "UvUvU", 1000, 6, 12));
+                Archivos.editarArchivo(u);
             } else if (op == 3) {
-                System.out.println("Chokhmah");
-                Lista l = new Lista();
-                l.productos.add(new Producto("22124124", "Conejo", "UvU", 1000, 5, 10));
-                l.productos.add(new Producto("22124125", "Conejo ty", "UvUvU", 1000, 6, 12));
-                for(int i = 0; i < l.productos.size(); i++) {
-                    System.out.println("Mi nombre es "+l.productos.get(i).nombre+" y soy el elemento "+i+" de la ArrayList.");
-                    String directorio = System.getProperty("user.dir");
-                    directorio = directorio + "\\productos.txt";
-                    System.out.println("Mi directorio es: " + directorio);
-                    try {
-                        FileOutputStream fos = new FileOutputStream(directorio);
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(l);
-                        oos.close();
-                        fos.close();
-                        System.out.print("El archivo fue creado.");
-                    } catch (IOException e) {
-                        System.out.print("El archivo no pudo ser creado.");
-                    }
+                System.out.println("Test 3");
+                Usuario u = null;
+                u = Archivos.cargarArchivos(u,"12324");
+                for(int i = 0; i < u.productos.size(); i++) {
+                    System.out.println("Mi nombre es "+u.productos.get(i).nombre+" y soy el elemento "+i+" de la ArrayList de productos.");
                 }
             } else if (op == 4) {
-                System.out.println("Da'at");
-                Lista l;
-                String directorio = System.getProperty("user.dir");
-                directorio = directorio + "\\productos.txt";
-                try {
-                    FileInputStream fis = new FileInputStream(directorio);
-                    ObjectInputStream ois = new ObjectInputStream(fis);
-                    l = (Lista) ois.readObject();
-                    fis.close();
-                    ois.close();
-                } catch (IOException i) {
-                    System.out.println("Algo salió mal.");
-                    return;
-                } catch (ClassNotFoundException c) {
-                    System.out.println("Clase no encontrada.");
-                    return;
-                }
-                for(int i = 0; i < l.productos.size(); i++) {
-                    System.out.println("Mi nombre es "+l.productos.get(i).nombre+" y soy el elemento "+i+" de la ArrayList.");
-                }
+                System.out.println("Test 4");
             } else if (op == 5) {
-                System.out.println("Gevurah");
-
+                System.out.println("Test 5");
             } else if (op == 6) {
-                System.out.println("Chesed");
+                System.out.println("Test 6");
             } else if (op == 7) {
-                System.out.println("Tiferet");
+                System.out.println("Test 7");
             } else if (op == 8) {
-                System.out.println("Hod");
+                System.out.println("Test 8");
             } else if (op == 9) {
-                System.out.println("Netzach");
+                System.out.println("Test 9");
             } else if (op == 10) {
-                System.out.println("Yesod");
+                System.out.println("Test 10");
             } else if (op == 11) {
-                System.out.println("Malkuth");
+                System.out.println("Test 11");
             }
         }
-        System.out.println("Gehinnom");
         sc.close();
     }
 }
