@@ -1,13 +1,14 @@
 package datos;
 
-import java.io.File;
-import java.io.IOException;
+import algoritmos.Archivos;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario implements Serializable {
     public String id;
+    public String contraseña;
     public String nombre;
     public String directorio;
     public float totalcompra;
@@ -17,17 +18,13 @@ public class Usuario implements Serializable {
     public List<Producto> productos = new ArrayList<>();
     public List<Proveedor> proveedores = new ArrayList<>();
 
-    public Usuario(String ID, String name){
+    public Usuario(String ID, String password, String name){
         id = ID;
+        contraseña = password;
         nombre = name;
         String directorio = System.getProperty("user.dir");
-        directorio = directorio + "\\usuario"+ID+".txt";
+        directorio = directorio + "\\"+ID+".txt";
         this.directorio = directorio;
-        try {
-            File myObj = new File(directorio);
-            myObj.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Archivos.guardarArchivo(this);
     }
 }

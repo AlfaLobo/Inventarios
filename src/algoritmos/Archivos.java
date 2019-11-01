@@ -1,17 +1,24 @@
 package algoritmos;
 
 import datos.Usuario;
+
 import java.io.*;
 
 public class Archivos {
 
-    public static void buscarArchivo() {
-
+    public static boolean buscarUsuario(String ID) {
+        String directorio = System.getProperty("user.dir");
+        directorio = directorio + "\\"+ID+".txt";
+        File f = new File(directorio);
+        if(f.exists()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public static void editarArchivo(Usuario u) {
+    public static void guardarArchivo(Usuario u) {
         try {
-            System.out.println("Mi directorio es: " + u.directorio);
             FileOutputStream fos = new FileOutputStream(u.directorio);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(u);
@@ -22,19 +29,20 @@ public class Archivos {
         }
     }
 
-    public static Usuario cargarArchivos(Usuario u, String ID) {
+    public static Usuario cargarArchivos(String ID) {
+        Usuario u = null;
         String directorio = System.getProperty("user.dir");
-        directorio = directorio + "\\usuario"+ID+".txt";
+        directorio = directorio + "\\"+ID+".txt";
         try {
             FileInputStream fis = new FileInputStream(directorio);
             ObjectInputStream ois = new ObjectInputStream(fis);
             u = (Usuario) ois.readObject();
             fis.close();
             ois.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException i) {
-            System.out.println("Algo salió mal.");
-        } catch (ClassNotFoundException c) {
-            System.out.println("Clase no encontrada.");
+            i.printStackTrace();
         }
         return u;
     }
