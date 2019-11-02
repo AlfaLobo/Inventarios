@@ -25,8 +25,8 @@ public class Temp {
                 new Inicio();
             } else if (op == 2) {
                 System.out.println("Test 2");
-                Usuario u = new Usuario("solecito","tyty", "Conejo");
-                Usuario k = new Usuario("pequeñaTierra","tyty", "UvU");
+                Usuario u = new Usuario("solecito","tyty", "Conejo", "uwu", "Conejo");
+                Usuario k = new Usuario("pequeñaTierra","tyty", "UvU", "owo", "Topo");
                 u.productos.add(new Producto("22124124", "Conejo", "UvU", 1000, 5, 10));
                 u.productos.add(new Producto("22124125", "Conejo ty", "UvUvU", 1000, 6, 12));
                 k.productos.add(new Producto("534631463", "Conejo1", "UvU1", 1000, 5, 10));
