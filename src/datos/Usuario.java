@@ -15,18 +15,19 @@ public class Usuario implements Serializable {
     public String directorio;
     public float totalcompra;
     public float totalventa;
-    public float ganancias;
+    public float saldo;
     public List<Cliente> clientes = new ArrayList<>();
     public List<Empleado> empleados = new ArrayList<>();
     public List<Producto> productos = new ArrayList<>();
     public List<Proveedor> proveedores = new ArrayList<>();
 
-    public Usuario(String ID, String password, String name, String lastname, String enterprise){
+    public Usuario(String ID, String password, String name, String lastname, String enterprise, float balance){
         id = ID;
         contraseña = password;
         nombre = name;
         apellidos = lastname;
         empresa = enterprise;
+        saldo = balance;
         String directorio = System.getProperty("user.dir");
         directorio = directorio + "\\"+ID+".txt";
         this.directorio = directorio;

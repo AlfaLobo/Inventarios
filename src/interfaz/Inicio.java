@@ -15,6 +15,7 @@ public class Inicio {
     JTextField t4 = new JTextField("Nombre");
     JTextField t5 = new JTextField("Apellidos");
     JTextField t6 = new JTextField("Empresa");
+    JTextField t7 = new JTextField("Saldo Inicial");
     JButton b1= new JButton("Iniciar Sesión");
     JButton b2= new JButton("Crear Nuevo Usuario");
     JButton b3= new JButton("Registrarse");
@@ -22,6 +23,7 @@ public class Inicio {
     JLabel l1 = new JLabel("La combinación de usuario y contraseña no fue encontrada.");
     JLabel l2 = new JLabel("El usuario ya existe.");
     JLabel l3 = new JLabel("Las contraseñas no coinciden.");
+    JLabel l4 = new JLabel("Insertar un saldo valido.");
 
     public Inicio(){
         f.setSize(400,500);
@@ -31,21 +33,26 @@ public class Inicio {
         t4.setBounds(90,130, 200,30);
         t5.setBounds(90,160, 200,30);
         t6.setBounds(90,190, 200,30);
+        t7.setBounds(90,220, 200,30);
         b1.setBounds(90,100,200, 40);
         b2.setBounds(90,130,200, 40);
-        b3.setBounds(90,190,200, 40);
-        b4.setBounds(90,220,200, 40);
+        b3.setBounds(90,250,200, 40);
+        b4.setBounds(90,280,200, 40);
         l1.setBounds(30,145,400, 40);
-        l2.setBounds(135,240,400, 40);
-        l3.setBounds(110,240,400, 40);
+        l2.setBounds(135,300,400, 40);
+        l3.setBounds(110,300,400, 40);
+        l4.setBounds(120,300,400, 40);
         f.setLayout(null);
         f.setVisible(true);
         l1.setVisible(false);
         l2.setVisible(false);
         l3.setVisible(false);
+        l4.setVisible(false);
         t3.setVisible(false);
         t4.setVisible(false);
         t5.setVisible(false);
+        t6.setVisible(false);
+        t7.setVisible(false);
         b3.setVisible(false);
         b4.setVisible(false);
         b2.setContentAreaFilled(false);
@@ -77,6 +84,8 @@ public class Inicio {
                 t3.setVisible(true);
                 t4.setVisible(true);
                 t5.setVisible(true);
+                t6.setVisible(true);
+                t7.setVisible(true);
                 b3.setVisible(true);
                 b4.setVisible(true);
             }
@@ -92,13 +101,25 @@ public class Inicio {
                 if (Archivos.buscarUsuario(ID)){
                     l2.setVisible(true);
                     l3.setVisible(false);
+                    l4.setVisible(false);
                 } else if (pw2.equals(pw1)) {
-                    Usuario u = new Usuario(ID,pw1,nm,ln,ep);
-                    new MenuPrincipal();
-                    f.dispose();
+                    float bl = 0.0f;
+                    try {
+                        bl = Float.parseFloat(t7.getText());
+                    } catch (NumberFormatException i) {
+                        l2.setVisible(false);
+                        l3.setVisible(false);
+                        l4.setVisible(true);
+                    }
+                    if (bl!=0.0f) {
+                        Usuario u = new Usuario(ID,pw1,nm,ln,ep,bl);
+                        new MenuPrincipal();
+                        f.dispose();
+                    }
                 } else {
                     l2.setVisible(false);
                     l3.setVisible(true);
+                    l4.setVisible(false);
                 }
             }
         });
@@ -109,10 +130,13 @@ public class Inicio {
                 t3.setVisible(false);
                 t4.setVisible(false);
                 t5.setVisible(false);
+                t6.setVisible(false);
+                t7.setVisible(false);
                 b3.setVisible(false);
                 b4.setVisible(false);
                 l2.setVisible(false);
                 l3.setVisible(false);
+                l4.setVisible(false);
             }
         });
         f.add(t1);
@@ -120,6 +144,8 @@ public class Inicio {
         f.add(t3);
         f.add(t4);
         f.add(t5);
+        f.add(t6);
+        f.add(t7);
         f.add(b1);
         f.add(b2);
         f.add(b3);
@@ -127,5 +153,6 @@ public class Inicio {
         f.add(l1);
         f.add(l2);
         f.add(l3);
+        f.add(l4);
     }
 }
