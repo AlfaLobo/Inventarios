@@ -73,7 +73,6 @@ public class Inicio {
         l7.setBounds(90,210, 200,30);
         l8.setBounds(75,240, 200,30);
         f.setLayout(null);
-        f.setVisible(true);
         t2.setVisible(false);
         t3.setVisible(false);
         t4.setVisible(false);
@@ -227,5 +226,6 @@ public class Inicio {
         f.add(l7);
         f.add(l8);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        f.setVisible(true);
     }
 }
