@@ -20,10 +20,7 @@ public class Inicio {
     JButton b2= new JButton("Crear Nuevo Usuario");
     JButton b3= new JButton("Registrarse");
     JButton b4= new JButton("Regresar");
-    JLabel l1 = new JLabel("La combinación de usuario y contraseña no fue encontrada.");
-    JLabel l2 = new JLabel("El usuario ya existe.");
-    JLabel l3 = new JLabel("Las contraseñas no coinciden.");
-    JLabel l4 = new JLabel("Insertar un saldo valido.");
+    JLabel l = new JLabel();
 
     public Inicio(){
         f.setSize(400,500);
@@ -38,16 +35,9 @@ public class Inicio {
         b2.setBounds(90,130,200, 40);
         b3.setBounds(90,250,200, 40);
         b4.setBounds(90,280,200, 40);
-        l1.setBounds(30,145,400, 40);
-        l2.setBounds(135,300,400, 40);
-        l3.setBounds(110,300,400, 40);
-        l4.setBounds(120,300,400, 40);
         f.setLayout(null);
         f.setVisible(true);
-        l1.setVisible(false);
-        l2.setVisible(false);
-        l3.setVisible(false);
-        l4.setVisible(false);
+        l.setVisible(false);
         t3.setVisible(false);
         t4.setVisible(false);
         t5.setVisible(false);
@@ -61,6 +51,8 @@ public class Inicio {
         b4.setBorderPainted(false);
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                l.setText("La combinación de usuario y contraseña no fue encontrada.");
+                l.setBounds(30,145,400, 40);
                 String ID=t1.getText();
                 String pw=t2.getText();
                 if (Archivos.buscarUsuario(ID)){
@@ -69,10 +61,10 @@ public class Inicio {
                         new MenuPrincipal();
                         f.dispose();
                     } else {
-                        l1.setVisible(true);
+                        l.setVisible(true);
                     }
                 } else {
-                    l1.setVisible(true);
+                    l.setVisible(true);
                 }
             }
         });
@@ -80,7 +72,7 @@ public class Inicio {
             public void actionPerformed(ActionEvent e){
                 b1.setVisible(false);
                 b2.setVisible(false);
-                l1.setVisible(false);
+                l.setVisible(false);
                 t3.setVisible(true);
                 t4.setVisible(true);
                 t5.setVisible(true);
@@ -99,17 +91,17 @@ public class Inicio {
                 String ln=t5.getText();
                 String ep=t6.getText();
                 if (Archivos.buscarUsuario(ID)){
-                    l2.setVisible(true);
-                    l3.setVisible(false);
-                    l4.setVisible(false);
+                    l.setText("El usuario ya existe.");
+                    l.setBounds(135,300,400, 40);
+                    l.setVisible(true);
                 } else if (pw2.equals(pw1)) {
                     float bl = 0.0f;
                     try {
                         bl = Float.parseFloat(t7.getText());
                     } catch (NumberFormatException i) {
-                        l2.setVisible(false);
-                        l3.setVisible(false);
-                        l4.setVisible(true);
+                        l.setText("Insertar un saldo valido.");
+                        l.setBounds(120,300,400, 40);
+                        l.setVisible(true);
                     }
                     if (bl!=0.0f) {
                         Usuario u = new Usuario(ID,pw1,nm,ln,ep,bl);
@@ -117,9 +109,9 @@ public class Inicio {
                         f.dispose();
                     }
                 } else {
-                    l2.setVisible(false);
-                    l3.setVisible(true);
-                    l4.setVisible(false);
+                    l.setText("Las contraseñas no coinciden.");
+                    l.setBounds(110,300,400, 40);
+                    l.setVisible(true);
                 }
             }
         });
@@ -134,9 +126,6 @@ public class Inicio {
                 t7.setVisible(false);
                 b3.setVisible(false);
                 b4.setVisible(false);
-                l2.setVisible(false);
-                l3.setVisible(false);
-                l4.setVisible(false);
             }
         });
         f.add(t1);
@@ -150,9 +139,6 @@ public class Inicio {
         f.add(b2);
         f.add(b3);
         f.add(b4);
-        f.add(l1);
-        f.add(l2);
-        f.add(l3);
-        f.add(l4);
+        f.add(l);
     }
 }
