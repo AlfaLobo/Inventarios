@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class MenuPrincipal {
     JFrame f = new JFrame("temp");
-    JButton b = new JButton("UvU");
+    JButton b = new JButton("Añadir Producto");
     JLabel l = new JLabel("Bienvenido OvO");
     public MenuPrincipal(Usuario u) {
         f.setSize(400,500);
@@ -16,8 +16,6 @@ public class MenuPrincipal {
         b.setBounds(30,175,100, 40);
         f.setLayout(null);
         f.setVisible(true);
-        f.add(l);
-        f.add(b);
         b.addActionListener(new ActionListener(){
             String UvU = "UvU";
             int i = 70;
@@ -30,5 +28,8 @@ public class MenuPrincipal {
                 j--;
             }
         });
+        f.add(b);
+        f.add(l);
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 }

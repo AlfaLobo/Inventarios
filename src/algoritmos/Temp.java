@@ -42,10 +42,6 @@ public class Temp {
                 Archivos.guardarArchivo(k);
             } else if (op == 3) {
                 System.out.println("Test 3");
-                Usuario u = Archivos.cargarArchivos("solecito");
-                for(int i = 0; i < u.productos.size(); i++) {
-                    System.out.println("Mi nombre es "+u.productos.get(i).nombre+" y soy el elemento "+i+" de la ArrayList de productos.");
-                }
             } else if (op == 4) {
                 System.out.println("Test 4");
             } else if (op == 5) {
