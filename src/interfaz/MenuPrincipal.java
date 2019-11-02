@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class MenuPrincipal {
     JFrame f = new JFrame("temp");
-    JButton b = new JButton("Añadir Producto");
+    JButton b = new JButton("UvU");
     JLabel l = new JLabel("Bienvenido OvO");
     public MenuPrincipal(Usuario u) {
         f.setSize(400,500);
