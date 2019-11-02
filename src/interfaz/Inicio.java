@@ -58,7 +58,7 @@ public class Inicio {
                 if (Archivos.buscarUsuario(ID)){
                     Usuario u = Archivos.cargarArchivos(ID);
                     if (u.contraseña.equals(pw)){
-                        new MenuPrincipal();
+                        new MenuPrincipal(u);
                         f.dispose();
                     } else {
                         l.setVisible(true);
@@ -105,7 +105,7 @@ public class Inicio {
                     }
                     if (bl!=0.0f) {
                         Usuario u = new Usuario(ID,pw1,nm,ln,ep,bl);
-                        new MenuPrincipal();
+                        new MenuPrincipal(u);
                         f.dispose();
                     }
                 } else {

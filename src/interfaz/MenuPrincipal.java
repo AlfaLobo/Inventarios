@@ -1,5 +1,7 @@
 package interfaz;
 
+import datos.Usuario;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ public class MenuPrincipal {
     JFrame f = new JFrame("temp");
     JButton b = new JButton("UvU");
     JLabel l = new JLabel("Bienvenido OvO");
-    public MenuPrincipal() {
+    public MenuPrincipal(Usuario u) {
         f.setSize(400,500);
         l.setBounds(30,145,400, 40);
         b.setBounds(30,175,100, 40);

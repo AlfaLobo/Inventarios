@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Temp {
 
     public static void menu() {
-        new Inicio();
         int nop = 12;
         int op = -1;
         Scanner sc = new Scanner(System.in);
