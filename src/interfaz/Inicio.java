@@ -1,11 +1,13 @@
 package interfaz;
 
 import algoritmos.Archivos;
+import datos.Sesion;
 import datos.Usuario;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class Inicio {
     JFrame f = new JFrame("Inicio de sesión");
@@ -17,9 +19,10 @@ public class Inicio {
     JPasswordField p1 = new JPasswordField("");
     JPasswordField p2 = new JPasswordField("");
     JButton b1= new JButton("Iniciar Sesión");
-    JButton b2= new JButton("Crear Nuevo Usuario");
+    JButton b2= new JButton("Crear nuevo usuario");
     JButton b3= new JButton("Registrarse");
     JButton b4= new JButton("Regresar");
+    JCheckBox c = new JCheckBox("Recordar");
     JLabel l1 = new JLabel();
     JLabel l2 = new JLabel("Usuario:");
     JLabel l3 = new JLabel("Contraseña:");
@@ -30,6 +33,25 @@ public class Inicio {
     JLabel l8 = new JLabel("Saldo Inicial:");
 
     public Inicio(){
+        if (Archivos.buscarArchivo("sesion")) {
+            Sesion s = null;
+            String directorio = System.getProperty("user.dir");
+            directorio = directorio + "\\sesion.txt";
+            try {
+                FileInputStream fis = new FileInputStream(directorio);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                s = (Sesion) ois.readObject();
+                fis.close();
+                ois.close();
+                t1.setText(s.id);
+                p1.setText(s.contraseña);
+                c.setSelected(true);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException i) {
+                i.printStackTrace();
+            }
+        }
         f.setSize(400,500);
         t1.setBounds(90,60, 200,30);
         t2.setBounds(150,150, 200,30);
@@ -42,6 +64,7 @@ public class Inicio {
         b2.setBounds(90,150,200, 40);
         b3.setBounds(150,270,200, 40);
         b4.setBounds(150,300,200, 40);
+        c.setBounds(10,120,80, 40);
         l2.setBounds(35,60, 200,30);
         l3.setBounds(15,90, 200,30);
         l4.setBounds(15,120, 200,30);
@@ -74,9 +97,17 @@ public class Inicio {
                 l1.setBounds(30,165,400, 40);
                 String ID=t1.getText();
                 String pw= String.valueOf(p1.getPassword());
-                if (Archivos.buscarUsuario(ID)){
-                    Usuario u = Archivos.cargarArchivos(ID);
+                if (Archivos.buscarArchivo(ID)){
+                    Usuario u = Archivos.cargarUsuario(ID);
                     if (u.contraseña.equals(pw)){
+                        if (c.isSelected()){
+                            Sesion s = new Sesion(ID, u.contraseña);
+                        } else if (Archivos.buscarArchivo("sesion")){
+                            String directorio = System.getProperty("user.dir");
+                            directorio = directorio + "\\sesion.txt";
+                            File f = new File(directorio);
+                            f.delete();
+                        }
                         new MenuPrincipal(u);
                         f.dispose();
                     } else {
@@ -93,6 +124,7 @@ public class Inicio {
                 p1.setBounds(150,90, 200,30);
                 l2.setBounds(95,60, 200,30);
                 l3.setBounds(75,90, 200,30);
+                c.setBounds(70,270,80, 40);
                 b1.setVisible(false);
                 b2.setVisible(false);
                 t2.setVisible(true);
@@ -122,7 +154,7 @@ public class Inicio {
                     l1.setText("Nombre de usuario no valido.");
                     l1.setBounds(170,315,400, 40);
                     l1.setVisible(true);
-                } else if (Archivos.buscarUsuario(ID)) {
+                } else if (Archivos.buscarArchivo(ID)) {
                     l1.setText("El usuario ya existe.");
                     l1.setBounds(195,315,400, 40);
                     l1.setVisible(true);
@@ -137,6 +169,9 @@ public class Inicio {
                     }
                     if (bl!=0.0f) {
                         Usuario u = new Usuario(ID,pw1,nm,ln,ep,bl);
+                        if (c.isSelected()){
+                            Sesion s = new Sesion(ID, u.contraseña);
+                        }
                         new MenuPrincipal(u);
                         f.dispose();
                     }
@@ -151,6 +186,7 @@ public class Inicio {
             public void actionPerformed(ActionEvent e){
                 t1.setBounds(90,60, 200,30);
                 p1.setBounds(90,90, 200,30);
+                c.setBounds(10,120,80, 40);
                 l2.setBounds(35,60, 200,30);
                 l3.setBounds(15,90, 200,30);
                 b1.setVisible(true);
@@ -181,6 +217,7 @@ public class Inicio {
         f.add(b2);
         f.add(b3);
         f.add(b4);
+        f.add(c);
         f.add(l1);
         f.add(l2);
         f.add(l3);

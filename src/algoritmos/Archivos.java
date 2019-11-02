@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Archivos {
 
-    public static boolean buscarUsuario(String ID) {
+    public static boolean buscarArchivo(String ID) {
         String directorio = System.getProperty("user.dir");
         directorio = directorio + "\\"+ID+".txt";
         File f = new File(directorio);
@@ -29,7 +29,7 @@ public class Archivos {
         }
     }
 
-    public static Usuario cargarArchivos(String ID) {
+    public static Usuario cargarUsuario(String ID) {
         Usuario u = null;
         String directorio = System.getProperty("user.dir");
         directorio = directorio + "\\"+ID+".txt";
