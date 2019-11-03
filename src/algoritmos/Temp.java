@@ -24,10 +24,6 @@ public class Temp {
                 new Inicio();
             } else if (op == 2) {
                 System.out.println("Test 2");
-                Usuario u = null;
-                for(int i = 0; i < u.productos.size(); i++) {
-                    System.out.println("Mi nombre es "+u.productos.get(i).nombre+" y soy el elemento "+i+" de la ArrayList de productos.");
-                }
             } else if (op == 3) {
                 System.out.println("Test 3");
             } else if (op == 4) {

@@ -28,6 +28,7 @@ public class Usuario implements Serializable {
         apellidos = lastname;
         empresa = enterprise;
         saldo = balance;
+        proveedores.add(new Proveedor("Ninguno", null, null));
         String directorio = System.getProperty("user.dir");
         directorio = directorio + "\\"+ID+".txt";
         this.directorio = directorio;

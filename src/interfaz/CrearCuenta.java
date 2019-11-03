@@ -75,7 +75,7 @@ public class CrearCuenta {
                     l1.setBounds(195,315,400, 40);
                     l1.setVisible(true);
                 } else if (pw2.equals(pw1)) {
-                    float bl = 0.0f;
+                    float bl = -1;
                     try {
                         bl = Float.parseFloat(t5.getText());
                     } catch (NumberFormatException i) {
@@ -83,7 +83,7 @@ public class CrearCuenta {
                         l1.setBounds(180,315,400, 40);
                         l1.setVisible(true);
                     }
-                    if (bl!=0.0f) {
+                    if (bl>=0) {
                         Usuario u = new Usuario(ID,pw1,nm,ln,ep,bl);
                         if (c.isSelected()){
                             Sesion s = new Sesion(ID, u.contraseña);
