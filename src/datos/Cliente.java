@@ -3,15 +3,18 @@ package datos;
 import java.io.Serializable;
 
 public class Cliente implements Serializable  {
-    public String id;
+    public int id;
     public String nombre;
-    public String fechanacimiento;
-    public float totalcompras;
+    public String telefono;
+    public String correo;
+    public String nacimiento;
+    public float ganancias;
 
-    public Cliente(String ID, String name, String date, float purchases) {
+    public Cliente(int ID, String name, String phone, String email, String date) {
         id=ID;
         nombre=name;
-        fechanacimiento=date;
-        totalcompras=purchases;
+        telefono=phone;
+        correo=email;
+        nacimiento=date;
     }
 }

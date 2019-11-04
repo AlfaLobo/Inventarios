@@ -1,7 +1,5 @@
 package algoritmos;
 
-import datos.Producto;
-import datos.Usuario;
 import interfaz.Inicio;
 
 import java.util.Scanner;

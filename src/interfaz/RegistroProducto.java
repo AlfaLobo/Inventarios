@@ -2,8 +2,6 @@ package interfaz;
 
 import algoritmos.Archivos;
 import datos.Producto;
-import datos.Proveedor;
-import datos.Sesion;
 import datos.Usuario;
 
 import javax.swing.*;
@@ -29,6 +27,7 @@ public class RegistroProducto {
     JLabel l6 = new JLabel("Proveedor:");
     JLabel error = new JLabel();
     public RegistroProducto(Usuario u, JFrame m) {
+        m.setEnabled(false);
         f.setSize(400,500);
         cb.setBounds(150,270, 200,30);
         t1.setBounds(150,120, 200,30);

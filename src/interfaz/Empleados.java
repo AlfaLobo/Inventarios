@@ -4,26 +4,26 @@ import datos.Usuario;
 
 import javax.swing.*;
 
-public class Inventario {
-    JFrame f= new JFrame("Inventario");
-    public Inventario(Usuario u, JFrame m){
+public class Empleados {
+    JFrame f= new JFrame("Empleados");
+    public Empleados(Usuario u, JFrame m){
         m.setEnabled(false);
-        String col[] = {"ID","Nombre","Marca","Proveedor","Cantidad","Costo","Precio","Ganancias"};
+        String col[] = {"ID","Nombre","Salario","Telefono","Correo","Cumpleaños","Total Invertido","Ganancia"};
         String[][] datos;
-        if (u.productos.size()<10){
+        if (u.empleados.size()<10){
             datos = new String[10][col.length];
         } else {
-            datos = new String[u.productos.size()][col.length];
+            datos = new String[u.empleados.size()][col.length];
         }
-        for (int i = 0;i<u.productos.size();i++){
-            datos[i][0]=Integer.toString(u.productos.get(i).id);
-            datos[i][1]=u.productos.get(i).nombre;
-            datos[i][2]=u.productos.get(i).marca;
-            datos[i][3]=u.productos.get(i).proveedor.nombre;
-            datos[i][4]=Integer.toString(u.productos.get(i).cantidad);
-            datos[i][5]=Float.toString(u.productos.get(i).costo);
-            datos[i][6]=Float.toString(u.productos.get(i).precio);
-            datos[i][7]=Float.toString(u.productos.get(i).ganancia);
+        for (int i = 0;i<u.empleados.size();i++){
+            datos[i][0]=Integer.toString(u.empleados.get(i).id);
+            datos[i][1]=u.empleados.get(i).nombre;
+            datos[i][2]=Float.toString(u.empleados.get(i).salario);
+            datos[i][3]=u.empleados.get(i).telefono;
+            datos[i][4]=u.empleados.get(i).correo;
+            datos[i][5]=u.empleados.get(i).nacimiento;
+            datos[i][6]=Float.toString(u.empleados.get(i).inversion);
+            datos[i][7]=Float.toString(u.empleados.get(i).ganancias);
         }
         JTable tb = new JTable(datos,col);
         tb.setRowHeight(38);

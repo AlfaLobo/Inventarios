@@ -1,6 +1,5 @@
 package myPackage;
 
-import algoritmos.*;
 import interfaz.Inicio;
 
 public class MyClass {

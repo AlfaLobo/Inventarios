@@ -7,17 +7,18 @@ public class Producto implements Serializable {
     public String nombre;
     public String marca;
     public int cantidad;
-    public float precioc;
-    public float preciov;
+    public float costo;
+    public float precio;
+    public float ganancia;
     public Proveedor proveedor;
 
-    public Producto(int ID, String name, String brand, int quantity, float cprice, float sprice, Proveedor provider) {
+    public Producto(int ID, String name, String brand, int quantity, float cost, float price, Proveedor provider) {
         id=ID;
         nombre=name;
         marca=brand;
         cantidad=quantity;
-        precioc=cprice;
-        preciov=sprice;
+        costo=cost;
+        precio=price;
         proveedor=provider;
     }
 }
