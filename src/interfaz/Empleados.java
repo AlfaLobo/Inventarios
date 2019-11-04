@@ -17,7 +17,7 @@ public class Empleados {
         }
         for (int i = 0;i<u.empleados.size();i++){
             datos[i][0]=Integer.toString(u.empleados.get(i).id);
-            datos[i][1]=u.empleados.get(i).nombre;
+            datos[i][1]=u.empleados.get(i).nombre+" "+u.empleados.get(i).apellidos;
             datos[i][2]=Float.toString(u.empleados.get(i).salario);
             datos[i][3]=u.empleados.get(i).telefono;
             datos[i][4]=u.empleados.get(i).correo;

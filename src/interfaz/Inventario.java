@@ -19,7 +19,7 @@ public class Inventario {
             datos[i][0]=Integer.toString(u.productos.get(i).id);
             datos[i][1]=u.productos.get(i).nombre;
             datos[i][2]=u.productos.get(i).marca;
-            datos[i][3]=u.productos.get(i).proveedor.nombre;
+            datos[i][3]=u.productos.get(i).proveedor;
             datos[i][4]=Integer.toString(u.productos.get(i).cantidad);
             datos[i][5]=Float.toString(u.productos.get(i).costo);
             datos[i][6]=Float.toString(u.productos.get(i).precio);

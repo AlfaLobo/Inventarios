@@ -78,7 +78,7 @@ public class RegistroProducto {
                         if (quantity>=0) {
                             if (cprice>=0&&sprice>=0){
                                 Random rand = new Random();
-                                u.productos.add(new Producto(rand.nextInt(100000), name, brand, quantity, cprice, sprice, u.proveedores.get(cb.getSelectedIndex())));
+                                u.productos.add(new Producto(rand.nextInt(100000), name, brand, quantity, cprice, sprice, u.proveedores.get(cb.getSelectedIndex()).nombre));
                                 Archivos.guardarArchivo(u);
                                 f.dispose();
                                 m.setEnabled(true);

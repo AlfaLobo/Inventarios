@@ -9,11 +9,25 @@ import java.awt.event.ActionListener;
 public class RegistroServicio {
     JFrame f = new JFrame("Registro Servicio");
     JTextField t1 = new JTextField();
+    JTextField t2 = new JTextField("0");
+    JTextField t3 = new JTextField("0");
     JButton b1 = new JButton("Registrar");
     JButton b2 = new JButton("Cancelar");
+    JLabel l1 = new JLabel("Nombre:");
+    JLabel l2 = new JLabel("Costo:");
+    JLabel l3 = new JLabel("Precio:");
+    JLabel error = new JLabel();
     public RegistroServicio(Usuario u, JFrame m) {
         m.setEnabled(false);
         f.setSize(400,500);
+        t1.setBounds(150,120, 200,30);
+        t2.setBounds(150,150, 200,30);
+        t3.setBounds(150,180, 200,30);
+        b1.setBounds(150,300, 200,30);
+        b2.setBounds(150,325, 200,30);
+        l1.setBounds(95,120, 200,30);
+        l2.setBounds(103,150, 200,30);
+        l3.setBounds(89,180, 200,30);
         f.setLayout(null);
         f.setResizable(false);
         b2.setContentAreaFilled(false);
@@ -30,8 +44,13 @@ public class RegistroServicio {
             }
         });
         f.add(t1);
+        f.add(t2);
+        f.add(t3);
         f.add(b1);
         f.add(b2);
+        f.add(l1);
+        f.add(l2);
+        f.add(l3);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setVisible(true);
     }
