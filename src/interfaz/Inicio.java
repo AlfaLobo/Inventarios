@@ -88,6 +88,7 @@ public class Inicio {
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 new CrearCuenta(t1.getText(), String.valueOf(p1.getPassword()));
+                f.dispose();
             }
         });
         f.add(t1);

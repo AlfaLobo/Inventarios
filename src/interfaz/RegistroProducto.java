@@ -16,9 +16,9 @@ public class RegistroProducto {
     JComboBox cb = new JComboBox();
     JTextField t1 = new JTextField();
     JTextField t2 = new JTextField();
-    JTextField t3 = new JTextField();
-    JTextField t4 = new JTextField();
-    JTextField t5 = new JTextField();
+    JTextField t3 = new JTextField("0");
+    JTextField t4 = new JTextField("0");
+    JTextField t5 = new JTextField("0");
     JButton b1 = new JButton("Registrar");
     JButton b2 = new JButton("Cancelar");
     JLabel l1 = new JLabel("Nombre:");
@@ -71,25 +71,26 @@ public class RegistroProducto {
                         quantity = Integer.parseInt(t3.getText());
                         cprice = Float.parseFloat(t4.getText());
                         sprice = Float.parseFloat(t5.getText());
+                        if (quantity>=0) {
+                            if (cprice>=0&&sprice>=0){
+                                Random rand = new Random();
+                                u.productos.add(new Producto(rand.nextInt(100000), name, brand, quantity, cprice, sprice, u.proveedores.get(cb.getSelectedIndex())));
+                                Archivos.guardarArchivo(u);
+                                f.dispose();
+                            } else {
+                                error.setText("Insertar precios validos.");
+                                error.setBounds(180,335,400, 40);
+                                error.setVisible(true);
+                            }
+                        } else {
+                            error.setText("Insertar una cantidad valida.");
+                            error.setBounds(175,335,400, 40);
+                            error.setVisible(true);
+                        }
 
                     } catch (NumberFormatException i) {
                         error.setText("Insertar valores validos.");
-                        error.setBounds(150,335,400, 40);
-                        error.setVisible(true);
-                    }
-                    if (quantity>=0) {
-                        if (cprice>=0&&sprice>=0){
-                            Random rand = new Random();
-                            u.productos.add(new Producto(rand.nextInt(100000), name, brand, quantity, cprice, sprice, u.proveedores.get(cb.getSelectedIndex())));
-                            f.dispose();
-                        } else {
-                            error.setText("Insertar precios validos.");
-                            error.setBounds(150,335,400, 40);
-                            error.setVisible(true);
-                        }
-                    } else {
-                        error.setText("Insertar una cantidad valida.");
-                        error.setBounds(150,335,400, 40);
+                        error.setBounds(180,335,400, 40);
                         error.setVisible(true);
                     }
                 }

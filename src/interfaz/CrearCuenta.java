@@ -14,7 +14,7 @@ public class CrearCuenta {
     JTextField t2 = new JTextField();
     JTextField t3 = new JTextField();
     JTextField t4 = new JTextField();
-    JTextField t5 = new JTextField();
+    JTextField t5 = new JTextField("0");
     JPasswordField p1 = new JPasswordField();
     JPasswordField p2 = new JPasswordField();
     JButton b1= new JButton("Registrarse");
@@ -88,7 +88,7 @@ public class CrearCuenta {
                         if (c.isSelected()){
                             Sesion s = new Sesion(ID, u.contraseña);
                         }
-                        new MenuPrincipal(u);
+                        new Inicio();
                         f.dispose();
                     }
                 } else {
@@ -100,6 +100,7 @@ public class CrearCuenta {
         });
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                new Inicio();
                 f.dispose();
             }
         });

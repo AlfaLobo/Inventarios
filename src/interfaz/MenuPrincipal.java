@@ -10,13 +10,16 @@ public class MenuPrincipal {
     JFrame f = new JFrame("temp");
     JButton b = new JButton("UvU");
     JButton b1 = new JButton("Registrar Producto");
+    JButton b2 = new JButton("Revisar Inventario");
     JLabel l = new JLabel("Bienvenido OvO");
     public MenuPrincipal(Usuario u) {
         f.setSize(1280,720);
         l.setBounds(70,145,1280, 40);
         b.setBounds(50,175,100, 40);
         b1.setBounds(200,175,160, 40);
+        b2.setBounds(410,175,160, 40);
         f.setLayout(null);
+        f.setResizable(false);
         b.addActionListener(new ActionListener(){
             String UvU = "UvU";
             int i = 70;
@@ -34,8 +37,14 @@ public class MenuPrincipal {
                 new RegistroProducto(u);
             }
         });
+        b2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new Inventario(u);
+            }
+        });
         f.add(b);
         f.add(b1);
+        f.add(b2);
         f.add(l);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setVisible(true);

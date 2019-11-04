@@ -9,7 +9,7 @@ public class Producto implements Serializable {
     public int cantidad;
     public float precioc;
     public float preciov;
-    Proveedor proveedor;
+    public Proveedor proveedor;
 
     public Producto(int ID, String name, String brand, int quantity, float cprice, float sprice, Proveedor provider) {
         id=ID;
