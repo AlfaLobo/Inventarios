@@ -34,12 +34,14 @@ public class MenuPrincipal {
         });
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroProducto(u);
+                new RegistroProducto(u, f);
+                f.setEnabled(false);
             }
         });
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Inventario(u);
+                new Inventario(u, f);
+                f.setEnabled(false);
             }
         });
         f.add(b);

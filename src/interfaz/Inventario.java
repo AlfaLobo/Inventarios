@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Inventario {
     JFrame f= new JFrame("Inventario");
-    public Inventario(Usuario u){
+    public Inventario(Usuario u, JFrame m){
         String col[] = {"ID","Nombre","Marca","Cantidad","Precio Venta","Proveedor"};
         String[][] datos;
         if (u.productos.size()<10){
@@ -31,6 +31,11 @@ public class Inventario {
         f.setLayout(null);
         f.setResizable(false);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        f.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                m.setEnabled(true);
+            }
+        });
         f.add(sp);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setVisible(true);

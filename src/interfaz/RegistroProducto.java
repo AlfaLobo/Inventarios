@@ -28,7 +28,7 @@ public class RegistroProducto {
     JLabel l5 = new JLabel("Precio venta:");
     JLabel l6 = new JLabel("Proveedor:");
     JLabel error = new JLabel();
-    public RegistroProducto(Usuario u) {
+    public RegistroProducto(Usuario u, JFrame m) {
         f.setSize(400,500);
         cb.setBounds(150,270, 200,30);
         t1.setBounds(150,120, 200,30);
@@ -51,6 +51,11 @@ public class RegistroProducto {
         for (int i=0;i<u.proveedores.size();i++) {
             cb.addItem(u.proveedores.get(i).nombre);
         }
+        f.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                m.setEnabled(true);
+            }
+        });
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String name=t1.getText();
@@ -60,8 +65,8 @@ public class RegistroProducto {
                     error.setBounds(200,335,400, 40);
                     error.setVisible(true);
                 } else if (Archivos.buscarProducto(u, name, brand)) {
-                    error.setText("Un producto con el mismo nombre de esta marca ya existe.");
-                    error.setBounds(210,335,400, 40);
+                    error.setText("El producto ya existe.");
+                    error.setBounds(190,335,400, 40);
                     error.setVisible(true);
                 } else {
                     int quantity = -1;
@@ -77,6 +82,7 @@ public class RegistroProducto {
                                 u.productos.add(new Producto(rand.nextInt(100000), name, brand, quantity, cprice, sprice, u.proveedores.get(cb.getSelectedIndex())));
                                 Archivos.guardarArchivo(u);
                                 f.dispose();
+                                m.setEnabled(true);
                             } else {
                                 error.setText("Insertar precios validos.");
                                 error.setBounds(180,335,400, 40);
@@ -99,6 +105,7 @@ public class RegistroProducto {
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 f.dispose();
+                m.setEnabled(true);
             }
         });
         f.add(cb);

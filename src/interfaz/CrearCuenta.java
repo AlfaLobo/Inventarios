@@ -19,7 +19,6 @@ public class CrearCuenta {
     JPasswordField p2 = new JPasswordField();
     JButton b1= new JButton("Registrarse");
     JButton b2= new JButton("Cancelar");
-    JCheckBox c = new JCheckBox("Recordar");
     JLabel l1 = new JLabel();
     JLabel l2 = new JLabel("Usuario:");
     JLabel l3 = new JLabel("Contraseña:");
@@ -40,7 +39,6 @@ public class CrearCuenta {
         p2.setBounds(150,120, 200,30);
         b1.setBounds(150,270,200, 40);
         b2.setBounds(150,310,200, 20);
-        c.setBounds(70,270,80, 40);
         l2.setBounds(95,60, 200,30);
         l3.setBounds(75,90, 200,30);
         l4.setBounds(15,120, 200,30);
@@ -54,8 +52,6 @@ public class CrearCuenta {
         l1.setVisible(false);
         b2.setContentAreaFilled(false);
         b2.setBorderPainted(false);
-        c.setContentAreaFilled(false);
-        c.setBorderPainted(false);
         t1.setText(user);
         p1.setText(password);
         b1.addActionListener(new ActionListener(){
@@ -85,9 +81,7 @@ public class CrearCuenta {
                     }
                     if (bl>=0) {
                         Usuario u = new Usuario(ID,pw1,nm,ln,ep,bl);
-                        if (c.isSelected()){
-                            Sesion s = new Sesion(ID, u.contraseña);
-                        }
+                        Sesion s = new Sesion(ID, u.contraseña);
                         new Inicio();
                         f.dispose();
                     }
@@ -113,7 +107,6 @@ public class CrearCuenta {
         f.add(p2);
         f.add(b1);
         f.add(b2);
-        f.add(c);
         f.add(l1);
         f.add(l2);
         f.add(l3);
