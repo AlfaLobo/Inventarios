@@ -127,7 +127,7 @@ public class MenuPrincipal {
         f.add(b11);
         f.add(b12);
         f.add(l);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }
 }

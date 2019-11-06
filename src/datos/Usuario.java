@@ -21,6 +21,7 @@ public class Usuario implements Serializable {
     public List<Producto> productos = new ArrayList<>();
     public List<Proveedor> proveedores = new ArrayList<>();
     public List<Servicio> servicios = new ArrayList<>();
+    public List<Venta> ventas = new ArrayList<>();
 
     public Usuario(String ID, String password, String name, String lastname, String enterprise, float balance){
         id = ID;
