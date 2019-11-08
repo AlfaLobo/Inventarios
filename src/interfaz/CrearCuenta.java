@@ -7,6 +7,8 @@ import datos.Usuario;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CrearCuenta {
     JFrame f = new JFrame("Crear cuenta");
@@ -54,6 +56,11 @@ public class CrearCuenta {
         b2.setBorderPainted(false);
         t1.setText(user);
         p1.setText(password);
+        t5.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                t5.selectAll();
+            }
+        });
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String ID=t1.getText();

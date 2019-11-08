@@ -7,6 +7,8 @@ import datos.Usuario;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 public class RegistroProducto {
@@ -49,6 +51,16 @@ public class RegistroProducto {
         f.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 m.setEnabled(true);
+            }
+        });
+        t3.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                t3.selectAll();
+            }
+        });
+        t4.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                t4.selectAll();
             }
         });
         b1.addActionListener(new ActionListener(){
