@@ -4,11 +4,13 @@ import datos.Producto;
 import datos.Usuario;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class CompraProducto {
     JFrame f = new JFrame("Compra de producto");
@@ -17,13 +19,13 @@ public class CompraProducto {
     JComboBox cb3 = new JComboBox();
     JSpinner s1 = new JSpinner(new SpinnerNumberModel(0,0,2147483647,1));
     JTextField t1 = new JTextField("0");
-    JTextField t2 = new JTextField();
+    JTextField t2 = new JTextField("0");
     JButton b1 = new JButton("Registrar");
     JButton b2 = new JButton("Cancelar");
     JCheckBox c = new JCheckBox("Expiración:");
     JLabel l1 = new JLabel("Cantidad:");
     JLabel l2 = new JLabel("Total Compra:");
-    JLabel l3 = new JLabel("Insertar valores validos");
+    JLabel l3 = new JLabel("Insertar valores validos.");
     public CompraProducto(Usuario u, JFrame m, Producto p){
         f.setSize(390,400);
         l1.setBounds(35,60, 100,30);
@@ -36,7 +38,7 @@ public class CompraProducto {
         cb3.setBounds(195,120, 100,30);
         b1.setBounds(95,150, 200,30);
         b2.setBounds(95,175, 200,30);
-        l3.setBounds(95,200, 200,30);
+        l3.setBounds(130,190, 200,30);
         f.setLayout(null);
         f.setResizable(false);
         cb1.setEnabled(false);
@@ -46,7 +48,6 @@ public class CompraProducto {
         b2.setBorderPainted(false);
         c.setContentAreaFilled(false);
         l3.setVisible(false);
-        t2.setText(String.valueOf(p.precio));
         for (int i=1;i<32;i++) {
             cb1.addItem(i);
         }
@@ -61,18 +62,45 @@ public class CompraProducto {
                 m.setEnabled(true);
             }
         });
+        t1.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                cambio();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                cambio();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                cambio();
+            }
+            public void cambio() {
+                try {
+                    float total = Float.parseFloat(t1.getText());
+                    total = total*p.costo;
+                    t2.setText(String.valueOf(total));
+                    l3.setVisible(false);
+                    b1.setEnabled(true);
+                } catch (NumberFormatException i) {
+                    l3.setVisible(true);
+                    b1.setEnabled(false);
+                }
+            }
+        });
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 int quantity = 0;
-                int total = 0;
+                float total = 0;
                 try {
                     quantity=Integer.parseInt(t1.getText());
-                    total=Integer.parseInt(t2.getText());
+                    total=Float.parseFloat(t2.getText());
+                    p.cantidad=p.cantidad+quantity;
+                    p.ganancia=p.ganancia-total;
+                    u.saldo=u.saldo-total;
                     if (c.isSelected()){
-
+                        GregorianCalendar date = new GregorianCalendar((int) cb3.getItemAt(cb3.getSelectedIndex()), (int) cb2.getItemAt(cb2.getSelectedIndex()), (int) cb1.getItemAt(cb1.getSelectedIndex()));
+                        p.expirables.add(p.new Expirable(quantity, date));
+                        f.dispose();
+                        m.setEnabled(true);
                     } else {
-                        p.cantidad=p.cantidad+quantity;
-                        p.ganancia=p.ganancia-total;
                         f.dispose();
                         m.setEnabled(true);
                     }
@@ -94,9 +122,6 @@ public class CompraProducto {
                 cb3.setEnabled(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
-        //int day= (int) cb1.getItemAt(cb1.getSelectedIndex());
-        //int month= (int) cb2.getItemAt(cb2.getSelectedIndex());
-        //int year=Integer.parseInt(t2.getText());;
         f.add(cb1);
         f.add(cb2);
         f.add(cb3);

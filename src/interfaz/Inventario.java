@@ -25,9 +25,12 @@ public class Inventario {
             datos[i][6]=Float.toString(u.productos.get(i).precio);
             datos[i][7]=Float.toString(u.productos.get(i).ganancia);
         }
-        JTable tb = new JTable(datos,col);
+        JTable tb = new JTable(datos,col){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };
+        };
         tb.setRowHeight(38);
-        tb.setEnabled(false);
         JScrollPane sp = new JScrollPane(tb);
         f.setSize(720,480);
         sp.setBounds(0,55,715,400);

@@ -1,5 +1,8 @@
 package datos;
 
+import com.sun.org.apache.bcel.internal.classfile.InnerClass;
+import javafx.scene.Parent;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -14,9 +17,13 @@ public class Producto implements Serializable {
     public float precio;
     public float ganancia;
     public String proveedor;
-    class Expirable implements Serializable{
-        int cantidad;
-        GregorianCalendar expiracion;
+    public class Expirable implements Serializable{
+        public int cantidad;
+        public GregorianCalendar expiracion;
+        public Expirable(int quantity, GregorianCalendar date){
+            cantidad=quantity;
+            expiracion=date;
+        }
     }
     public List<Expirable> expirables = new ArrayList<>();
 
