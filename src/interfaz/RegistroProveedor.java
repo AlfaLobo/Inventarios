@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RegistroProveedor {
-    JFrame f = new JFrame("Registro ");
+    JDialog d;
     JTextField t1 = new JTextField();
     JTextField t2 = new JTextField();
     JTextField t3 = new JTextField();
@@ -19,9 +19,10 @@ public class RegistroProveedor {
     JLabel l3 = new JLabel("Correo:");
     JLabel l4 = new JLabel("Dirección:");
     JLabel error = new JLabel();
-    public RegistroProveedor(Usuario u, JFrame m) {
-        m.setEnabled(false);
-        f.setSize(400,500);
+    public RegistroProveedor(Usuario u, JFrame f) {
+        d = new JDialog(f);
+        f.setEnabled(false);
+        d.setSize(400,500);
         t1.setBounds(150,120, 200,30);
         t2.setBounds(150,150, 200,30);
         t3.setBounds(150,180, 200,30);
@@ -32,33 +33,33 @@ public class RegistroProveedor {
         l2.setBounds(103,150, 200,30);
         l3.setBounds(89,180, 200,30);
         l4.setBounds(55,210, 200,30);
-        f.setLayout(null);
-        f.setResizable(false);
+        d.setLayout(null);
+        d.setResizable(false);
         b2.setContentAreaFilled(false);
         b2.setBorderPainted(false);
-        f.addWindowListener(new java.awt.event.WindowAdapter() {
+        d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                m.setEnabled(true);
+                f.setEnabled(true);
             }
         });
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                f.dispose();
-                m.setEnabled(true);
+                d.dispose();
+                f.setEnabled(true);
             }
         });
-        f.add(t1);
-        f.add(t2);
-        f.add(t3);
-        f.add(t4);
-        f.add(b1);
-        f.add(b2);
-        f.add(l1);
-        f.add(l2);
-        f.add(l3);
-        f.add(l4);
-        f.add(error);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setVisible(true);
+        d.add(t1);
+        d.add(t2);
+        d.add(t3);
+        d.add(t4);
+        d.add(b1);
+        d.add(b2);
+        d.add(l1);
+        d.add(l2);
+        d.add(l3);
+        d.add(l4);
+        d.add(error);
+        d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        d.setVisible(true);
     }
 }

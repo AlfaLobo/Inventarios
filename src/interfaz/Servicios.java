@@ -5,9 +5,10 @@ import datos.Usuario;
 import javax.swing.*;
 
 public class Servicios {
-    JFrame f= new JFrame("Servicios");
-    public Servicios (Usuario u, JFrame m){
-        m.setEnabled(false);
+    JDialog d;
+    public Servicios (Usuario u, JFrame f){
+        d = new JDialog(f);
+        f.setEnabled(false);
         String col[] = {"Nombre","Costo","Precio","Total Invertido","Ganancias"};
         String[][] datos;
         if (u.proveedores.size()<10){
@@ -26,18 +27,18 @@ public class Servicios {
         tb.setRowHeight(38);
         tb.setEnabled(false);
         JScrollPane sp = new JScrollPane(tb);
-        f.setSize(720,480);
+        d.setSize(720,480);
         sp.setBounds(0,55,715,400);
-        f.setLayout(null);
-        f.setResizable(false);
+        d.setLayout(null);
+        d.setResizable(false);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        f.addWindowListener(new java.awt.event.WindowAdapter() {
+        d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                m.setEnabled(true);
+                f.setEnabled(true);
             }
         });
-        f.add(sp);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setVisible(true);
+        d.add(sp);
+        d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        d.setVisible(true);
     }
 }

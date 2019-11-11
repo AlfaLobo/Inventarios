@@ -3,11 +3,14 @@ package interfaz;
 import datos.Usuario;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class Inventario {
-    JFrame f= new JFrame("Inventario");
-    public Inventario(Usuario u, JFrame m){
-        m.setEnabled(false);
+    JDialog d;
+    public Inventario(Usuario u, JFrame f){
+        d = new JDialog(f);
+        f.setEnabled(false);
         String col[] = {"ID","Nombre","Marca","Proveedor","Cantidad","Costo","Precio","Ganancias"};
         String[][] datos;
         if (u.productos.size()<10){
@@ -31,19 +34,24 @@ public class Inventario {
             };
         };
         tb.setRowHeight(38);
-        JScrollPane sp = new JScrollPane(tb);
-        f.setSize(720,480);
-        sp.setBounds(0,55,715,400);
-        f.setLayout(null);
-        f.setResizable(false);
-        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        f.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                m.setEnabled(true);
+        tb.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                new InfoProducto(f, d, u.productos.get(tb.getSelectedRow()));
             }
         });
-        f.add(sp);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setVisible(true);
+        JScrollPane sp = new JScrollPane(tb);
+        d.setSize(720,480);
+        sp.setBounds(0,55,715,400);
+        d.setLayout(null);
+        d.setResizable(false);
+        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        d.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                f.setEnabled(true);
+            }
+        });
+        d.add(sp);
+        d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        d.setVisible(true);
     }
 }

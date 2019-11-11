@@ -1,5 +1,7 @@
 package interfaz;
 
+import algoritmos.Archivos;
+import datos.Compra;
 import datos.Producto;
 import datos.Usuario;
 
@@ -10,7 +12,7 @@ import java.awt.event.*;
 import java.util.GregorianCalendar;
 
 public class CompraProducto {
-    JFrame f = new JFrame("Compra de producto");
+    JDialog d;
     JComboBox cb1 = new JComboBox();
     JComboBox cb2 = new JComboBox();
     JComboBox cb3 = new JComboBox();
@@ -22,8 +24,9 @@ public class CompraProducto {
     JLabel l1 = new JLabel("Cantidad:");
     JLabel l2 = new JLabel("Total Compra:");
     JLabel l3 = new JLabel("Insertar valores validos.");
-    public CompraProducto(Usuario u, JFrame m, Producto p){
-        f.setSize(390,400);
+    public CompraProducto(Usuario u, JFrame f, Producto p){
+        d = new JDialog(f);
+        d.setSize(390,400);
         l1.setBounds(35,60, 100,30);
         t1.setBounds(95,60, 200,30);
         l2.setBounds(10,90, 100,30);
@@ -35,8 +38,8 @@ public class CompraProducto {
         b1.setBounds(95,150, 200,30);
         b2.setBounds(95,175, 200,30);
         l3.setBounds(130,190, 200,30);
-        f.setLayout(null);
-        f.setResizable(false);
+        d.setLayout(null);
+        d.setResizable(false);
         cb1.setEnabled(false);
         cb2.setEnabled(false);
         cb3.setEnabled(false);
@@ -54,9 +57,9 @@ public class CompraProducto {
         for (int i=2019;i<2099;i++) {
             cb3.addItem(i);
         }
-        f.addWindowListener(new java.awt.event.WindowAdapter() {
+        d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                m.setEnabled(true);
+                f.setEnabled(true);
             }
         });
         t1.getDocument().addDocumentListener(new DocumentListener() {
@@ -120,21 +123,25 @@ public class CompraProducto {
                 p.cantidad=p.cantidad+quantity;
                 p.ganancia=p.ganancia-total;
                 u.saldo=u.saldo-total;
+                GregorianCalendar today = new GregorianCalendar();
+                u.compras.add(new Compra(u.compras.size(), p.proveedor, today, total));
+                Archivos.guardarArchivo(u);
                 if (c.isSelected()){
                     GregorianCalendar date = new GregorianCalendar((int) cb3.getItemAt(cb3.getSelectedIndex()), (int) cb2.getItemAt(cb2.getSelectedIndex()), (int) cb1.getItemAt(cb1.getSelectedIndex()));
                     p.expirables.add(p.new Expirable(quantity, date));
-                    f.dispose();
-                    m.setEnabled(true);
+                    Archivos.guardarArchivo(u);
+                    d.dispose();
+                    f.setEnabled(true);
                 } else {
-                    f.dispose();
-                    m.setEnabled(true);
+                    d.dispose();
+                    f.setEnabled(true);
                 }
             }
         });
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                f.dispose();
-                m.setEnabled(true);
+                d.dispose();
+                f.setEnabled(true);
             }
         });
         c.addItemListener(new ItemListener() {
@@ -144,18 +151,18 @@ public class CompraProducto {
                 cb3.setEnabled(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
-        f.add(cb1);
-        f.add(cb2);
-        f.add(cb3);
-        f.add(t1);
-        f.add(t2);
-        f.add(b1);
-        f.add(b2);
-        f.add(c);
-        f.add(l1);
-        f.add(l2);
-        f.add(l3);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setVisible(true);
+        d.add(cb1);
+        d.add(cb2);
+        d.add(cb3);
+        d.add(t1);
+        d.add(t2);
+        d.add(b1);
+        d.add(b2);
+        d.add(c);
+        d.add(l1);
+        d.add(l2);
+        d.add(l3);
+        d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        d.setVisible(true);
     }
 }

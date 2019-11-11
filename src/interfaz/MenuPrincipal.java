@@ -1,7 +1,6 @@
 package interfaz;
 
 import datos.Usuario;
-import datos.Venta;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,8 +20,9 @@ public class MenuPrincipal {
     JButton b9 = new JButton("Revisar Proveedores");
     JButton b10 = new JButton("Revisar Servicios");
     JButton b11 = new JButton("Nueva Venta");
-    JButton b12 = new JButton("Historial de Ventas");
-    JLabel l = new JLabel("Bienvenido UvU");
+    JButton b12 = new JButton("Historial de Compras");
+    JButton b13 = new JButton("E");
+    JLabel l = new JLabel("Bienvenido OvO");
     public MenuPrincipal(Usuario u) {
         f.setSize(1280,720);
         l.setBounds(70,145,1280, 40);
@@ -39,16 +39,17 @@ public class MenuPrincipal {
         b10.setBounds(1050,245,160, 40);
         b11.setBounds(200,315,160, 40);
         b12.setBounds(410,315,160, 40);
+        b13.setBounds(620,315,160, 40);
         f.setLayout(null);
         f.setResizable(false);
         b.addActionListener(new ActionListener(){
-            String OvO = "OvO";
+            String UvU = "UvU";
             int i = 70;
             int j = 145;
             public void actionPerformed(ActionEvent e){
-                l.setText(OvO);
+                l.setText(UvU);
                 l.setBounds(i,j,1280, 40);
-                OvO=OvO+"vO";
+                UvU=UvU+"vU";
                 i++;
                 j--;
             }
@@ -110,7 +111,11 @@ public class MenuPrincipal {
         });
         b12.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Historial(u, f);
+                new Compras(u, f);
+            }
+        });
+        b13.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
             }
         });
         f.add(b);
@@ -126,6 +131,7 @@ public class MenuPrincipal {
         f.add(b10);
         f.add(b11);
         f.add(b12);
+        f.add(b13);
         f.add(l);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);

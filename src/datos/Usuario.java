@@ -21,6 +21,7 @@ public class Usuario implements Serializable {
     public List<Producto> productos = new ArrayList<>();
     public List<Proveedor> proveedores = new ArrayList<>();
     public List<Servicio> servicios = new ArrayList<>();
+    public List<Compra> compras = new ArrayList<>();
     public List<Venta> ventas = new ArrayList<>();
 
     public Usuario(String ID, String password, String name, String lastname, String enterprise, float balance){
@@ -30,9 +31,9 @@ public class Usuario implements Serializable {
         apellidos = lastname;
         empresa = enterprise;
         saldo = balance;
-        clientes.add(new Cliente(0, "Generico", null, null, null));
+        clientes.add(new Cliente(0, "Generico", null, null, null, null));
         empleados.add(new Empleado(0, name, lastname, 0.0f, null, null, null));
-        proveedores.add(new Proveedor("Generico", null, null, null));
+        proveedores.add(new Proveedor(0,"Generico", null, null, null));
         String directorio = System.getProperty("user.dir");
         directorio = directorio + "\\"+ID+".txt";
         this.directorio = directorio;

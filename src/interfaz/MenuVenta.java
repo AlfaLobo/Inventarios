@@ -5,18 +5,19 @@ import datos.Usuario;
 import javax.swing.*;
 
 public class MenuVenta {
-    JFrame f = new JFrame("Venta");
-    public MenuVenta(Usuario u, JFrame m){
-        m.setEnabled(false);
-        f.setSize(400,500);
-        f.setLayout(null);
-        f.setResizable(false);
-        f.addWindowListener(new java.awt.event.WindowAdapter() {
+    JDialog d;
+    public MenuVenta(Usuario u, JFrame f){
+        d = new JDialog(f);
+        f.setEnabled(false);
+        d.setSize(400,500);
+        d.setLayout(null);
+        d.setResizable(false);
+        d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                m.setEnabled(true);
+                f.setEnabled(true);
             }
         });
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setVisible(true);
+        d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        d.setVisible(true);
     }
 }

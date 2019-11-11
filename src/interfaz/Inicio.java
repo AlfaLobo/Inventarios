@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-public class Inicio {
-    JFrame f = new JFrame("Inicio de sesión");
+public class Inicio implements Runnable {
+    JFrame f = new JFrame("Inicio de Sesión");
     JTextField t1 = new JTextField();
     JPasswordField p1 = new JPasswordField();
     JButton b1= new JButton("Iniciar Sesión");
@@ -87,8 +87,7 @@ public class Inicio {
         });
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new CrearCuenta(t1.getText(), String.valueOf(p1.getPassword()));
-                f.dispose();
+                new CrearCuenta(f, t1.getText(), String.valueOf(p1.getPassword()));
             }
         });
         f.add(t1);
@@ -99,7 +98,11 @@ public class Inicio {
         f.add(l1);
         f.add(l2);
         f.add(l3);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
+    }
+
+    public void run() {
+
     }
 }

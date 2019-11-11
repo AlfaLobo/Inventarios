@@ -19,7 +19,6 @@ public class Temp {
             }
             if (op == 1) {
                 System.out.println("Test 1");
-                new Inicio();
             } else if (op == 2) {
                 System.out.println("Test 2");
             } else if (op == 3) {
