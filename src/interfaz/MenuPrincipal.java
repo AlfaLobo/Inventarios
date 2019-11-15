@@ -21,8 +21,9 @@ public class MenuPrincipal {
     JButton b10 = new JButton("Revisar Servicios");
     JButton b11 = new JButton("Nueva Venta");
     JButton b12 = new JButton("Historial de Compras");
-    JButton b13 = new JButton("E");
+    JButton b13 = new JButton("Nueva Compra");
     JLabel l = new JLabel("Bienvenido OvO");
+
     public MenuPrincipal(Usuario u) {
         f.setSize(1280,720);
         l.setBounds(70,145,1280, 40);
@@ -56,66 +57,71 @@ public class MenuPrincipal {
         });
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroCliente(u, f);
+                new RegistroCliente(f, u);
             }
         });
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroEmpleado(u, f);
+                new RegistroEmpleado(f, u);
             }
         });
         b3.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroProducto(u, f);
+                new RegistroProducto(f, u);
             }
         });
         b4.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroProveedor(u, f);
+                new RegistroProveedor(f, u);
             }
         });
         b5.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroServicio(u, f);
+                new RegistroServicio(f, u);
             }
         });
         b6.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Clientes(u, f);
+                new Clientes(f, u);
             }
         });
         b7.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Empleados(u, f);
+                new Empleados(f, u);
             }
         });
         b8.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Inventario(u, f);
+                new Inventario(f, u);
             }
         });
         b9.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Proveedores(u, f);
+                new Proveedores(f, u);
             }
         });
         b10.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Servicios(u, f);
+                new Servicios(f, u);
             }
         });
         b11.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new MenuVenta(u, f);
+                    new MenuVenta(f, u);
             }
         });
         b12.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Compras(u, f);
+                new Compras(f, u);
             }
         });
         b13.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                if (u.productos.size()==0){
+                    l.setText("No existen productos que comprar.");
+                } else {
+                    new MenuCompra(f, u);
+                }
             }
         });
         f.add(b);

@@ -17,8 +17,8 @@ public class RegistroServicio {
     JLabel l2 = new JLabel("Costo:");
     JLabel l3 = new JLabel("Precio:");
     JLabel error = new JLabel();
-    public RegistroServicio(Usuario u, JFrame f) {
-        d = new JDialog(f);
+    public RegistroServicio(JFrame f, Usuario u) {
+        /*d = new JDialog(f);
         f.setEnabled(false);
         d.setSize(400,500);
         t1.setBounds(150,120, 200,30);
@@ -53,6 +53,6 @@ public class RegistroServicio {
         d.add(l2);
         d.add(l3);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        d.setVisible(true);
+        d.setVisible(true);*/
     }
 }

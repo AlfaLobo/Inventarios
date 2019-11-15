@@ -3,7 +3,6 @@ package datos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class Venta implements Serializable {
     public int id;
@@ -19,7 +18,7 @@ public class Venta implements Serializable {
             cantidad=quantity;
         }
     }
-    public List<Articulo> articulos = new ArrayList<>();
+    public ArrayList<Articulo> articulos;
     public Venta() {
 
     }

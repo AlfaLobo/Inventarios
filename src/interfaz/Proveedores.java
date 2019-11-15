@@ -6,23 +6,24 @@ import javax.swing.*;
 
 public class Proveedores {
     JDialog d;
-    public Proveedores(Usuario u, JFrame f){
+    public Proveedores(JFrame f, Usuario u){
+        /*
         d = new JDialog(f);
         f.setEnabled(false);
         String col[] = {"Nombre","Telefono","Correo","Dirección","Total Invertido","Ganancias Generadas"};
         String[][] datos;
-        if (u.proveedores.size()<10){
+        if (ceo.proveedores.size()<10){
             datos = new String[10][col.length];
         } else {
-            datos = new String[u.proveedores.size()][col.length];
+            datos = new String[ceo.proveedores.size()][col.length];
         }
-        for (int i = 0;i<u.proveedores.size();i++){
-            datos[i][0]=u.proveedores.get(i).nombre;
-            datos[i][1]=u.proveedores.get(i).telefono;
-            datos[i][2]=u.proveedores.get(i).correo;
-            datos[i][3]=u.proveedores.get(i).direccion;
-            datos[i][4]=Float.toString(u.proveedores.get(i).inversion);
-            datos[i][5]=Float.toString(u.proveedores.get(i).ganancias);
+        for (int i = 0;i<ceo.proveedores.size();i++){
+            datos[i][0]=ceo.proveedores.get(i).nombre;
+            datos[i][1]=ceo.proveedores.get(i).telefono;
+            datos[i][2]=ceo.proveedores.get(i).correo;
+            datos[i][3]=ceo.proveedores.get(i).direccion;
+            datos[i][4]=Float.toString(ceo.proveedores.get(i).inversion);
+            datos[i][5]=Float.toString(ceo.proveedores.get(i).ganancias);
         }
         JTable tb = new JTable(datos,col);
         tb.setRowHeight(38);
@@ -40,6 +41,6 @@ public class Proveedores {
         });
         d.add(sp);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        d.setVisible(true);
+        d.setVisible(true);*/
     }
 }

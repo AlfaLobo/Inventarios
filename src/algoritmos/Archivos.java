@@ -1,17 +1,21 @@
 package algoritmos;
 
-import datos.Producto;
+import datos.Empleado;
 import datos.Usuario;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class Archivos {
 
-    public static boolean buscarArchivo(String ID) {
+    public static void crearDirectorio(String dir){
         String directorio = System.getProperty("user.dir");
-        directorio = directorio + "\\"+ID+".txt";
-        File f = new File(directorio);
+        File fl = new File(directorio+dir);
+        fl.mkdir();
+    }
+
+    public static boolean buscarArchivo(String dir) {
+        String directorio = System.getProperty("user.dir");
+        File f = new File(directorio+dir);
         if(f.exists()) {
             return true;
         } else {
@@ -19,18 +23,29 @@ public class Archivos {
         }
     }
 
-    public static boolean buscarProducto(Usuario u, String name, String brand){
+    public static boolean buscarDirectorio(String ID) {
+        String directorio = System.getProperty("user.dir");
+        File f = new File(directorio+ "\\"+ID);
+        if(f.exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean buscarProducto(Usuario u, String name){
         for(int i = 0; i < u.productos.size(); i++) {
-            if (u.productos.get(i).nombre.equals(name) && u.productos.get(i).marca.equals(brand)){
+            if (u.productos.get(i).nombre.equals(name)){
                 return true;
             }
         }
         return false;
     }
 
-    public static void guardarArchivo(Usuario u) {
+    public static void guardarArchivo(Usuario u, String dir) {
+        String directorio = System.getProperty("user.dir");
         try {
-            FileOutputStream fos = new FileOutputStream(u.directorio);
+            FileOutputStream fos = new FileOutputStream(directorio+dir);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(u);
             oos.close();
@@ -40,12 +55,11 @@ public class Archivos {
         }
     }
 
-    public static Usuario cargarUsuario(String ID) {
+    public static Empleado cargarUsuario(String dir) {
         Usuario u = null;
         String directorio = System.getProperty("user.dir");
-        directorio = directorio + "\\"+ID+".txt";
         try {
-            FileInputStream fis = new FileInputStream(directorio);
+            FileInputStream fis = new FileInputStream(directorio+dir);
             ObjectInputStream ois = new ObjectInputStream(fis);
             u = (Usuario) ois.readObject();
             fis.close();

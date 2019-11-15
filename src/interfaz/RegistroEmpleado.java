@@ -21,8 +21,8 @@ public class RegistroEmpleado {
     JLabel l4 = new JLabel("Correo:");
     JLabel l5 = new JLabel("Fecha de Nacimiento:");
     JLabel error = new JLabel();
-    public RegistroEmpleado(Usuario u, JFrame f) {
-        d = new JDialog(f);
+    public RegistroEmpleado(JFrame f, Usuario u) {
+        /*d = new JDialog(f);
         f.setEnabled(false);
         d.setSize(400,500);
         t1.setBounds(150,120, 200,30);
@@ -66,6 +66,6 @@ public class RegistroEmpleado {
         d.add(l5);
         d.add(error);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        d.setVisible(true);
+        d.setVisible(true);*/
     }
 }

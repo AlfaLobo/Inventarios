@@ -2,32 +2,27 @@ package datos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Producto implements Serializable {
     public int id;
     public String nombre;
-    public String marca;
     public int cantidad;
     public float costo;
     public float precio;
     public float ganancia;
     public String proveedor;
-    public class Expirable implements Serializable{
-        public int cantidad;
-        public GregorianCalendar expiracion;
-        public Expirable(int quantity, GregorianCalendar date){
-            cantidad=quantity;
-            expiracion=date;
-        }
-    }
     public List<Expirable> expirables = new ArrayList<>();
 
-    public Producto(int ID, String name, String brand, float cost, float price, String provider) {
+    public Producto(int ID, String name, int quantity, float price) {
         id=ID;
         nombre=name;
-        marca=brand;
+        cantidad=quantity;
+        precio=price;
+    }
+    public Producto(Usuario u, String name, float cost, float price, String provider) {
+        id=u.productos.size();
+        nombre=name;
         costo=cost;
         precio=price;
         proveedor=provider;

@@ -8,10 +8,10 @@ import javax.swing.event.ListSelectionListener;
 
 public class Inventario {
     JDialog d;
-    public Inventario(Usuario u, JFrame f){
+    public Inventario(JFrame f, Usuario u){
         d = new JDialog(f);
         f.setEnabled(false);
-        String col[] = {"ID","Nombre","Marca","Proveedor","Cantidad","Costo","Precio","Ganancias"};
+        String col[] = {"ID","Nombre","Proveedor","Cantidad","Costo","Precio","Ganancias"};
         String[][] datos;
         if (u.productos.size()<10){
             datos = new String[10][col.length];
@@ -21,12 +21,11 @@ public class Inventario {
         for (int i = 0;i<u.productos.size();i++){
             datos[i][0]=Integer.toString(u.productos.get(i).id);
             datos[i][1]=u.productos.get(i).nombre;
-            datos[i][2]=u.productos.get(i).marca;
-            datos[i][3]=u.productos.get(i).proveedor;
-            datos[i][4]=Integer.toString(u.productos.get(i).cantidad);
-            datos[i][5]=Float.toString(u.productos.get(i).costo);
-            datos[i][6]=Float.toString(u.productos.get(i).precio);
-            datos[i][7]=Float.toString(u.productos.get(i).ganancia);
+            datos[i][2]=u.productos.get(i).proveedor;
+            datos[i][3]=Integer.toString(u.productos.get(i).cantidad);
+            datos[i][4]=Float.toString(u.productos.get(i).costo);
+            datos[i][5]=Float.toString(u.productos.get(i).precio);
+            datos[i][6]=Float.toString(u.productos.get(i).ganancia);
         }
         JTable tb = new JTable(datos,col){
             public boolean isCellEditable(int row, int column) {
@@ -36,7 +35,11 @@ public class Inventario {
         tb.setRowHeight(38);
         tb.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
-                new InfoProducto(f, d, u.productos.get(tb.getSelectedRow()));
+                try {
+                    new InfoProducto(f, d, u.productos.get(tb.getSelectedRow()));
+                } catch (IndexOutOfBoundsException e) {
+
+                }
             }
         });
         JScrollPane sp = new JScrollPane(tb);

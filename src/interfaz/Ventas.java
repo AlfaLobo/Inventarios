@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class Ventas {
     JDialog d;
     public Ventas(Usuario u, JFrame f){
-        d = new JDialog(f);
+        /*d = new JDialog(f);
         f.setEnabled(false);
         String col[] = {"ID","Cliente","Forma de Pago","Total","Fecha"};
         String[][] datos;
@@ -43,6 +43,6 @@ public class Ventas {
         });
         d.add(sp);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        d.setVisible(true);
+        d.setVisible(true);*/
     }
 }
