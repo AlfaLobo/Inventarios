@@ -7,21 +7,19 @@ import javax.swing.*;
 public class Servicios {
     JDialog d;
     public Servicios (JFrame f, Usuario u){
-        /*d = new JDialog(f);
+        d = new JDialog(f);
         f.setEnabled(false);
-        String col[] = {"Nombre","Costo","Precio","Total Invertido","Ganancias"};
+        String col[] = {"Nombre","Precio","Ganancias"};
         String[][] datos;
-        if (ceo.proveedores.size()<10){
+        if (u.servicios.size()<10){
             datos = new String[10][col.length];
         } else {
-            datos = new String[ceo.proveedores.size()][col.length];
+            datos = new String[u.servicios.size()][col.length];
         }
-        for (int i = 0;i<ceo.servicios.size();i++){
-            datos[i][0]=ceo.servicios.get(i).nombre;
-            datos[i][1]=Float.toString(ceo.servicios.get(i).costo);
-            datos[i][2]=Float.toString(ceo.servicios.get(i).precio);
-            datos[i][3]=Float.toString(ceo.servicios.get(i).inversion);
-            datos[i][4]=Float.toString(ceo.servicios.get(i).ganancias);
+        for (int i = 0;i<u.servicios.size();i++){
+            datos[i][0]=u.servicios.get(i).nombre;
+            datos[i][1]=Float.toString(u.servicios.get(i).precio);
+            datos[i][3]=Float.toString(u.servicios.get(i).ganancia);
         }
         JTable tb = new JTable(datos,col);
         tb.setRowHeight(38);
@@ -39,6 +37,6 @@ public class Servicios {
         });
         d.add(sp);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        d.setVisible(true);*/
+        d.setVisible(true);
     }
 }

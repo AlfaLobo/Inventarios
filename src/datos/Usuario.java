@@ -12,10 +12,9 @@ public class Usuario extends Empleado implements Serializable {
     public boolean permisos;
     public String usuario;
     public String contraseña;
-    public String director;
+    public int director;
     public float saldo;
     public ArrayList<Empresa> empresas;
-    public ArrayList<Negocio> negocios;
     public ArrayList<Proveedor> proveedores;
     public ArrayList<Empleado> empleados;
     public ArrayList<Cliente> clientes;
@@ -26,6 +25,7 @@ public class Usuario extends Empleado implements Serializable {
     public ArrayList<Usuario> usuarios;
 
     public Usuario(String user, String password, String name, String lastname, float balance){
+        Archivos.crearDirectorio("\\Usuarios\\"+user);
         permisos=true;
         usuario=user;
         contraseña=password;
@@ -33,7 +33,6 @@ public class Usuario extends Empleado implements Serializable {
         apellidos=lastname;
         saldo=balance;
         empresas = new ArrayList<>();
-        negocios = new ArrayList<>();
         proveedores = new ArrayList<>();
         empleados = new ArrayList<>();
         clientes = new ArrayList<>();
@@ -42,15 +41,13 @@ public class Usuario extends Empleado implements Serializable {
         compras = new ArrayList<>();
         ventas = new ArrayList<>();
         usuarios = new ArrayList<>();
+        clientes.add(new Cliente(this, "Generico "+user));
         empleados.add(this);
-        clientes.add(new Cliente(0, "Generico", null, null, null, null));
-        empleados.add(new Empleado(0, name, lastname, 0.0f, null, null, null));
-        proveedores.add(new Proveedor(0, "Generico", null, null, null));
-        Archivos.crearDirectorio("\\Usuarios\\"+user);
+        proveedores.add(new Proveedor(this, "Generico", null, null, null));
         Archivos.guardarArchivo(this, "\\Usuarios\\"+user+"\\datos.txt");
     }
-    public Usuario(int ID, String user, String password, String ceo, String name, String lastname, float salary, String phone, String email, GregorianCalendar birthday){
-        super(ID, name, lastname, salary, phone, email, birthday);
+    public Usuario(Usuario u, String user, String password, int ceo, String name, String lastname, float salary, String phone, String email, GregorianCalendar birthday){
+        super(u, name, lastname, salary, phone, email, birthday);
         permisos=false;
         usuario=user;
         contraseña=password;

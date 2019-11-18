@@ -8,24 +8,28 @@ import java.util.Calendar;
 public class Empleados {
     JDialog d;
     public Empleados(JFrame f, Usuario u){
-        /*d = new JDialog(f);
+        d = new JDialog(f);
         f.setEnabled(false);
         String col[] = {"ID","Nombre","Salario","Telefono","Correo","Cumpleaños","Total Invertido","Ganancia"};
         String[][] datos;
-        if (u.empresas.get(0).empleados.size()<10){
+        if (u.empleados.size()<10){
             datos = new String[10][col.length];
         } else {
-            datos = new String[u.empresas.get(0).empleados.size()][col.length];
+            datos = new String[u.empleados.size()][col.length];
         }
-        for (int i = 1;i<u.empresas.get(0).empleados.size();i++){
-            datos[i][0]=Integer.toString(Integer.parseInt(u.empresas.get(0).empleados.get(i).id));
-            datos[i][1]=u.empresas.get(0).empleados.get(i).nombre+" "+u.empresas.get(0).empleados.get(i).apellidos;
-            datos[i][2]=Float.toString(u.empresas.get(0).empleados.get(i).salario);
-            datos[i][3]=u.empresas.get(0).empleados.get(i).telefono;
-            datos[i][4]=u.empresas.get(0).empleados.get(i).correo;
-            datos[i][5]=u.empresas.get(0).empleados.get(i).nacimiento.get(Calendar.DAY_OF_MONTH)+"-"+u.empresas.get(0).empleados.get(i).nacimiento.get(Calendar.MONTH)+"-"+u.empresas.get(0).empleados.get(i).nacimiento.get(Calendar.YEAR);
-            datos[i][6]=Float.toString(u.empresas.get(0).empleados.get(i).inversion);
-            datos[i][7]=Float.toString(u.empresas.get(0).empleados.get(i).ganancia);
+        for (int i = 0;i<u.empleados.size();i++){
+            datos[i][0]=String.valueOf(u.empleados.get(i).id);
+            datos[i][1]=u.empleados.get(i).nombre+" "+u.empleados.get(i).apellidos;
+            datos[i][2]=Float.toString(u.empleados.get(i).salario);
+            datos[i][3]=u.empleados.get(i).telefono;
+            datos[i][4]=u.empleados.get(i).correo;
+            try {
+                datos[i][5]=u.empleados.get(i).nacimiento.get(Calendar.DAY_OF_MONTH)+"/"+u.empleados.get(i).nacimiento.get(Calendar.MONTH)+"/"+u.empleados.get(i).nacimiento.get(Calendar.YEAR);
+            } catch (NullPointerException e) {
+                datos[i][5]="";
+            }
+            datos[i][6]=Float.toString(u.empleados.get(i).inversion);
+            datos[i][7]=Float.toString(u.empleados.get(i).ganancia);
         }
         JTable tb = new JTable(datos,col);
         tb.setRowHeight(38);
@@ -44,7 +48,5 @@ public class Empleados {
         d.add(sp);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);
-
-         */
     }
 }

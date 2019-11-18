@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class Ventas {
     JDialog d;
     public Ventas(Usuario u, JFrame f){
-        /*d = new JDialog(f);
+        d = new JDialog(f);
         f.setEnabled(false);
         String col[] = {"ID","Cliente","Forma de Pago","Total","Fecha"};
         String[][] datos;
@@ -19,7 +19,7 @@ public class Ventas {
         }
         for (int i = 0;i<u.ventas.size();i++){
             datos[i][0]=Integer.toString(u.ventas.get(i).id);
-            datos[i][1]=u.ventas.get(i).cliente;
+            datos[i][1]=u.clientes.get(u.ventas.get(i).cliente).nombre;
             datos[i][2]=u.ventas.get(i).formapago;
             datos[i][3]=u.ventas.get(i).total +"$";
             datos[i][4]=u.compras.get(i).fecha.get(Calendar.DAY_OF_MONTH)+"-"+u.compras.get(i).fecha.get(Calendar.MONTH)+"-"+u.compras.get(i).fecha.get(Calendar.YEAR);
@@ -43,6 +43,6 @@ public class Ventas {
         });
         d.add(sp);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        d.setVisible(true);*/
+        d.setVisible(true);
     }
 }

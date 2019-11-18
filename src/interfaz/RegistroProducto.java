@@ -130,17 +130,17 @@ public class RegistroProducto {
                     l5.setText("Nombre no valido.");
                     l5.setBounds(200,305,400, 40);
                     l5.setVisible(true);
-                } else if (Archivos.buscarProducto(u, t1.getText())) {
+                } else if (Archivos.buscarProducto(u, cb.getSelectedIndex(),t1.getText())) {
                     l5.setText("El producto ya existe.");
                     l5.setBounds(190,305,400, 40);
                     l5.setVisible(true);
                 } else {
-                    u.productos.add(new Producto(u, t1.getText(), Float.parseFloat(t2.getText()), Float.parseFloat(t3.getText()), u.proveedores.get(cb.getSelectedIndex()).nombre));
+                    u.productos.add(new Producto(u, t1.getText(), Float.parseFloat(t2.getText()), Float.parseFloat(t3.getText()), cb.getSelectedIndex()));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
                     Object[] opciones = {"Si", "No"};
                     int opcion = JOptionPane.showOptionDialog(d, "Desea registrar una compra de este producto?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
                     if (opcion == JOptionPane.YES_OPTION){
-                        new MenuCompra(f,u);
+                        new RegistroCompra(f,u);
                     } else {
                         f.setEnabled(true);
                     }

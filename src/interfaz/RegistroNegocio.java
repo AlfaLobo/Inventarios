@@ -25,7 +25,7 @@ public class RegistroNegocio {
     JLabel l = new JLabel("Insertar un saldo valido.");
     public RegistroNegocio(JFrame f, Usuario u){
         f.setEnabled(false);
-        d = new JDialog(f, "Registrar un negocio");
+        d = new JDialog(f, "Registrar Un Negocio");
         d.setSize(400,500);
         l1.setBounds(95,60,200,30);
         c.setBounds(150,60,200,30);
@@ -44,6 +44,7 @@ public class RegistroNegocio {
         for (int i=0;i<u.empresas.size();i++) {
             c.addItem(u.empresas.get(i).nombre);
         }
+        c.setSelectedIndex(u.empresas.size()-1);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
@@ -84,17 +85,17 @@ public class RegistroNegocio {
                     l.setText("La empresa ya existe.");
                     l.setVisible(true);
                 } else {
-                    u.negocios.add(new Negocio(u.negocios.size(), t1.getText(), Float.parseFloat(t2.getText()), c.getSelectedIndex()));
+                    u.empresas.get(c.getSelectedIndex()).negocios.add(new Negocio(u, u.empresas.get(c.getSelectedIndex()).negocios.size(), t1.getText(), Float.parseFloat(t2.getText())));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
-                    d.dispose();
                     f.setEnabled(true);
+                    d.dispose();
                 }
             }
         });
         b2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                d.dispose();
                 f.setEnabled(true);
+                d.dispose();
             }
         });
         d.add(c);

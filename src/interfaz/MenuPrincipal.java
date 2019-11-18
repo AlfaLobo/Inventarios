@@ -22,11 +22,16 @@ public class MenuPrincipal {
     JButton b11 = new JButton("Nueva Venta");
     JButton b12 = new JButton("Historial de Compras");
     JButton b13 = new JButton("Nueva Compra");
+    JButton b14 = new JButton("Nueva Empresa");
+    JButton b15 = new JButton("Nuevo Negocio");
+    JButton b16 = new JButton("Seleccionar Negocio");
     JLabel l = new JLabel("Bienvenido OvO");
+    JLabel l1 = new JLabel();
 
     public MenuPrincipal(Usuario u) {
         f.setSize(1280,720);
         l.setBounds(70,145,1280, 40);
+        l1.setBounds(620,70,1280, 40);
         b.setBounds(50,175,100, 40);
         b1.setBounds(200,175,160, 40);
         b2.setBounds(410,175,160, 40);
@@ -41,6 +46,9 @@ public class MenuPrincipal {
         b11.setBounds(200,315,160, 40);
         b12.setBounds(410,315,160, 40);
         b13.setBounds(620,315,160, 40);
+        b14.setBounds(830,315,160, 40);
+        b15.setBounds(1050,315,160, 40);
+        b16.setBounds(200,385,160, 40);
         f.setLayout(null);
         f.setResizable(false);
         b.addActionListener(new ActionListener(){
@@ -55,6 +63,7 @@ public class MenuPrincipal {
                 j--;
             }
         });
+        l1.setText("Administrando el negocio "+u.empresas.get(u.empresa).negocios.get(u.negocio).nombre+" de la empresa "+u.empresas.get(u.empresa).nombre);
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 new RegistroCliente(f, u);
@@ -107,7 +116,11 @@ public class MenuPrincipal {
         });
         b11.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                    new MenuVenta(f, u);
+                if (u.productos.size()==0){
+                    l.setText("No existen productos que vender.");
+                } else {
+                    new RegistroVenta(f, u);
+                }
             }
         });
         b12.addActionListener(new ActionListener(){
@@ -120,8 +133,23 @@ public class MenuPrincipal {
                 if (u.productos.size()==0){
                     l.setText("No existen productos que comprar.");
                 } else {
-                    new MenuCompra(f, u);
+                    new RegistroCompra(f, u);
                 }
+            }
+        });
+        b14.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new RegistroEmpresa(f, u);
+            }
+        });
+        b15.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new RegistroNegocio(f, u);
+            }
+        });
+        b16.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new Seleccion(f, u, l1);
             }
         });
         f.add(b);
@@ -138,6 +166,10 @@ public class MenuPrincipal {
         f.add(b11);
         f.add(b12);
         f.add(b13);
+        f.add(b14);
+        f.add(b15);
+        f.add(b16);
+        f.add(l1);
         f.add(l);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);

@@ -23,7 +23,7 @@ public class RegistroEmpresa {
     JLabel l = new JLabel("Insertar un saldo valido.");
     public RegistroEmpresa(JFrame f, Usuario u){
         f.setEnabled(false);
-        d = new JDialog(f, "Registrar una empresa");
+        d = new JDialog(f, "Registrar Una Empresa");
         d.setSize(400,500);
         l1.setBounds(95,60, 200,30);
         t1.setBounds(150,60, 200,30);
@@ -77,10 +77,10 @@ public class RegistroEmpresa {
                     l.setText("La empresa ya existe.");
                     l.setVisible(true);
                 } else {
-                    u.empresas.add(new Empresa(u.empresas.size(), t1.getText(), Float.parseFloat(t2.getText())));
+                    u.empresas.add(new Empresa(u, t1.getText(), Float.parseFloat(t2.getText())));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
-                    d.dispose();
                     new RegistroNegocio(f, u);
+                    d.dispose();
                 }
             }
         });

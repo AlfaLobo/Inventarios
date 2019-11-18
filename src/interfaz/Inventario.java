@@ -11,7 +11,7 @@ public class Inventario {
     public Inventario(JFrame f, Usuario u){
         d = new JDialog(f);
         f.setEnabled(false);
-        String col[] = {"ID","Nombre","Proveedor","Cantidad","Costo","Precio","Ganancias"};
+        String col[] = {"ID","Nombre","Proveedor","Cantidad","Costo","Precio","Inversion", "Ganancias"};
         String[][] datos;
         if (u.productos.size()<10){
             datos = new String[10][col.length];
@@ -21,11 +21,12 @@ public class Inventario {
         for (int i = 0;i<u.productos.size();i++){
             datos[i][0]=Integer.toString(u.productos.get(i).id);
             datos[i][1]=u.productos.get(i).nombre;
-            datos[i][2]=u.productos.get(i).proveedor;
+            datos[i][2]=u.proveedores.get(u.productos.get(i).proveedor).nombre;
             datos[i][3]=Integer.toString(u.productos.get(i).cantidad);
             datos[i][4]=Float.toString(u.productos.get(i).costo);
             datos[i][5]=Float.toString(u.productos.get(i).precio);
-            datos[i][6]=Float.toString(u.productos.get(i).ganancia);
+            datos[i][6]=Float.toString(u.productos.get(i).inversion);
+            datos[i][7]=Float.toString(u.productos.get(i).ganancia);
         }
         JTable tb = new JTable(datos,col){
             public boolean isCellEditable(int row, int column) {

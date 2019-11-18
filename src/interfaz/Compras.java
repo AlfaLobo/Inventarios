@@ -20,11 +20,11 @@ public class Compras {
         for (int i = 0;i<u.compras.size();i++){
             String compras = "";
             for(int j=0;j<u.compras.get(i).productos.size();j++){
-                compras=compras+u.compras.get(i).productos.get(j).nombre+" \n";
+                compras=compras+u.productos.get(u.compras.get(i).productos.get(j).id).nombre+" \n";
             }
             datos[i][0]=Integer.toString(u.compras.get(i).id);
             datos[i][1]=compras;
-            datos[i][2]=u.compras.get(i).proveedor;
+            datos[i][2]=u.proveedores.get(u.compras.get(i).proveedor).nombre;
             datos[i][3]=u.compras.get(i).total +"$";
             datos[i][4]=u.compras.get(i).fecha.get(Calendar.DAY_OF_MONTH)+"/"+String.valueOf(u.compras.get(i).fecha.get(Calendar.MONTH)+1)+"/"+u.compras.get(i).fecha.get(Calendar.YEAR);
         }

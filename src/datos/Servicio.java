@@ -3,14 +3,17 @@ package datos;
 import java.io.Serializable;
 
 public class Servicio implements Serializable {
+    public int id;
     public String nombre;
-    public float costo;
     public float precio;
-    public float inversion;
-    public float ganancias;
-    public Servicio(String name, float cost, float price) {
+    public float ganancia=0;
+    public Servicio(){
+
+    }
+    public Servicio(Usuario u, String name, float price) {
+        id=u.servicios.size();
         nombre=name;
-        costo=cost;
         precio=price;
+        u.empresas.get(u.empresa).servicios.add(id);
     }
 }

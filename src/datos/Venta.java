@@ -6,20 +6,42 @@ import java.util.GregorianCalendar;
 
 public class Venta implements Serializable {
     public int id;
-    public String cliente;
+    public int cantidad;
+    public float total;
+    public int cliente;
     public GregorianCalendar fecha;
     public String formapago;
-    public float total;
-    public class Articulo implements Serializable{
-        public String producto;
-        public int cantidad;
-        public Articulo(String product, int quantity){
-            producto=product;
-            cantidad=quantity;
-        }
-    }
-    public ArrayList<Articulo> articulos;
-    public Venta() {
+    public Producto producto;
+    public ArrayList<Venta> productos;
 
+    public Venta(Producto p, int quantity, float total) {
+        producto=p;
+        id=p.id;
+        cantidad=quantity;
+        this.total=total;
+    }
+    public Venta(Usuario u, int client, ArrayList<Venta> sales) {
+        id=u.ventas.size();
+        cliente=client;
+        productos=sales;
+        fecha=new GregorianCalendar();
+        for (int i=0;i<sales.size();i++){
+            if (sales.get(i).producto instanceof Expirable){
+                u.productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad-=sales.get(i).cantidad;
+                System.out.println("Restando "+sales.get(i).cantidad+" a "+u.productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad);
+                u.empresas.get(u.empresa).productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad-=sales.get(i).cantidad;
+                u.empresas.get(u.empresa).negocios.get(u.negocio).productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad-=sales.get(i).cantidad;
+            }
+            u.productos.get(sales.get(i).id).cantidad-=sales.get(i).cantidad;
+            u.productos.get(sales.get(i).id).ganancia+=sales.get(i).total;
+            u.proveedores.get(u.productos.get(sales.get(i).id).proveedor).ganancia+=sales.get(i).total;
+            total+=sales.get(i).total;
+        }
+        u.saldo+=total;
+        System.out.println("ty 8");
+        u.empresas.get(u.empresa).ventas.add(id);
+        System.out.println("ty 9");
+        u.empresas.get(u.empresa).negocios.get(u.negocio).ventas.add(id);
+        System.out.println("ty 10");
     }
 }

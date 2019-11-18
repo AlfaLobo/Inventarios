@@ -4,27 +4,31 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Producto implements Serializable {
+public class Producto extends Servicio implements Serializable {
     public int id;
     public String nombre;
     public int cantidad;
     public float costo;
     public float precio;
-    public float ganancia;
-    public String proveedor;
+    public float inversion=0;
+    public float ganancia=0;
+    public int proveedor;
     public List<Expirable> expirables = new ArrayList<>();
 
-    public Producto(int ID, String name, int quantity, float price) {
-        id=ID;
-        nombre=name;
-        cantidad=quantity;
-        precio=price;
+    public Producto(){
+
     }
-    public Producto(Usuario u, String name, float cost, float price, String provider) {
+    public Producto(Usuario u, String name, float cost, float price, int provider) {
         id=u.productos.size();
         nombre=name;
-        costo=cost;
         precio=price;
+        costo=cost;
         proveedor=provider;
+        u.proveedores.get(provider).productos.add(id);
+        u.empresas.get(u.empresa).productos.add(new Producto(u.productos.size()-1));
+        u.empresas.get(u.empresa).negocios.get(u.negocio).productos.add(new Producto(u.productos.size()-1));
+    }
+    public Producto(int ID) {
+        id=ID;
     }
 }
