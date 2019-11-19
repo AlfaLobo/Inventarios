@@ -28,20 +28,13 @@ public class Venta implements Serializable {
         for (int i=0;i<sales.size();i++){
             if (sales.get(i).producto instanceof Expirable){
                 u.productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad-=sales.get(i).cantidad;
-                System.out.println("Restando "+sales.get(i).cantidad+" a "+u.productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad);
-                u.empresas.get(u.empresa).productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad-=sales.get(i).cantidad;
-                u.empresas.get(u.empresa).negocios.get(u.negocio).productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad-=sales.get(i).cantidad;
             }
             u.productos.get(sales.get(i).id).cantidad-=sales.get(i).cantidad;
             u.productos.get(sales.get(i).id).ganancia+=sales.get(i).total;
             u.proveedores.get(u.productos.get(sales.get(i).id).proveedor).ganancia+=sales.get(i).total;
             total+=sales.get(i).total;
         }
+        u.clientes.get(client).ganancia+=total;
         u.saldo+=total;
-        System.out.println("ty 8");
-        u.empresas.get(u.empresa).ventas.add(id);
-        System.out.println("ty 9");
-        u.empresas.get(u.empresa).negocios.get(u.negocio).ventas.add(id);
-        System.out.println("ty 10");
     }
 }

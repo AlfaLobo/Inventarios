@@ -15,69 +15,69 @@ import java.util.GregorianCalendar;
 
 public class RegistroEmpleado {
     JDialog d;
-    JComboBox cb1 = new JComboBox();
-    JComboBox cb2 = new JComboBox();
-    JComboBox cb3 = new JComboBox();
-    JTextField t1 = new JTextField();
-    JTextField t2 = new JTextField();
-    JTextField t3 = new JTextField("0");
-    JTextField t4 = new JTextField();
-    JTextField t5 = new JTextField();
-    JButton b1 = new JButton("Registrar");
-    JButton b2 = new JButton("Cancelar");
-    JLabel l1 = new JLabel("Nombre:");
-    JLabel l2 = new JLabel("Apellidos:");
-    JLabel l3 = new JLabel("Salario:");
-    JLabel l4 = new JLabel("Telefono:");
-    JLabel l5 = new JLabel("Correo:");
-    JLabel l6 = new JLabel("Fecha de Nacimiento:");
-    JLabel l7 = new JLabel("Salario no valido");
+    JComboBox JComboBoxDay = new JComboBox();
+    JComboBox JComboBoxMonth = new JComboBox();
+    JComboBox JComboBoxYear = new JComboBox();
+    JTextField JTextFieldName = new JTextField();
+    JTextField JTextFieldLastName = new JTextField();
+    JTextField JTextFieldSalary = new JTextField("0");
+    JTextField JTextFieldPhone = new JTextField();
+    JTextField JTextFieldEmail = new JTextField();
+    JButton JButtonRegister = new JButton("Registrar");
+    JButton JButtonCancel = new JButton("Cancelar");
+    JLabel JLabelName = new JLabel("Nombre:");
+    JLabel JLabelLastName = new JLabel("Apellidos:");
+    JLabel JLabelSalary = new JLabel("Salario:");
+    JLabel JLabelPhone = new JLabel("Telefono:");
+    JLabel JLabelEmail = new JLabel("Correo:");
+    JLabel JLabelBirthday = new JLabel("Fecha de Nacimiento:");
+    JLabel JLabelError = new JLabel("Salario no valido");
     public RegistroEmpleado(JFrame f, Usuario u) {
         d = new JDialog(f);
         f.setEnabled(false);
         d.setSize(400,500);
-        l1.setBounds(95,120, 200,30);
-        t1.setBounds(150,120, 200,30);
-        l2.setBounds(103,150, 200,30);
-        t2.setBounds(150,150, 200,30);
-        l3.setBounds(89,180, 200,30);
-        t3.setBounds(150,180, 200,30);
-        l4.setBounds(55,210, 200,30);
-        t4.setBounds(150,210, 200,30);
-        l5.setBounds(67,240, 200,30);
-        t5.setBounds(150,240, 200,30);
-        l6.setBounds(67,270, 200,30);
-        cb1.setBounds(150,270, 100,30);
-        cb2.setBounds(250,270, 50,30);
-        cb3.setBounds(300,270, 50,30);
-        b1.setBounds(150,300, 200,30);
-        b2.setBounds(150,325, 200,30);
-        l7.setBounds(190,255, 200,30);
+        JLabelName.setBounds(95,120, 200,30);
+        JTextFieldName.setBounds(150,120, 200,30);
+        JLabelLastName.setBounds(103,150, 200,30);
+        JTextFieldLastName.setBounds(150,150, 200,30);
+        JLabelSalary.setBounds(89,180, 200,30);
+        JTextFieldSalary.setBounds(150,180, 200,30);
+        JLabelPhone.setBounds(55,210, 200,30);
+        JTextFieldPhone.setBounds(150,210, 200,30);
+        JLabelEmail.setBounds(67,240, 200,30);
+        JTextFieldEmail.setBounds(150,240, 200,30);
+        JLabelBirthday.setBounds(67,270, 200,30);
+        JComboBoxDay.setBounds(150,270, 100,30);
+        JComboBoxMonth.setBounds(250,270, 50,30);
+        JComboBoxYear.setBounds(300,270, 50,30);
+        JButtonRegister.setBounds(150,300, 200,30);
+        JButtonCancel.setBounds(150,325, 200,30);
+        JLabelError.setBounds(190,255, 200,30);
         d.setLayout(null);
         d.setResizable(false);
-        b2.setContentAreaFilled(false);
-        b2.setBorderPainted(false);
-        l7.setVisible(false);
+        JButtonCancel.setContentAreaFilled(false);
+        JButtonCancel.setBorderPainted(false);
+        JLabelError.setVisible(false);
         for (int i=1;i<32;i++) {
-            cb1.addItem(i);
+            JComboBoxDay.addItem(i);
         }
         for (int i=1;i<13;i++) {
-            cb2.addItem(i);
+            JComboBoxMonth.addItem(i);
         }
         for (int i=2019;i>1899;i--) {
-            cb3.addItem(i);
+            JComboBoxYear.addItem(i);
         }
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
             }
         });
-        t3.addMouseListener(new MouseAdapter(){
+        JTextFieldSalary.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                t3.selectAll();
+                JTextFieldSalary.selectAll();
             }
         });
-        t3.getDocument().addDocumentListener(new DocumentListener() {
+        JTextFieldSalary.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 cambio();
             }
@@ -89,46 +89,46 @@ public class RegistroEmpleado {
             }
             public void cambio() {
                 try {
-                    float salario = Float.parseFloat(t3.getText());
-                    l7.setVisible(false);
-                    b1.setEnabled(true);
+                    float salario = Float.parseFloat(JTextFieldSalary.getText());
+                    JLabelError.setVisible(false);
+                    JButtonRegister.setEnabled(true);
                 } catch (NumberFormatException i) {
-                    l7.setVisible(true);
-                    b1.setEnabled(false);
+                    JLabelError.setVisible(true);
+                    JButtonRegister.setEnabled(false);
                 }
             }
         });
-        b1.addActionListener(new ActionListener(){
+        JButtonRegister.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                u.empleados.add(new Empleado(u, t1.getText(), t2.getText(), Float.parseFloat(t3.getText()), t4.getText(), t5.getText(), new GregorianCalendar((int) cb3.getItemAt(cb3.getSelectedIndex()), (int) cb2.getItemAt(cb2.getSelectedIndex()), (int) cb1.getItemAt(cb1.getSelectedIndex()))));
+                u.empleados.add(new Empleado(u, JTextFieldName.getText(), JTextFieldLastName.getText(), Float.parseFloat(JTextFieldPhone.getText()), JTextFieldPhone.getText(), JTextFieldEmail.getText(), new GregorianCalendar((int) JComboBoxYear.getItemAt(JComboBoxYear.getSelectedIndex()), (int) JComboBoxMonth.getItemAt(JComboBoxMonth.getSelectedIndex()), (int) JComboBoxDay.getItemAt(JComboBoxDay.getSelectedIndex()))));
                 Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
                 d.dispose();
                 f.setEnabled(true);
             }
         });
-        b2.addActionListener(new ActionListener(){
+        JButtonCancel.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 d.dispose();
                 f.setEnabled(true);
             }
         });
-        d.add(cb1);
-        d.add(cb2);
-        d.add(cb3);
-        d.add(t1);
-        d.add(t2);
-        d.add(t3);
-        d.add(t4);
-        d.add(t5);
-        d.add(b1);
-        d.add(b2);
-        d.add(l1);
-        d.add(l2);
-        d.add(l3);
-        d.add(l4);
-        d.add(l5);
-        d.add(l6);
-        d.add(l7);
+        d.add(JComboBoxDay);
+        d.add(JComboBoxMonth);
+        d.add(JComboBoxYear);
+        d.add(JTextFieldName);
+        d.add(JTextFieldLastName);
+        d.add(JTextFieldSalary);
+        d.add(JTextFieldPhone);
+        d.add(JTextFieldEmail);
+        d.add(JButtonRegister);
+        d.add(JButtonCancel);
+        d.add(JLabelName);
+        d.add(JLabelLastName);
+        d.add(JLabelSalary);
+        d.add(JLabelPhone);
+        d.add(JLabelEmail);
+        d.add(JLabelBirthday);
+        d.add(JLabelError);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);
     }

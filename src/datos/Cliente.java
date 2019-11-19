@@ -22,7 +22,6 @@ public class Cliente implements Serializable  {
         apellidos=lastname;
         telefono=phone;
         correo=email;
-        //nacimiento=date;
-        u.empresas.get(u.empresa).clientes.add(id);
+        nacimiento=date;
     }
 }

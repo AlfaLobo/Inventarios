@@ -14,6 +14,5 @@ public class Servicio implements Serializable {
         id=u.servicios.size();
         nombre=name;
         precio=price;
-        u.empresas.get(u.empresa).servicios.add(id);
     }
 }

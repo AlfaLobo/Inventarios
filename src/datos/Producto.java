@@ -25,8 +25,6 @@ public class Producto extends Servicio implements Serializable {
         costo=cost;
         proveedor=provider;
         u.proveedores.get(provider).productos.add(id);
-        u.empresas.get(u.empresa).productos.add(new Producto(u.productos.size()-1));
-        u.empresas.get(u.empresa).negocios.get(u.negocio).productos.add(new Producto(u.productos.size()-1));
     }
     public Producto(int ID) {
         id=ID;

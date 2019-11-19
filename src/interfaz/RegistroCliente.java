@@ -11,86 +11,86 @@ import java.util.GregorianCalendar;
 
 public class RegistroCliente {
     JDialog d;
-    JComboBox cb1 = new JComboBox();
-    JComboBox cb2 = new JComboBox();
-    JComboBox cb3 = new JComboBox();
-    JTextField t1 = new JTextField();
-    JTextField t2 = new JTextField();
-    JTextField t3 = new JTextField();
-    JTextField t4 = new JTextField();
-    JButton b1 = new JButton("Registrar");
-    JButton b2 = new JButton("Cancelar");
-    JLabel l1 = new JLabel("Nombre:");
-    JLabel l2 = new JLabel("Apellidos:");
-    JLabel l3 = new JLabel("Telefono:");
-    JLabel l4 = new JLabel("Correo:");
-    JLabel l5 = new JLabel("Fecha de Nacimiento:");
-    JLabel error = new JLabel();
+    JComboBox JComboBoxDay = new JComboBox();
+    JComboBox JComboBoxMonth = new JComboBox();
+    JComboBox JComboBoxYear = new JComboBox();
+    JTextField JTextFieldName = new JTextField();
+    JTextField JTextFieldLastName = new JTextField();
+    JTextField JTextFieldPhone = new JTextField();
+    JTextField JTextFieldEmail = new JTextField();
+    JButton JButtonRegister = new JButton("Registrar");
+    JButton JButtonCancel = new JButton("Cancelar");
+    JLabel JLabelName = new JLabel("Nombre:");
+    JLabel JLabelLastName = new JLabel("Apellidos:");
+    JLabel JLabelPhone = new JLabel("Telefono:");
+    JLabel JLabelEmail = new JLabel("Correo:");
+    JLabel JLabelBirthday = new JLabel("Fecha de Nacimiento:");
+    JLabel JLabelError = new JLabel();
     public RegistroCliente(JFrame f, Usuario u){
         d = new JDialog(f);
         f.setEnabled(false);
         d.setSize(400,500);
-        t1.setBounds(150,120, 200,30);
-        t2.setBounds(150,150, 200,30);
-        t3.setBounds(150,180, 200,30);
-        t4.setBounds(150,210, 200,30);
-        cb1.setBounds(150,240, 100,30);
-        cb2.setBounds(250,240, 50,30);
-        cb3.setBounds(300,240, 50,30);
-        b1.setBounds(150,270, 200,30);
-        b2.setBounds(150,295, 200,30);
-        l1.setBounds(95,120, 200,30);
-        l2.setBounds(103,150, 200,30);
-        l3.setBounds(89,180, 200,30);
-        l4.setBounds(55,210, 200,30);
-        l5.setBounds(55,240, 200,30);
+        JTextFieldName.setBounds(150,120, 200,30);
+        JTextFieldLastName.setBounds(150,150, 200,30);
+        JTextFieldPhone.setBounds(150,180, 200,30);
+        JTextFieldEmail.setBounds(150,210, 200,30);
+        JComboBoxDay.setBounds(150,240, 100,30);
+        JComboBoxMonth.setBounds(250,240, 50,30);
+        JComboBoxYear.setBounds(300,240, 50,30);
+        JButtonRegister.setBounds(150,270, 200,30);
+        JButtonCancel.setBounds(150,295, 200,30);
+        JLabelName.setBounds(95,120, 200,30);
+        JLabelLastName.setBounds(103,150, 200,30);
+        JLabelPhone.setBounds(89,180, 200,30);
+        JLabelEmail.setBounds(55,210, 200,30);
+        JLabelBirthday.setBounds(55,240, 200,30);
         d.setLayout(null);
         d.setResizable(false);
-        b2.setContentAreaFilled(false);
-        b2.setBorderPainted(false);
+        JButtonCancel.setContentAreaFilled(false);
+        JButtonCancel.setBorderPainted(false);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
             }
         });
         for (int i=1;i<32;i++) {
-            cb1.addItem(i);
+            JComboBoxDay.addItem(i);
         }
         for (int i=1;i<13;i++) {
-            cb2.addItem(i);
+            JComboBoxMonth.addItem(i);
         }
         for (int i=2019;i>1899;i--) {
-            cb3.addItem(i);
+            JComboBoxYear.addItem(i);
         }
-        b1.addActionListener(new ActionListener(){
+        JButtonRegister.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                u.clientes.add(new Cliente(u, t1.getText(), t2.getText(), t3.getText(), t4.getText(), new GregorianCalendar((int) cb3.getItemAt(cb3.getSelectedIndex()), (int) cb2.getItemAt(cb2.getSelectedIndex()), (int) cb1.getItemAt(cb1.getSelectedIndex()))));
+                u.clientes.add(new Cliente(u, JTextFieldName.getText(), JTextFieldLastName.getText(), JTextFieldPhone.getText(), JTextFieldEmail.getText(), new GregorianCalendar((int) JComboBoxYear.getItemAt(JComboBoxYear.getSelectedIndex()), (int) JComboBoxMonth.getItemAt(JComboBoxMonth.getSelectedIndex()), (int) JComboBoxDay.getItemAt(JComboBoxDay.getSelectedIndex()))));
                 Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
                 f.setEnabled(true);
                 d.dispose();
             }
         });
-        b2.addActionListener(new ActionListener(){
+        JButtonCancel.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 f.dispose();
                 f.setEnabled(true);
             }
         });
-        d.add(cb1);
-        d.add(cb2);
-        d.add(cb3);
-        d.add(t1);
-        d.add(t2);
-        d.add(t3);
-        d.add(t4);
-        d.add(b1);
-        d.add(b2);
-        d.add(l1);
-        d.add(l2);
-        d.add(l3);
-        d.add(l4);
-        d.add(l5);
-        d.add(error);
+        d.add(JComboBoxDay);
+        d.add(JComboBoxMonth);
+        d.add(JComboBoxYear);
+        d.add(JTextFieldName);
+        d.add(JTextFieldLastName);
+        d.add(JTextFieldPhone);
+        d.add(JTextFieldEmail);
+        d.add(JButtonRegister);
+        d.add(JButtonCancel);
+        d.add(JLabelName);
+        d.add(JLabelLastName);
+        d.add(JLabelPhone);
+        d.add(JLabelEmail);
+        d.add(JLabelBirthday);
+        d.add(JLabelError);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);
     }

@@ -27,16 +27,12 @@ public class Compra implements Serializable {
         for (int i=0;i<purchases.size();i++){
             if (purchases.get(i).producto instanceof Expirable){
                 u.productos.get(purchases.get(i).id).expirables.add(new Expirable(purchases.get(i).producto, purchases.get(i).cantidad, ((Expirable) purchases.get(i).producto).expiracion));
-                u.empresas.get(u.empresa).productos.get(purchases.get(i).id).expirables.add(new Expirable(purchases.get(i).producto, purchases.get(i).cantidad, ((Expirable) purchases.get(i).producto).expiracion));
-                u.empresas.get(u.empresa).negocios.get(u.negocio).productos.get(purchases.get(i).id).expirables.add(new Expirable(purchases.get(i).producto, purchases.get(i).cantidad, ((Expirable) purchases.get(i).producto).expiracion));
             }
             u.productos.get(purchases.get(i).id).cantidad+=purchases.get(i).cantidad;
             u.productos.get(purchases.get(i).id).inversion+=purchases.get(i).total;
             total+=purchases.get(i).total;
         }
-        u.saldo-=total;
         u.proveedores.get(provider).inversion+=total;
-        u.empresas.get(u.empresa).compras.add(id);
-        u.empresas.get(u.empresa).negocios.get(u.negocio).compras.add(id);
+        u.saldo-=total;
     }
 }

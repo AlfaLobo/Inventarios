@@ -63,7 +63,7 @@ public class MenuPrincipal {
                 j--;
             }
         });
-        l1.setText("Administrando el negocio "+u.empresas.get(u.empresa).negocios.get(u.negocio).nombre+" de la empresa "+u.empresas.get(u.empresa).nombre);
+        l1.setText("ty");
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 new RegistroCliente(f, u);
@@ -139,17 +139,17 @@ public class MenuPrincipal {
         });
         b14.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroEmpresa(f, u);
+                
             }
         });
         b15.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new RegistroNegocio(f, u);
+                
             }
         });
         b16.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new Seleccion(f, u, l1);
+                
             }
         });
         f.add(b);
