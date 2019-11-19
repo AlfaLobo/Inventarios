@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Usuario extends Empleado implements Serializable {
-    public boolean permisos;
     public String usuario;
     public String contraseña;
-    public int director;
     public float saldo;
     public ArrayList<Proveedor> proveedores;
     public ArrayList<Empleado> empleados;
@@ -23,7 +21,6 @@ public class Usuario extends Empleado implements Serializable {
 
     public Usuario(String user, String password, String name, String lastname, float balance){
         Archivos.crearDirectorio("\\Usuarios\\"+user);
-        permisos=true;
         usuario=user;
         contraseña=password;
         nombre=name;

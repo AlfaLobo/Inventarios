@@ -21,6 +21,7 @@ public class Inicio implements Runnable {
     JLabel JLabelError = new JLabel("La combinación de usuario y contraseña no fue encontrada.");
 
     public Inicio(){
+        JButtonLogin.setOpaque(false);
         if (Archivos.buscarArchivo("\\sesion.txt")) {
             Sesion s;
             String directorio = System.getProperty("user.dir");
@@ -52,10 +53,11 @@ public class Inicio implements Runnable {
         JCheckBoxRemember.setBounds(10,120,80, 40);
         JButtonNewAccount.setBounds(90,160,200, 20);
         JLabelError.setBounds(30,165,400, 40);
-        f.getContentPane().setBackground(new java.awt.Color(255,196,112,100));
-        JTextFieldUser.setBackground(new java.awt.Color(232,160,102,91));
-        JPasswordFieldPassword.setBackground(new java.awt.Color(232,160,102,91));
-        JButtonLogin.setBackground(new java.awt.Color(153,146,136,60));
+        f.getContentPane().setBackground(new java.awt.Color(216,191,166));
+        JTextFieldUser.setBackground(new java.awt.Color(165,131,96));
+        JPasswordFieldPassword.setBackground(new java.awt.Color(165,131,96));
+        JButtonLogin.setBackground(new java.awt.Color(117,86,55));
+        JButtonLogin.setOpaque(true);
         f.setLayout(null);
         f.setResizable(false);
         JLabelError.setVisible(false);

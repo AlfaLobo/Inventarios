@@ -48,7 +48,7 @@ public class CrearCuenta {
         JTextFieldBalance.setBounds(150,210, 200,30);
         JButtonRegister.setBounds(150,240,200, 40);
         JButtonCancel.setBounds(150,280,200, 20);
-        d.getContentPane().setBackground(new java.awt.Color(204,153,80,80));
+        d.getContentPane().setBackground(new java.awt.Color(204,153,80));
         d.setLayout(null);
         d.setResizable(false);
         JButtonCancel.setContentAreaFilled(false);

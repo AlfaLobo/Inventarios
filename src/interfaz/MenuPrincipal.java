@@ -2,9 +2,12 @@ package interfaz;
 
 import datos.Usuario;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class MenuPrincipal {
     JFrame f = new JFrame("temp");
@@ -22,9 +25,9 @@ public class MenuPrincipal {
     JButton b11 = new JButton("Nueva Venta");
     JButton b12 = new JButton("Historial de Compras");
     JButton b13 = new JButton("Nueva Compra");
-    JButton b14 = new JButton("Nueva Empresa");
-    JButton b15 = new JButton("Nuevo Negocio");
-    JButton b16 = new JButton("Seleccionar Negocio");
+    JButton b14 = new JButton("Mostrar datos de usuario");
+    JButton b15 = new JButton("");
+    JButton b16 = new JButton();
     JLabel l = new JLabel("Bienvenido OvO");
     JLabel l1 = new JLabel();
 
@@ -51,6 +54,15 @@ public class MenuPrincipal {
         b16.setBounds(200,385,160, 40);
         f.setLayout(null);
         f.setResizable(false);
+
+        try {
+            String directorio = System.getProperty("user.dir");
+            Image img = ImageIO.read(new File(directorio+"\\resources\\arrow-34.png"));
+            b16.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
         b.addActionListener(new ActionListener(){
             String UvU = "UvU";
             int i = 70;
@@ -139,7 +151,7 @@ public class MenuPrincipal {
         });
         b14.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
+                new DatosUsuario(f, u);
             }
         });
         b15.addActionListener(new ActionListener(){
@@ -149,7 +161,7 @@ public class MenuPrincipal {
         });
         b16.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
+                f.dispose();
             }
         });
         f.add(b);
