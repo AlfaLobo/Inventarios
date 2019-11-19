@@ -76,18 +76,17 @@ public class RegistroCompra {
         for (int i=2019;i<2100;i++) {
             cb5.addItem(i);
         }
+        d.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                f.setEnabled(true);
+            }
+        });
         cb1.addActionListener (new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cb2.removeAllItems();
                 for (int i=0;i<u.proveedores.get(cb1.getSelectedIndex()).productos.size();i++) {
                     cb2.addItem(u.productos.get(u.proveedores.get(cb1.getSelectedIndex()).productos.get(i)).nombre);
                 }
-            }
-        });
-        cb2.setSelectedIndex(u.proveedores.get(cb1.getSelectedIndex()).productos.size()-1);
-        d.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                f.setEnabled(true);
             }
         });
         sp.setVerticalScrollBarPolicy(
@@ -117,7 +116,7 @@ public class RegistroCompra {
         });
         t1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                t2.selectAll();
+                t1.selectAll();
             }
         });
         t2.getDocument().addDocumentListener(new DocumentListener() {
@@ -140,11 +139,6 @@ public class RegistroCompra {
                     l4.setVisible(true);
                     b1.setEnabled(false);
                 }
-            }
-        });
-        t2.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                t2.selectAll();
             }
         });
         t2.addMouseListener(new MouseAdapter(){
@@ -201,5 +195,15 @@ public class RegistroCompra {
         d.add(l5);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);
+    }
+    public RegistroCompra(JFrame f, Usuario u, int proveedor) {
+        this(f, u);
+        cb1.setSelectedIndex(proveedor);
+        cb2.setSelectedIndex(u.proveedores.get(proveedor).productos.size()-1);
+        cb1.setEnabled(false);
+    }
+    public RegistroCompra(JFrame f, Usuario u, int proveedor, int product) {
+        this(f, u, proveedor);
+        cb2.setSelectedIndex(product);
     }
 }

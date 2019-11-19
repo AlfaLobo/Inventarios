@@ -37,7 +37,7 @@ public class Inventario {
         tb.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
                 try {
-                    new InfoProducto(f, d, u.productos.get(tb.getSelectedRow()));
+                    new InfoProducto(f, d, u, u.productos.get(tb.getSelectedRow()));
                 } catch (IndexOutOfBoundsException e) {
 
                 }

@@ -140,7 +140,7 @@ public class RegistroProducto {
                     Object[] opciones = {"Si", "No"};
                     int opcion = JOptionPane.showOptionDialog(d, "Desea registrar una compra de este producto?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
                     if (opcion == JOptionPane.YES_OPTION){
-                        new RegistroCompra(f,u);
+                        new RegistroCompra(f,u,cb.getSelectedIndex());
                     } else {
                         f.setEnabled(true);
                     }
