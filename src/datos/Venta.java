@@ -9,6 +9,7 @@ public class Venta implements Serializable {
     public int cantidad;
     public float total;
     public int cliente;
+    public String notas;
     public GregorianCalendar fecha;
     public String formapago;
     public Producto producto;

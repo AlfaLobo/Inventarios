@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 public class Ventas {
     JDialog d;
-    public Ventas(Usuario u, JFrame f){
+    public Ventas(JFrame f, Usuario u){
         d = new JDialog(f);
         f.setEnabled(false);
         String col[] = {"ID","Cliente","Forma de Pago","Total","Fecha"};

@@ -9,6 +9,7 @@ public class Compra implements Serializable {
     public int cantidad;
     public float total;
     public int proveedor;
+    public String notas;
     public GregorianCalendar fecha;
     public Producto producto;
     public ArrayList<Compra> productos;

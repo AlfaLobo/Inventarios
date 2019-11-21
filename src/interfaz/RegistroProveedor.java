@@ -1,6 +1,7 @@
 package interfaz;
 
 import algoritmos.Archivos;
+import algoritmos.Busqueda;
 import datos.Proveedor;
 import datos.Usuario;
 
@@ -51,7 +52,7 @@ public class RegistroProveedor {
                     JLabelError.setText("Nombre no valido.");
                     JLabelError.setBounds(200,275,400, 40);
                     JLabelError.setVisible(true);
-                } else if (Archivos.buscarProveedor(u, JTextFieldName.getText())) {
+                } else if (Busqueda.buscarProveedor(u, JTextFieldName.getText())) {
                     JLabelError.setText("El prveedor ya existe.");
                     JLabelError.setBounds(190,275,400, 40);
                     JLabelError.setVisible(true);

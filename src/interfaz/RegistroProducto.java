@@ -1,6 +1,7 @@
 package interfaz;
 
 import algoritmos.Archivos;
+import algoritmos.Busqueda;
 import datos.Producto;
 import datos.Usuario;
 
@@ -129,7 +130,7 @@ public class RegistroProducto {
                     JLabelError.setText("Nombre no valido.");
                     JLabelError.setBounds(200,305,400, 40);
                     JLabelError.setVisible(true);
-                } else if (Archivos.buscarProducto(u, JComboBoxProviders.getSelectedIndex(), JTextFieldName.getText())) {
+                } else if (Busqueda.buscarProducto(u, JComboBoxProviders.getSelectedIndex(), JTextFieldName.getText())) {
                     JLabelError.setText("El producto ya existe.");
                     JLabelError.setBounds(190,305,400, 40);
                     JLabelError.setVisible(true);

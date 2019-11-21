@@ -3,6 +3,9 @@ package algoritmos;
 import datos.Empleado;
 import datos.Usuario;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 
 public class Archivos {
@@ -12,7 +15,6 @@ public class Archivos {
         File fl = new File(directorio+dir);
         fl.mkdir();
     }
-
     public static boolean buscarArchivo(String dir) {
         String directorio = System.getProperty("user.dir");
         File f = new File(directorio+dir);
@@ -22,7 +24,6 @@ public class Archivos {
             return false;
         }
     }
-
     public static boolean buscarDirectorio(String ID) {
         String directorio = System.getProperty("user.dir");
         File f = new File(directorio+ "\\"+ID);
@@ -32,24 +33,6 @@ public class Archivos {
             return false;
         }
     }
-
-    public static boolean buscarProducto(Usuario u, int provider, String name){
-        for(int i = 0; i < u.proveedores.get(provider).productos.size(); i++) {
-            if (u.productos.get(u.proveedores.get(provider).productos.get(i)).nombre.equals(name)){
-                return true;
-            }
-        }
-        return false;
-    }
-    public static boolean buscarProveedor(Usuario u, String name){
-        for(int i = 0; i < u.proveedores.size(); i++) {
-            if (u.proveedores.get(i).nombre.equals(name)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void guardarArchivo(Usuario u, String dir) {
         String directorio = System.getProperty("user.dir");
         try {
@@ -62,7 +45,6 @@ public class Archivos {
             e.printStackTrace();
         }
     }
-
     public static Empleado cargarUsuario(String dir) {
         Usuario u = null;
         String directorio = System.getProperty("user.dir");
