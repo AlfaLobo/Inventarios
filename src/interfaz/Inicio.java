@@ -46,16 +46,17 @@ public class Inicio implements Runnable {
             new CrearCuenta(f);
         }
         f.setSize(375,275);
+        f.setLocationRelativeTo(null);
         f.getContentPane().setBackground(new java.awt.Color(171,213,217));
         f.setResizable(false);
         JPanelLogin.setLayout(new BoxLayout(JPanelLogin, BoxLayout.Y_AXIS));
         JPanelLogin.setBorder(BorderFactory.createEmptyBorder(30, 90, 50, 90));
         JPanelLogin.setOpaque(false);
         JCheckBoxRemember.setContentAreaFilled(false);
-        Dimension d1 = new Dimension(180, 30);
+        Dimension d1 = new Dimension(190, 30);
         JButtonLogin.setPreferredSize(d1);
         JButtonLogin.setMaximumSize(d1);
-        Dimension d2 = new Dimension(180, 20);
+        Dimension d2 = new Dimension(190, 20);
         JButtonNewAccount.setPreferredSize(d2);
         JButtonNewAccount.setMaximumSize(d2);
         JButtonNewAccount.setContentAreaFilled(false);

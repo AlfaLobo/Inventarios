@@ -15,17 +15,18 @@ import java.awt.event.MouseEvent;
 
 public class RegistroProducto {
     JDialog d;
+    JLabel JLabelProvider = new JLabel("Proveedor:");
     JComboBox JComboBoxProviders = new JComboBox();
+    JLabel JLabelName = new JLabel("Nombre:");
     JTextField JTextFieldName = new JTextField();
+    JLabel JLabelCost = new JLabel("Costo:");
     JTextField JTextFieldCost = new JTextField("0");
+    JLabel JLabelPrice = new JLabel("Precio:");
     JTextField JTextFieldPrice = new JTextField("0");
     JButton JButtonRegister = new JButton("Registrar");
     JButton JButtonCancel = new JButton("Cancelar");
-    JLabel JLabelName = new JLabel("Nombre:");
-    JLabel JLabelCost = new JLabel("Costo:");
-    JLabel JLabelPrice = new JLabel("Precio:");
-    JLabel JLabelProvider = new JLabel("Proveedor:");
     JLabel JLabelError = new JLabel();
+
     public RegistroProducto(JFrame f, Usuario u) {
         f.setEnabled(false);
         d = new JDialog(f);

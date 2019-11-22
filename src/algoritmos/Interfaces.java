@@ -12,6 +12,11 @@ public class Interfaces {
         c.gridy=y;
         p.add(p1, c);
     }
+    public static void addScrollPane(JPanel p, JScrollPane sp, GridBagConstraints c, int x, int y){
+        c.gridx=x;
+        c.gridy=y;
+        p.add(sp, c);
+    }
     public static void addTextField(JPanel p, JTextField t, GridBagConstraints c, int x, int y){
         p.setBackground(new java.awt.Color(232,234,232));
         Dimension n = new Dimension(200, 30);

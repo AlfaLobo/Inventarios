@@ -1,13 +1,10 @@
 package interfaz;
 
 import algoritmos.Archivos;
-import algoritmos.Interfaces;
 import datos.Sesion;
 import datos.Usuario;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
@@ -17,7 +14,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class CrearCuenta {
-    GridBagConstraints c = new GridBagConstraints();
     JDialog d;
     JPanel JPanelLogin = new JPanel();
     JLabel JLabelUser = new JLabel("Usuario:");
@@ -39,20 +35,17 @@ public class CrearCuenta {
         f.setEnabled(false);
         d = new JDialog(f);
         d.setSize(375,400);
-        d.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+        d.setLocationRelativeTo(f);
+        d.getRootPane().setBorder(BorderFactory.createEmptyBorder(30, 90, 20, 90));
         d.getRootPane().setBackground(new java.awt.Color(171,213,217));
         d.getContentPane().setBackground(new java.awt.Color(171,213,217));
         d.setResizable(false);
         JPanelLogin.setLayout(new BoxLayout(JPanelLogin, BoxLayout.Y_AXIS));
         JPanelLogin.setOpaque(false);
-        Border border = BorderFactory.createLoweredBevelBorder();
-        TitledBorder title = BorderFactory.createTitledBorder(border, "Menú Proveedores");
-        title.setTitlePosition(TitledBorder.ABOVE_TOP);
-        JPanelLogin.setBorder(title);
-        Dimension d1 = new Dimension(180, 30);
+        Dimension d1 = new Dimension(190, 30);
         JButtonRegister.setPreferredSize(d1);
         JButtonRegister.setMaximumSize(d1);
-        Dimension d2 = new Dimension(180, 20);
+        Dimension d2 = new Dimension(190, 30);
         JButtonCancel.setPreferredSize(d2);
         JButtonCancel.setMaximumSize(d2);
         JButtonCancel.setContentAreaFilled(false);

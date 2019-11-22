@@ -38,9 +38,11 @@ public class MenuPrincipal {
     JButton JButtonProviders = new JButton();
     JLabel JLabelClients = new JLabel("Clientes");
     JLabel JLabelProviders = new JLabel("Proveedores");
+    JButton JButtonExit = new JButton();
 
     public MenuPrincipal(Usuario u) {
         f.setSize(850,600);
+        f.setLocationRelativeTo(null);
         f.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         f.getRootPane().setBackground(new java.awt.Color(171,213,217));
         f.getContentPane().setBackground(new java.awt.Color(171,213,217));
@@ -74,11 +76,7 @@ public class MenuPrincipal {
         });
         JButtonInventory.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if (u.productos.size()!=0){
-                    new Inventario(f, u);
-                } else {
-                    JOptionPane.showMessageDialog(f, "No hay productos registrados.");
-                }
+                new Inventario(f, u);
             }
         });
         JButtonClients.addActionListener(new ActionListener(){
@@ -101,34 +99,19 @@ public class MenuPrincipal {
                     if (u.productos.size()!=0){
                         new RegistroVenta(f, u);
                     } else {
-                        JOptionPane.showMessageDialog(f, "No existen productos que vender!!!");
+                        JOptionPane.showMessageDialog(f, "No existen productos que vender.");
                     }
                 }
             }
         });
         JButtonTransactionHistory.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                Object[] opciones = {"Compras", "Ventas", "General"};
-                int opcion = JOptionPane.showOptionDialog(f, "Que tipo de transacción quiere revisar?", "Elegir una opción", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[2]);
-                if (opcion == JOptionPane.YES_OPTION){
-                    if (u.ventas.size()!=0) {
-                        new Compras(f, u);
-                    } else {
-                        JOptionPane.showMessageDialog(f, "No existen compras registradas.");
-                    }
-                } else if (opcion == JOptionPane.NO_OPTION){
-                    if (u.ventas.size()!=0) {
-                        new Ventas(f, u);
-                    } else {
-                        JOptionPane.showMessageDialog(f, "No existen ventas registradas.");
-                    }
-                } else if (opcion == JOptionPane.CANCEL_OPTION) {
-                    if (u.compras.size()!=0&&u.ventas.size()!=0) {
-                        JOptionPane.showMessageDialog(f, "No está implementado UnU");
-                    } else {
-                        JOptionPane.showMessageDialog(f, "No existen transacciónes registradas.");
-                    }
-                }
+                JOptionPane.showMessageDialog(f, "No está implementado UnU");
+            }
+        });
+        JButtonExit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                f.dispose();
             }
         });
         c.weighty = 1;
@@ -156,6 +139,8 @@ public class MenuPrincipal {
         Interfaces.addPanel(JPanelMenu, JPanelContacts, c, 1, 1);
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         Interfaces.addImage(JPanelMenu, JLabelLogo, c, 0, 0, "image(1).png");
+        c.anchor = GridBagConstraints.LAST_LINE_START;
+        Interfaces.addImageButton(JPanelMenu, JButtonExit, c, 0, 1, "arrow-34.png");
         f.add(JPanelMenu);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);

@@ -22,6 +22,7 @@ public class RegistroProveedor {
     JLabel JLabelEmail = new JLabel("Correo:");
     JLabel JLabelAddress = new JLabel("Dirección:");
     JLabel JLabelError = new JLabel();
+
     public RegistroProveedor(JFrame f, Usuario u) {
         d = new JDialog(f);
         f.setEnabled(false);

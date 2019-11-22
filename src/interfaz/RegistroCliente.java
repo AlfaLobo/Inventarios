@@ -11,20 +11,20 @@ import java.util.GregorianCalendar;
 
 public class RegistroCliente {
     JDialog d;
+    JLabel JLabelName = new JLabel("Nombre:");
+    JTextField JTextFieldName = new JTextField();
+    JLabel JLabelLastName = new JLabel("Apellidos:");
+    JTextField JTextFieldLastName = new JTextField();
+    JLabel JLabelPhone = new JLabel("Telefono:");
+    JTextField JTextFieldPhone = new JTextField();
+    JLabel JLabelEmail = new JLabel("Correo:");
+    JTextField JTextFieldEmail = new JTextField();
+    JLabel JLabelBirthday = new JLabel("Fecha de Nacimiento:");
     JComboBox JComboBoxDay = new JComboBox();
     JComboBox JComboBoxMonth = new JComboBox();
     JComboBox JComboBoxYear = new JComboBox();
-    JTextField JTextFieldName = new JTextField();
-    JTextField JTextFieldLastName = new JTextField();
-    JTextField JTextFieldPhone = new JTextField();
-    JTextField JTextFieldEmail = new JTextField();
     JButton JButtonRegister = new JButton("Registrar");
     JButton JButtonCancel = new JButton("Cancelar");
-    JLabel JLabelName = new JLabel("Nombre:");
-    JLabel JLabelLastName = new JLabel("Apellidos:");
-    JLabel JLabelPhone = new JLabel("Telefono:");
-    JLabel JLabelEmail = new JLabel("Correo:");
-    JLabel JLabelBirthday = new JLabel("Fecha de Nacimiento:");
     JLabel JLabelError = new JLabel();
     public RegistroCliente(JFrame f, Usuario u){
         d = new JDialog(f);
