@@ -4,6 +4,8 @@ import algoritmos.Interfaces;
 import datos.Usuario;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,15 +18,19 @@ import java.net.URISyntaxException;
 public class MenuPrincipal {
     GridBagConstraints c = new GridBagConstraints();
     JFrame f = new JFrame("Inventarios Conejo");
+    JPanel JPanelMenu = new JPanel();
     JLabel JLabelLogo = new JLabel();
     JPanel JPanelInventory = new JPanel();
     JLabel JLabelInventoryTitle = new JLabel("Inventario");
+    JButton JButtonAddProduct = new JButton();
     JButton JButtonInventory = new JButton();
+    JLabel JLabelAddProduct = new JLabel("Añadir Producto");
+    JLabel JLabelInventory = new JLabel("Administrar");
     JPanel JPanelTransactions = new JPanel();
     JLabel JLabelTransactionsTitle = new JLabel("Transacciónes");
     JButton JButtonTransaction = new JButton();
     JButton JButtonTransactionHistory = new JButton();
-    JLabel JLabelTransaction = new JLabel("Transacción");
+    JLabel JLabelTransaction = new JLabel("Nueva Transacción");
     JLabel JLabelTransactionHistory = new JLabel("Historial");
     JPanel JPanelContacts = new JPanel();
     JLabel JLabelContactsTitle = new JLabel("Contactos");
@@ -34,16 +40,20 @@ public class MenuPrincipal {
     JLabel JLabelProviders = new JLabel("Proveedores");
 
     public MenuPrincipal(Usuario u) {
-        f.setSize(950,600);
+        f.setSize(850,600);
+        f.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+        f.getRootPane().setBackground(new java.awt.Color(171,213,217));
         f.getContentPane().setBackground(new java.awt.Color(171,213,217));
-        f.setLayout(new GridBagLayout());
         f.setResizable(false);
+        JPanelMenu.setLayout(new GridBagLayout());
+        JPanelMenu.setOpaque(false);
+        Border border = BorderFactory.createLoweredBevelBorder();
+        TitledBorder title = BorderFactory.createTitledBorder(border, "Menú Principal");
+        title.setTitlePosition(TitledBorder.ABOVE_TOP);
+        JPanelMenu.setBorder(title);
         JPanelInventory.setLayout(new GridBagLayout());
         JPanelTransactions.setLayout(new GridBagLayout());
         JPanelContacts.setLayout(new GridBagLayout());
-        JPanelInventory.setOpaque(false);
-        JPanelTransactions.setOpaque(false);
-        JPanelContacts.setOpaque(false);
         JLabelLogo.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -55,6 +65,11 @@ public class MenuPrincipal {
                         ex.printStackTrace();
                     }
                 }
+            }
+        });
+        JButtonAddProduct.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new RegistroProducto(f, u);
             }
         });
         JButtonInventory.addActionListener(new ActionListener(){
@@ -116,22 +131,32 @@ public class MenuPrincipal {
                 }
             }
         });
-        Interfaces.addLabel(JPanelInventory, JLabelInventoryTitle, c, 1, 0);
-        Interfaces.addImageButton(JPanelInventory, JButtonInventory, c, 1, 1, "addthis.png");
-        Interfaces.addLabel(JPanelTransactions, JLabelTransactionsTitle, c, 1, 0);
+        c.weighty = 1;
+        c.weightx = 0.5;
+        Interfaces.addTitle(JPanelInventory, JLabelInventoryTitle, c, 0, 0);
+        Interfaces.addImageButton(JPanelInventory, JButtonAddProduct, c, 0, 1, "addthis.png");
+        Interfaces.addImageButton(JPanelInventory, JButtonInventory, c, 1, 1, "book-3.png");
+        Interfaces.addLabel(JPanelInventory, JLabelAddProduct, c, 0, 2);
+        Interfaces.addLabel(JPanelInventory, JLabelInventory, c, 1, 2);
+        Interfaces.addTitle(JPanelTransactions, JLabelTransactionsTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelTransactions, JButtonTransaction, c, 0, 1, "shopping-cart-8.png");
-        Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 3, 1, "book-3.png");
+        Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 1, 1, "book-3.png");
         Interfaces.addLabel(JPanelTransactions, JLabelTransaction, c, 0, 2);
-        Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 3, 2);
-        Interfaces.addLabel(JPanelContacts, JLabelContactsTitle, c, 1, 0);
+        Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 1, 2);
+        Interfaces.addTitle(JPanelContacts, JLabelContactsTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelContacts, JButtonClients, c, 0, 1, "add-user.png");
-        Interfaces.addImageButton(JPanelContacts, JButtonProviders, c, 3, 1, "shop-5.png");
+        Interfaces.addImageButton(JPanelContacts, JButtonProviders, c, 1, 1, "shop-5.png");
         Interfaces.addLabel(JPanelContacts, JLabelClients, c, 0, 2);
-        Interfaces.addLabel(JPanelContacts, JLabelProviders, c, 3, 2);
-        Interfaces.addImage(f, JLabelLogo, c, 0, 0, "image(1).png");
-        Interfaces.addPanel(f, JPanelInventory, c, 1, 1);
-        Interfaces.addPanel(f, JPanelTransactions, c, 0, 2);
-        Interfaces.addPanel(f, JPanelContacts, c, 2, 2);
+        Interfaces.addLabel(JPanelContacts, JLabelProviders, c, 1, 2);
+        c.gridwidth=2;
+        Interfaces.addPanel(JPanelMenu, JPanelInventory, c, 0, 0);
+        c.gridwidth=1;
+        c.anchor = GridBagConstraints.PAGE_START;
+        Interfaces.addPanel(JPanelMenu, JPanelTransactions, c, 0, 1);
+        Interfaces.addPanel(JPanelMenu, JPanelContacts, c, 1, 1);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        Interfaces.addImage(JPanelMenu, JLabelLogo, c, 0, 0, "image(1).png");
+        f.add(JPanelMenu);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }

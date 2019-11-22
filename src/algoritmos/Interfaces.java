@@ -6,11 +6,11 @@ import java.awt.*;
 import java.io.File;
 
 public class Interfaces {
-    public static void addPanel(JFrame f, JPanel p, GridBagConstraints c, int x, int y){
-        p.setOpaque(false);
+    public static void addPanel(JPanel p, JPanel p1, GridBagConstraints c, int x, int y){
+        p1.setOpaque(false);
         c.gridx=x;
         c.gridy=y;
-        f.add(p, c);
+        p.add(p1, c);
     }
     public static void addTextField(JPanel p, JTextField t, GridBagConstraints c, int x, int y){
         p.setBackground(new java.awt.Color(232,234,232));
@@ -49,7 +49,7 @@ public class Interfaces {
         c.gridy=y;
         p.add(cb, c);
     }
-    public static  void  addImage(JFrame f, JLabel l, GridBagConstraints c, int x, int y, String dir){
+    public static  void  addImage(JPanel p, JLabel l, GridBagConstraints c, int x, int y, String dir){
         try {
             String directorio = System.getProperty("user.dir");
             Image img = ImageIO.read(new File(directorio+"\\resources\\"+dir));
@@ -59,7 +59,15 @@ public class Interfaces {
         }
         c.gridx=x;
         c.gridy=y;
-        f.add(l, c);
+        p.add(l, c);
+    }
+    public static void addTitle(JPanel p, JLabel l, GridBagConstraints c, int x, int y){
+        c.gridwidth = 2;
+        l.setFont(new Font("Verdana", Font.PLAIN, 20));
+        c.gridx=x;
+        c.gridy=y;
+        p.add(l, c);
+        c.gridwidth = 1;
     }
     public static void addLabel(JPanel p, JLabel l, GridBagConstraints c, int x, int y){
         c.gridx=x;

@@ -3,9 +3,13 @@ package interfaz;
 import datos.Usuario;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Proveedores {
+    GridBagConstraints c = new GridBagConstraints();
     JDialog d;
+    JPanel JPanelProviders = new JPanel();
+    JPanel JPanelAddProvider = new JPanel();
     public Proveedores(JFrame f, Usuario u){
         d = new JDialog(f);
         f.setEnabled(false);
@@ -28,17 +32,20 @@ public class Proveedores {
         tb.setRowHeight(38);
         tb.setEnabled(false);
         JScrollPane sp = new JScrollPane(tb);
-        d.setSize(720,480);
-        sp.setBounds(0,55,715,400);
-        d.setLayout(null);
+        d.setSize(850,600);
+        d.getContentPane().setBackground(new java.awt.Color(171,213,217));
         d.setResizable(false);
+        JPanelProviders.setLayout(new FlowLayout());
+        JPanelProviders.setOpaque(false);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
             }
         });
-        d.add(sp);
+        JPanelProviders.add(JPanelAddProvider);
+        JPanelProviders.add(sp);
+        d.add(JPanelProviders);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);
     }

@@ -1,7 +1,6 @@
 package interfaz;
 
 import algoritmos.Archivos;
-import algoritmos.Interfaces;
 import datos.Sesion;
 import datos.Usuario;
 
@@ -12,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class Inicio implements Runnable {
-    GridBagConstraints c = new GridBagConstraints();
     JFrame f = new JFrame("Inicio de Sesión");
     JPanel JPanelLogin = new JPanel();
     JLabel JLabelUser = new JLabel("Usuario:");
@@ -21,7 +19,7 @@ public class Inicio implements Runnable {
     JPasswordField JPasswordFieldPassword = new JPasswordField();
     JButton JButtonLogin = new JButton("Iniciar Sesión");
     JCheckBox JCheckBoxRemember = new JCheckBox("Recordar");
-    JButton JButtonNewAccount = new JButton("Crear nuevo usuario");
+    JButton JButtonNewAccount = new JButton("Crear Nuevo Usuario");
     JLabel JLabelError = new JLabel("La combinación de usuario y contraseña no fue encontrada.");
 
     public Inicio(){
@@ -50,8 +48,18 @@ public class Inicio implements Runnable {
         f.setSize(375,275);
         f.getContentPane().setBackground(new java.awt.Color(171,213,217));
         f.setResizable(false);
-        JPanelLogin.setLayout(new GridBagLayout());
+        JPanelLogin.setLayout(new BoxLayout(JPanelLogin, BoxLayout.Y_AXIS));
+        JPanelLogin.setBorder(BorderFactory.createEmptyBorder(30, 90, 50, 90));
         JPanelLogin.setOpaque(false);
+        JCheckBoxRemember.setContentAreaFilled(false);
+        Dimension d1 = new Dimension(180, 30);
+        JButtonLogin.setPreferredSize(d1);
+        JButtonLogin.setMaximumSize(d1);
+        Dimension d2 = new Dimension(180, 20);
+        JButtonNewAccount.setPreferredSize(d2);
+        JButtonNewAccount.setMaximumSize(d2);
+        JButtonNewAccount.setContentAreaFilled(false);
+        JButtonNewAccount.setBorderPainted(false);
         JLabelError.setVisible(false);
         JButtonLogin.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -81,14 +89,14 @@ public class Inicio implements Runnable {
                 new CrearCuenta(f, JTextFieldUser.getText(), String.valueOf(JPasswordFieldPassword.getPassword()));
             }
         });
-        Interfaces.addLabel(JPanelLogin, JLabelUser, c, 0, 0);
-        Interfaces.addTextField(JPanelLogin, JTextFieldUser, c, 1, 0);
-        Interfaces.addLabel(JPanelLogin, JLabelPassword, c, 0, 1);
-        Interfaces.addTextField(JPanelLogin, JPasswordFieldPassword, c, 1, 1);
-        Interfaces.addCheckBox(JPanelLogin, JCheckBoxRemember, c, 0, 2);
-        Interfaces.addButton(JPanelLogin, JButtonLogin, c, 1, 2);
-        Interfaces.addButton(JPanelLogin, JButtonNewAccount, c, 1, 3);
-        f.add(JPanelLogin);
+        JPanelLogin.add(JLabelUser);
+        JPanelLogin.add(JTextFieldUser);
+        JPanelLogin.add(JLabelPassword);
+        JPanelLogin.add(JPasswordFieldPassword);
+        JPanelLogin.add(JCheckBoxRemember);
+        JPanelLogin.add(JButtonLogin);
+        JPanelLogin.add(JButtonNewAccount);
+        f.getContentPane().add(JPanelLogin);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }
