@@ -11,6 +11,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Inventario {
+    String notes = "";
     GridBagConstraints c = new GridBagConstraints();
     JDialog d;
     JPanel JPanelProducts = new JPanel();
@@ -32,6 +35,7 @@ public class Inventario {
     JTextField JTextFieldCost = new JTextField("0");
     JLabel JLabelPrice = new JLabel("Precio:");
     JTextField JTextFieldPrice = new JTextField("0");
+    JButton JButtonNotes = new JButton("Notas");
     JButton JButtonRegister = new JButton("Registrar");
     JButton JButtonReturn = new JButton();
 
@@ -39,7 +43,7 @@ public class Inventario {
         d = new JDialog(f);
         d.setSize(850,600);
         d.setLocationRelativeTo(f);
-        f.setVisible(false);
+        f.setEnabled(false);
         d.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         d.getRootPane().setBackground(new java.awt.Color(171,213,217));
         d.getContentPane().setBackground(new java.awt.Color(171,213,217));
@@ -57,7 +61,11 @@ public class Inventario {
         JPanelAddProductBorder.setBorder(title1);
         JPanelAddProductBorder.add(JPanelAddProduct);
         DefaultTableModel model = new DefaultTableModel();
-        JTable tb = new JTable(model);
+        JTable tb = new JTable(model){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };
+        };
         tb.setRowHeight(38);
         model.addColumn("Nombre");
         model.addColumn("Cantidad");
@@ -74,9 +82,32 @@ public class Inventario {
         for (int i=0;i<u.proveedores.size();i++) {
             JComboBoxProviders.addItem(u.proveedores.get(i).nombre);
         }
+        JComboBoxProviders.addItem("Añadir Nuevo +");
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                f.dispose();
+                f.setEnabled(true);
+            }
+        });
+        tb.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                try {
+                    new InfoProducto(f, d, u, u.productos.get(tb.getSelectedRow()));
+                } catch (IndexOutOfBoundsException e) {
+
+                }
+            }
+        });
+        JComboBoxProviders.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                if (JComboBoxProviders.getSelectedIndex()==JComboBoxProviders.getItemCount()-1){
+                    Object[] opciones = {"Si", "No"};
+                    int opcion = JOptionPane.showOptionDialog(d, "Desea registrar un nuevo proveedor?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+                    if (opcion == JOptionPane.YES_OPTION){
+                        new Proveedores(f, u);
+                        d.dispose();
+                    }
+                    JComboBoxProviders.setSelectedIndex(0);
+                }
             }
         });
         JTextFieldCost.getDocument().addDocumentListener(new DocumentListener() {
@@ -139,6 +170,12 @@ public class Inventario {
                 JTextFieldPrice.selectAll();
             }
         });
+        JButtonNotes.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+                notes = (String) JOptionPane.showInputDialog(d, "Nota:", "Notas", JOptionPane.PLAIN_MESSAGE, null, null, null);
+            }
+        });
         JButtonRegister.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (JTextFieldName.getText().equals("")){
@@ -146,7 +183,7 @@ public class Inventario {
                 } else if (Busqueda.buscarProducto(u, JComboBoxProviders.getSelectedIndex(), JTextFieldName.getText())) {
                     JOptionPane.showMessageDialog(d, "El producto ya existe.");
                 } else {
-                    u.productos.add(new Producto(u, JTextFieldName.getText(), Float.parseFloat(JTextFieldCost.getText()), Float.parseFloat(JTextFieldPrice.getText()), JComboBoxProviders.getSelectedIndex()));
+                    u.productos.add(new Producto(u, JTextFieldName.getText(), Float.parseFloat(JTextFieldCost.getText()), Float.parseFloat(JTextFieldPrice.getText()), JComboBoxProviders.getSelectedIndex(), notes));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
                     Object[] opciones = {"Si", "No"};
                     int opcion = JOptionPane.showOptionDialog(d, "Producto añadido, desea registrar una compra de este producto?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
@@ -165,12 +202,11 @@ public class Inventario {
         });
         JButtonReturn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                f.setVisible(true);
-                f.setLocationRelativeTo(d);
+                f.setEnabled(true);
                 d.dispose();
             }
         });
-        JPanelAddProduct.setPreferredSize(new Dimension(125, 225));
+        JPanelAddProduct.setPreferredSize(new Dimension(150, 225));
         c.weighty = 0.1;
         c.weightx = 0.1;
         c.anchor = GridBagConstraints.LINE_START;
@@ -182,8 +218,10 @@ public class Inventario {
         Interfaces.addTextField(JPanelAddProduct, JTextFieldCost, c, 0, 5);
         Interfaces.addLabel(JPanelAddProduct, JLabelPrice, c, 0, 6);
         Interfaces.addTextField(JPanelAddProduct, JTextFieldPrice, c, 0, 7);
-        c.anchor = GridBagConstraints.CENTER;
+        Interfaces.addButton(JPanelAddProduct, JButtonNotes, c, 0, 8);
+        c.anchor = GridBagConstraints.LINE_END;
         Interfaces.addButton(JPanelAddProduct, JButtonRegister, c, 0, 8);
+        c.anchor = GridBagConstraints.CENTER;
         Interfaces.addPanel(JPanelProducts, JPanelAddProductBorder, c, 0, 0);
         Interfaces.addScrollPane(JPanelProducts, sp, c, 1, 0);
         c.anchor = GridBagConstraints.LAST_LINE_START;
@@ -191,5 +229,9 @@ public class Inventario {
         d.add(JPanelProducts);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);
+    }
+    public Inventario(JFrame f, Usuario u, int provider){
+        this(f, u);
+        JComboBoxProviders.setSelectedIndex(provider);
     }
 }

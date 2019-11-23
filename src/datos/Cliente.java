@@ -9,19 +9,19 @@ public class Cliente implements Serializable  {
     public String apellidos;
     public String telefono;
     public String correo;
-    public GregorianCalendar nacimiento;
+    public String notas;
     public float ganancia=0;
 
     public Cliente(Usuario u, String name) {
         id=u.clientes.size();
         nombre=name;
     }
-    public Cliente(Usuario u, String name, String lastname, String phone, String email, GregorianCalendar date) {
+    public Cliente(Usuario u, String name, String lastname, String phone, String email, String notes) {
         id=u.clientes.size();
         nombre=name;
         apellidos=lastname;
         telefono=phone;
         correo=email;
-        nacimiento=date;
+        notas=notes;
     }
 }

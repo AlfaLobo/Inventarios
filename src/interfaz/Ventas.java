@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Ventas {
-    String notas = "Sin notas.";
+    String notes = "";
     ArrayList<Venta> ventas = new ArrayList<>();
     GridBagConstraints c = new GridBagConstraints();
     JDialog d;
@@ -41,6 +41,7 @@ public class Ventas {
     JScrollPane JScrollPaneSales = new JScrollPane(ta);
     JLabel JLabelPaymentMethod = new JLabel("Metodo de Pago:");
     JTextField JTextFieldPaymentMethod = new JTextField();
+    JButton JButtonNotes = new JButton("Notas");
     JButton JButtonRegister = new JButton("Registrar");
     JButton JButtonReturn = new JButton();
 
@@ -48,7 +49,7 @@ public class Ventas {
         d = new JDialog(f);
         d.setSize(850,600);
         d.setLocationRelativeTo(f);
-        f.setVisible(false);
+        f.setEnabled(false);
         d.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         d.getRootPane().setBackground(new java.awt.Color(171,213,217));
         d.getContentPane().setBackground(new java.awt.Color(171,213,217));
@@ -95,7 +96,7 @@ public class Ventas {
         }
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                f.dispose();
+                f.setEnabled(true);
             }
         });
         JComboBoxProducts.addActionListener (new ActionListener() {
@@ -183,12 +184,22 @@ public class Ventas {
                 ta.append(JTextFieldQuantity.getText()+" "+u.productos.get(JComboBoxProducts.getSelectedIndex()).nombre+" - "+JTextFieldTotal.getText()+"$\n");
             }
         });
+        JButtonNotes.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+                notes = (String) JOptionPane.showInputDialog(d, "Nota:", "Notas", JOptionPane.PLAIN_MESSAGE, null, null, null);
+            }
+        });
         JButtonRegister.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (ventas.size()!=0){
-                    u.ventas.add(new Venta(u, JComboBoxClients.getSelectedIndex(), JTextFieldPaymentMethod.getText(), notas, ventas));
+                    u.ventas.add(new Venta(u, JComboBoxClients.getSelectedIndex(), JTextFieldPaymentMethod.getText(), notes, ventas));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
-                    JOptionPane.showMessageDialog(d, "Venta exitosa.");
+                    Object[] opciones = {"Si", "No"};
+                    int opcion = JOptionPane.showOptionDialog(d, "Venta registrada, desea imprimir el recibo?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+                    if (opcion == JOptionPane.YES_OPTION){
+
+                    }
                     ventas.clear();
                     JComboBoxClients.setEnabled(true);
                     JComboBoxClients.setSelectedIndex(0);
@@ -206,8 +217,7 @@ public class Ventas {
         });
         JButtonReturn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                f.setVisible(true);
-                f.setLocationRelativeTo(d);
+                f.setEnabled(true);
                 d.dispose();
             }
         });
@@ -232,6 +242,8 @@ public class Ventas {
         Interfaces.addScrollPane(JPanelNewSale, JScrollPaneSales, c, 0, 11);
         Interfaces.addLabel(JPanelNewSale, JLabelPaymentMethod, c, 0, 12);
         Interfaces.addTextField(JPanelNewSale, JTextFieldPaymentMethod, c, 0, 13);
+        Interfaces.addButton(JPanelNewSale, JButtonNotes, c, 0, 14);
+        c.anchor = GridBagConstraints.LINE_END;
         Interfaces.addButton(JPanelNewSale, JButtonRegister, c, 0, 14);
         c.anchor = GridBagConstraints.CENTER;
         Interfaces.addPanel(JPanelSales, JPanelNewSale, c, 0, 0);

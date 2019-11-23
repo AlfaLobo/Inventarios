@@ -23,7 +23,9 @@ public class MenuPrincipal {
     JPanel JPanelAdminister = new JPanel();
     JLabel JLabelAdministerTitle = new JLabel("Administrar");
     JButton JButtonInventory = new JButton();
+    JButton JButtonEmployees = new JButton();
     JLabel JLabelInventory = new JLabel("Inventario");
+    JLabel JLabelEmployees = new JLabel("Empleados");
     JPanel JPanelTransactions = new JPanel();
     JLabel JLabelTransactionsTitle = new JLabel("Transacciónes");
     JButton JButtonTransaction = new JButton();
@@ -72,6 +74,11 @@ public class MenuPrincipal {
                 new Inventario(f, u);
             }
         });
+        JButtonEmployees.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new Empleados(f, u);
+            }
+        });
         JButtonClients.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 new Clientes(f, u);
@@ -84,19 +91,19 @@ public class MenuPrincipal {
         });
         JButtonTransaction.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                Object[] opciones = {"Venta", "Compra"};
+                Object[] opciones = {"Venta", "Pago"};
                 int opcion = JOptionPane.showOptionDialog(f, "Que tipo de transacción quiere realizar?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-                if (opcion == JOptionPane.YES_OPTION){
-                    if (u.productos.size()!=0){
+                if (u.productos.size()!=0){
+                    if (opcion == JOptionPane.YES_OPTION){
                         new Ventas(f, u);
-                    } else {
-                        JOptionPane.showMessageDialog(f, "No existen productos que vender.");
-                    }
-                } else if (opcion == JOptionPane.NO_OPTION) {
-                    if (u.productos.size()!=0){
+                    } else if (opcion == JOptionPane.NO_OPTION) {
                         new Compras(f, u);
-                    } else {
-                        JOptionPane.showMessageDialog(f, "No existen productos que comprar.");
+                    }
+                } else {
+                    Object[] opciones1 = {"Registrar Producto", "Regresar"};
+                    int opcion2 = JOptionPane.showOptionDialog(f, "No se encuentran productos registrados.", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, opciones1, opciones1[0]);
+                    if (opcion2 == JOptionPane.YES_OPTION){
+                        new Inventario(f, u);
                     }
                 }
             }
@@ -114,13 +121,15 @@ public class MenuPrincipal {
         c.weighty = 1;
         c.weightx = 0.5;
         Interfaces.addTitle(JPanelAdminister, JLabelAdministerTitle, c, 0, 0);
-        Interfaces.addImageButton(JPanelAdminister, JButtonTransaction, c, 0, 1, "shopping-cart-8.png");
-        Interfaces.addImageButton(JPanelAdminister, JButtonInventory, c, 1, 1, "book-3.png");
-        Interfaces.addLabel(JPanelAdminister, JLabelTransaction, c, 0, 2);
-        Interfaces.addLabel(JPanelAdminister, JLabelInventory, c, 1, 2);
+        Interfaces.addImageButton(JPanelAdminister, JButtonInventory, c, 0, 1, "book-3.png");
+        Interfaces.addImageButton(JPanelAdminister, JButtonEmployees, c, 1, 1, "book-3.png");
+        Interfaces.addLabel(JPanelAdminister, JLabelInventory, c, 0, 2);
+        Interfaces.addLabel(JPanelAdminister, JLabelEmployees, c, 1, 2);
         Interfaces.addTitle(JPanelTransactions, JLabelTransactionsTitle, c, 0, 0);
-        Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 0, 1, "receipt-5.png");
-        Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 0, 2);
+        Interfaces.addImageButton(JPanelTransactions, JButtonTransaction, c, 0, 1, "shopping-cart-8.png");
+        Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 1, 1, "receipt-5.png");
+        Interfaces.addLabel(JPanelTransactions, JLabelTransaction, c, 0, 2);
+        Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 1, 2);
         Interfaces.addTitle(JPanelContacts, JLabelContactsTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelContacts, JButtonClients, c, 0, 1, "add-user.png");
         Interfaces.addImageButton(JPanelContacts, JButtonProviders, c, 1, 1, "shop-5.png");

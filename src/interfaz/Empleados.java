@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Empleados {
+    String notes = "";
     GridBagConstraints c = new GridBagConstraints();
     JDialog d;
     JPanel JPanelEmployees = new JPanel();
@@ -39,6 +40,7 @@ public class Empleados {
     JComboBox JComboBoxDay = new JComboBox();
     JComboBox JComboBoxMonth = new JComboBox();
     JComboBox JComboBoxYear = new JComboBox();
+    JButton JButtonNotes = new JButton("Notas");
     JButton JButtonRegister = new JButton("Registrar");
     JButton JButtonReturn = new JButton();
 
@@ -46,7 +48,7 @@ public class Empleados {
         d = new JDialog(f);
         d.setSize(850,600);
         d.setLocationRelativeTo(f);
-        f.setVisible(false);
+        f.setEnabled(false);
         d.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         d.getRootPane().setBackground(new java.awt.Color(171,213,217));
         d.getContentPane().setBackground(new java.awt.Color(171,213,217));
@@ -95,7 +97,7 @@ public class Empleados {
         }
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                f.dispose();
+                f.setEnabled(true);
             }
         });
         JTextFieldSalary.getDocument().addDocumentListener(new DocumentListener() {
@@ -127,12 +129,18 @@ public class Empleados {
                 JTextFieldSalary.selectAll();
             }
         });
+        JButtonNotes.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+                notes = (String) JOptionPane.showInputDialog(d, "Nota:", "Notas", JOptionPane.PLAIN_MESSAGE, null, null, null);
+            }
+        });
         JButtonRegister.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (JTextFieldName.getText().equals("")){
                     JOptionPane.showMessageDialog(d, "Nombre no valido.");
                 } else {
-                    u.empleados.add(new Empleado(u, JTextFieldName.getText(), JTextFieldLastName.getText(), Float.parseFloat(JTextFieldSalary.getText()), JTextFieldPhone.getText(), JTextFieldEmail.getText(), new GregorianCalendar((int) JComboBoxYear.getItemAt(JComboBoxYear.getSelectedIndex()), (int) JComboBoxMonth.getItemAt(JComboBoxMonth.getSelectedIndex()), (int) JComboBoxDay.getItemAt(JComboBoxDay.getSelectedIndex()))));
+                    u.empleados.add(new Empleado(u, JTextFieldName.getText(), JTextFieldLastName.getText(), Float.parseFloat(JTextFieldSalary.getText()), JTextFieldPhone.getText(), JTextFieldEmail.getText(), new GregorianCalendar((int) JComboBoxYear.getItemAt(JComboBoxYear.getSelectedIndex()), (int) JComboBoxMonth.getItemAt(JComboBoxMonth.getSelectedIndex()), (int) JComboBoxDay.getItemAt(JComboBoxDay.getSelectedIndex())), notes));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
                     JOptionPane.showMessageDialog(d, "El empleado ha sido añadido.");
                     JTextFieldName.setText("");
@@ -149,12 +157,11 @@ public class Empleados {
         });
         JButtonReturn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                f.setVisible(true);
-                f.setLocationRelativeTo(d);
+                f.setEnabled(true);
                 d.dispose();
             }
         });
-        JPanelAddEmployee.setPreferredSize(new Dimension(150, 300));
+        JPanelAddEmployee.setPreferredSize(new Dimension(150, 325));
         c.weighty = 0.1;
         c.weightx = 0.1;
         c.anchor = GridBagConstraints.LINE_START;
@@ -172,7 +179,10 @@ public class Empleados {
         Interfaces.addLabel(JPanelAddEmployee, JLabelSalary, c, 0, 10);
         Interfaces.addTextField(JPanelAddEmployee, JTextFieldSalary, c, 0, 11);
         Interfaces.addLabel(JPanelAddEmployee, JLabelBirthday, c, 0, 12);
+        Interfaces.addButton(JPanelAddEmployee, JButtonNotes, c, 0, 14);
+        c.anchor = GridBagConstraints.LINE_END;
         Interfaces.addButton(JPanelAddEmployee, JButtonRegister, c, 0, 14);
+        c.anchor = GridBagConstraints.LINE_START;
         Dimension d1 = new Dimension(45, 25);
         Dimension d2 = new Dimension(70, 25);
         JComboBoxDay.setPreferredSize(d1);

@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Compras {
-    String notas = "Sin notas.";
+    String notas = "";
     ArrayList<Compra> compras = new ArrayList<>();
     GridBagConstraints c = new GridBagConstraints();
     JDialog d;
@@ -40,6 +40,7 @@ public class Compras {
     JTextArea ta = new JTextArea();
     JScrollPane JScrollPanePurchases = new JScrollPane(ta);
     JButton JButtonAdd = new JButton("Añadir");
+    JButton JButtonNotes = new JButton("Notas");
     JButton JButtonRegister = new JButton("Registrar");
     JButton JButtonReturn = new JButton();
 
@@ -47,7 +48,7 @@ public class Compras {
         d = new JDialog(f);
         d.setSize(850,600);
         d.setLocationRelativeTo(f);
-        f.setVisible(false);
+        f.setEnabled(false);
         d.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         d.getRootPane().setBackground(new java.awt.Color(171,213,217));
         d.getContentPane().setBackground(new java.awt.Color(171,213,217));
@@ -98,7 +99,7 @@ public class Compras {
         }
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                f.dispose();
+                f.setEnabled(true);
             }
         });
         JComboBoxProviders.addActionListener (new ActionListener() {
@@ -182,6 +183,12 @@ public class Compras {
                 JComboBoxYear.setEnabled(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
+        JButtonNotes.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+                notas = JOptionPane.showInputDialog(d, "Nota:");
+            }
+        });
         JButtonRegister.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (compras.size()!=0){
@@ -204,8 +211,7 @@ public class Compras {
         });
         JButtonReturn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                f.setVisible(true);
-                f.setLocationRelativeTo(d);
+                f.setEnabled(true);
                 d.dispose();
             }
         });
@@ -236,7 +242,10 @@ public class Compras {
         Interfaces.addCheckBox(JPanelNewPurchase, JCheckBoxExpiration, c, 0, 8);
         Interfaces.addButton(JPanelNewPurchase, JButtonAdd, c, 0, 10);
         Interfaces.addScrollPane(JPanelNewPurchase, JScrollPanePurchases, c, 0, 11);
+        Interfaces.addButton(JPanelNewPurchase, JButtonNotes, c, 0, 12);
+        c.anchor = GridBagConstraints.LINE_END;
         Interfaces.addButton(JPanelNewPurchase, JButtonRegister, c, 0, 12);
+        c.anchor = GridBagConstraints.LINE_START;
         c.gridwidth=1;
         Interfaces.addComboBox(JPanelNewPurchase, JComboBoxDay, c, 0, 9);
         Interfaces.addComboBox(JPanelNewPurchase, JComboBoxMonth, c, 1, 9);

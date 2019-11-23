@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Proveedores {
+    String notes = "";
     GridBagConstraints c = new GridBagConstraints();
     JDialog d;
     JPanel JPanelProviders = new JPanel();
@@ -28,6 +29,7 @@ public class Proveedores {
     JTextField JTextFieldEmail = new JTextField();
     JLabel JLabelAddress = new JLabel("Dirección:");
     JTextField JTextFieldAddress = new JTextField();
+    JButton JButtonNotes = new JButton("Notas");
     JButton JButtonRegister = new JButton("Registrar");
     JButton JButtonReturn = new JButton();
 
@@ -35,7 +37,7 @@ public class Proveedores {
         d = new JDialog(f);
         d.setSize(850,600);
         d.setLocationRelativeTo(f);
-        f.setVisible(false);
+        f.setEnabled(false);
         d.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         d.getRootPane().setBackground(new java.awt.Color(171,213,217));
         d.getContentPane().setBackground(new java.awt.Color(171,213,217));
@@ -46,14 +48,12 @@ public class Proveedores {
         TitledBorder title = BorderFactory.createTitledBorder(border, "Menú Proveedores");
         title.setTitlePosition(TitledBorder.ABOVE_TOP);
         JPanelProviders.setBorder(title);
-        TitledBorder title1 = BorderFactory.createTitledBorder(border, "Registrar Producto");
+        TitledBorder title1 = BorderFactory.createTitledBorder(border, "Registrar Proveedor");
         title1.setTitlePosition(TitledBorder.ABOVE_TOP);
         JPanelAddProviderBorder.setBorder(title1);
-        JPanelAddProviderBorder.setPreferredSize(new Dimension(200, 235));
-        JPanelAddProvider.setLayout(new BoxLayout(JPanelAddProvider, BoxLayout.Y_AXIS));
-        JPanelAddProvider.setPreferredSize(new Dimension(150, 195));
+        JPanelAddProvider.setLayout(new GridBagLayout());
         JPanelAddProvider.setOpaque(false);
-        Dimension d1 = new Dimension(150, 25);
+        Dimension d1 = new Dimension(175, 30);
         JButtonRegister.setPreferredSize(d1);
         JButtonRegister.setMaximumSize(d1);
         DefaultTableModel model = new DefaultTableModel();
@@ -72,7 +72,13 @@ public class Proveedores {
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                f.dispose();
+                f.setEnabled(true);
+            }
+        });
+        JButtonNotes.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+                notes = (String) JOptionPane.showInputDialog(d, "Nota:", "Notas", JOptionPane.PLAIN_MESSAGE, null, null, null);
             }
         });
         JButtonRegister.addActionListener(new ActionListener(){
@@ -82,9 +88,14 @@ public class Proveedores {
                 } else if (Busqueda.buscarProveedor(u, JTextFieldName.getText())) {
                     JOptionPane.showMessageDialog(d, "El proveedor ya existe.");
                 } else {
-                    u.proveedores.add(new Proveedor(u, JTextFieldName.getText(), JTextFieldPhone.getText(), JTextFieldEmail.getText(), JTextFieldAddress.getText()));
+                    u.proveedores.add(new Proveedor(u, JTextFieldName.getText(), JTextFieldPhone.getText(), JTextFieldEmail.getText(), JTextFieldAddress.getText(), notes));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
-                    JOptionPane.showMessageDialog(d, "El proveedor ha sido añadido.");
+                    Object[] opciones = {"Si", "No"};
+                    int opcion = JOptionPane.showOptionDialog(d, "Registro exitoso, desea añadir un producto a este proveedor?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+                    if (opcion == JOptionPane.YES_OPTION){
+                        new Inventario(f, u, u.proveedores.size()-1);
+                        d.dispose();
+                    }
                     JTextFieldName.setText("");
                     JTextFieldPhone.setText("");
                     JTextFieldEmail.setText("");
@@ -96,21 +107,26 @@ public class Proveedores {
         });
         JButtonReturn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                f.setVisible(true);
-                f.setLocationRelativeTo(d);
+                f.setEnabled(true);
                 d.dispose();
             }
         });
-        JPanelAddProvider.add(JLabelName);
-        JPanelAddProvider.add(JTextFieldName);
-        JPanelAddProvider.add(JLabelPhone);
-        JPanelAddProvider.add(JTextFieldPhone);
-        JPanelAddProvider.add(JLabelEmail);
-        JPanelAddProvider.add(JTextFieldEmail);
-        JPanelAddProvider.add(JLabelAddress);
-        JPanelAddProvider.add(JTextFieldAddress);
-        JPanelAddProvider.add(JButtonRegister);
-        c.weightx = 0.5;
+        JPanelAddProvider.setPreferredSize(new Dimension(175, 250));
+        c.weighty = 0.1;
+        c.weightx = 0.1;
+        c.anchor = GridBagConstraints.LINE_START;
+        Interfaces.addLabel(JPanelAddProvider, JLabelName, c, 0, 0);
+        Interfaces.addTextField(JPanelAddProvider, JTextFieldName, c, 0, 1);
+        Interfaces.addLabel(JPanelAddProvider, JLabelPhone, c, 0, 2);
+        Interfaces.addTextField(JPanelAddProvider, JTextFieldPhone, c, 0, 3);
+        Interfaces.addLabel(JPanelAddProvider, JLabelEmail, c, 0, 4);
+        Interfaces.addTextField(JPanelAddProvider, JTextFieldEmail, c, 0, 5);
+        Interfaces.addLabel(JPanelAddProvider, JLabelAddress, c, 0, 6);
+        Interfaces.addTextField(JPanelAddProvider, JTextFieldAddress, c, 0, 7);
+        Interfaces.addButton(JPanelAddProvider, JButtonNotes, c, 0, 8);
+        c.anchor = GridBagConstraints.LINE_END;
+        Interfaces.addButton(JPanelAddProvider, JButtonRegister, c, 0, 8);
+        c.anchor = GridBagConstraints.CENTER;
         JPanelAddProviderBorder.add(JPanelAddProvider);
         Interfaces.addPanel(JPanelProviders, JPanelAddProviderBorder, c, 0, 0);
         Interfaces.addScrollPane(JPanelProviders, sp, c, 1, 0);

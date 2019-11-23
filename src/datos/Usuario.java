@@ -38,7 +38,8 @@ public class Usuario implements Serializable {
         ventas = new ArrayList<>();
         usuarios = new ArrayList<>();
         clientes.add(new Cliente(this, "Generico"));
-        proveedores.add(new Proveedor(this, business, null, null, null));
+        proveedores.add(new Proveedor(this, "Propio", null, null, null, null));
+        proveedores.add(new Proveedor(this, "Generico", null, null, null, null));
         Archivos.guardarArchivo(this, "\\Usuarios\\"+user+"\\datos.txt");
     }
 }

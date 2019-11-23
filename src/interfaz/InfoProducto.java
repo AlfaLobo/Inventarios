@@ -1,25 +1,42 @@
 package interfaz;
 
+import algoritmos.Interfaces;
 import datos.Producto;
 import datos.Usuario;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 public class InfoProducto {
+    GridBagConstraints c = new GridBagConstraints();
     JDialog d;
-    JButton JButtonBuy = new JButton("Comprar");
+    JPanel JPanelProductInfo = new JPanel();
+    JLabel JLabelName = new JLabel();
+    JLabel JLabelProvider = new JLabel();
+    JLabel JLabelQuantity = new JLabel();
+    JLabel JLabelNotes = new JLabel();
+    JLabel JLabelIterations = new JLabel("Iteraciónes:");
     JButton JButtonEdit = new JButton("Modificar");
     JButton JButtonDelete = new JButton("Eliminar");
-    JLabel JLabelName = new JLabel();
-    JLabel JLabelQuantity = new JLabel();
+
     public InfoProducto(JFrame f, JDialog j, Usuario u, Producto p) {
-        d = new JDialog(f);
         j.setEnabled(false);
+        d = new JDialog(f);
+        d.setSize(375,400);
+        d.setLocationRelativeTo(j);
+        d.getRootPane().setBorder(BorderFactory.createEmptyBorder(25, 90, 20, 90));
+        d.getRootPane().setBackground(new java.awt.Color(171,213,217));
+        d.getContentPane().setBackground(new java.awt.Color(171,213,217));
+        d.setResizable(false);
+        JPanelProductInfo.setLayout(new GridBagLayout());
+        JPanelProductInfo.setOpaque(false);
         JLabelName.setText("Nombre: "+p.nombre);
+        JLabelProvider.setText("Proveedor: "+u.proveedores.get(p.proveedor).nombre);
         JLabelQuantity.setText("Total: "+p.cantidad);
+        JLabelNotes.setText("Notas: "+p.notas);
         String col[] = {"Fecha de Expiración","Cantidad"};
         String[][] datos;
         if (p.expirables.size()==0) {
@@ -38,44 +55,35 @@ public class InfoProducto {
                 return false;
             };
         };
-
         JScrollPane sp = new JScrollPane(tb);
-        d.setSize(375,400);
-        JLabelName.setBounds(55,90, 200,30);
-        JLabelQuantity.setBounds(55,105, 200,30);
-        JButtonBuy.setBounds(180,35, 125,30);
-        JButtonEdit.setBounds(180,65, 125,30);
-        JButtonDelete.setBounds(180,95, 125,30);
-        sp.setBounds(50,130,255,183);
-        d.setLayout(null);
-        d.setResizable(false);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 j.setEnabled(true);
             }
         });
-        JButtonBuy.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                int i;
-                for (i=0;i<u.proveedores.get(p.proveedor).productos.size();i++){
-                    if (u.productos.get(u.proveedores.get(p.proveedor).productos.get(i)).id==p.id){
-                        break;
-                    }
-                }
-            }
-        });
         JButtonEdit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                new ModificarProducto(u, f);
+                new ModificarProducto(u, d, p);
             }
         });
-        d.add(sp);
-        d.add(JButtonBuy);
-        d.add(JButtonEdit);
-        d.add(JButtonDelete);
-        d.add(JLabelName);
-        d.add(JLabelQuantity);
+        Dimension d1 = new Dimension(255, 183);
+        sp.setPreferredSize(d1);
+        sp.setMinimumSize(d1);
+        c.weightx = 0.1;
+        c.anchor = GridBagConstraints.LINE_START;
+        c.gridwidth=2;
+        Interfaces.addLabel(JPanelProductInfo, JLabelName, c, 0, 0);
+        Interfaces.addLabel(JPanelProductInfo, JLabelProvider, c, 0, 1);
+        Interfaces.addLabel(JPanelProductInfo, JLabelQuantity, c, 0, 2);
+        Interfaces.addLabel(JPanelProductInfo, JLabelIterations, c, 0, 3);
+        Interfaces.addLabel(JPanelProductInfo, JLabelNotes, c, 0, 4);
+        Interfaces.addScrollPane(JPanelProductInfo, sp, c, 0, 5);
+        c.gridwidth=1;
+        c.anchor = GridBagConstraints.CENTER;
+        Interfaces.addButton(JPanelProductInfo, JButtonEdit, c, 0, 6);
+        Interfaces.addButton(JPanelProductInfo, JButtonDelete, c, 1, 6);
+        d.add(JPanelProductInfo);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);
     }
