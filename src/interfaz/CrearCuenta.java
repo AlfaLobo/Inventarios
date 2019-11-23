@@ -26,6 +26,8 @@ public class CrearCuenta {
     JTextField JTextFieldName = new JTextField();
     JLabel JLabelLastName = new JLabel("Apellidos:");
     JTextField JTextFieldLastName = new JTextField();
+    JLabel JLabelBusiness = new JLabel("Nombre del Negocio:");
+    JTextField JTextFieldBusiness = new JTextField();
     JLabel JLabelBalance = new JLabel("Saldo Inicial:");
     JTextField JTextFieldBalance = new JTextField("0");
     JButton JButtonRegister = new JButton("Registrarse");
@@ -35,16 +37,16 @@ public class CrearCuenta {
         d = new JDialog(f);
         d.setSize(375,400);
         d.setLocationRelativeTo(f);
-        d.getRootPane().setBorder(BorderFactory.createEmptyBorder(30, 90, 20, 90));
+        d.getRootPane().setBorder(BorderFactory.createEmptyBorder(25, 90, 20, 90));
         d.getRootPane().setBackground(new java.awt.Color(171,213,217));
         d.getContentPane().setBackground(new java.awt.Color(171,213,217));
         d.setResizable(false);
         JPanelLogin.setLayout(new BoxLayout(JPanelLogin, BoxLayout.Y_AXIS));
         JPanelLogin.setOpaque(false);
-        Dimension d1 = new Dimension(190, 30);
+        Dimension d1 = new Dimension(190, 25);
         JButtonRegister.setPreferredSize(d1);
         JButtonRegister.setMaximumSize(d1);
-        Dimension d2 = new Dimension(190, 30);
+        Dimension d2 = new Dimension(190, 20);
         JButtonCancel.setPreferredSize(d2);
         JButtonCancel.setMaximumSize(d2);
         JButtonCancel.setContentAreaFilled(false);
@@ -85,7 +87,7 @@ public class CrearCuenta {
                 } else if (Archivos.buscarDirectorio("\\Usuarios\\"+JTextFieldUser.getText())) {
                     JOptionPane.showMessageDialog(d, "El usuario ya existe.");
                 } else if (String.valueOf(JPasswordFieldConfirmPassword.getPassword()).equals(String.valueOf(JPasswordFieldPassword.getPassword()))) {
-                    Usuario u = new Usuario(JTextFieldUser.getText(),String.valueOf(JPasswordFieldPassword.getPassword()),JTextFieldName.getText(),JTextFieldLastName.getText(),Float.parseFloat(JTextFieldBalance.getText()));
+                    Usuario u = new Usuario(JTextFieldUser.getText(),String.valueOf(JPasswordFieldPassword.getPassword()),JTextFieldName.getText(),JTextFieldLastName.getText(),JTextFieldBusiness.getText(),Float.parseFloat(JTextFieldBalance.getText()));
                     Sesion s = new Sesion(JTextFieldUser.getText(), u.contraseña);
                     f.setEnabled(true);
                     d.dispose();
@@ -110,6 +112,8 @@ public class CrearCuenta {
         JPanelLogin.add(JTextFieldName);
         JPanelLogin.add(JLabelLastName);
         JPanelLogin.add(JTextFieldLastName);
+        JPanelLogin.add(JLabelBusiness);
+        JPanelLogin.add(JTextFieldBusiness);
         JPanelLogin.add(JLabelBalance);
         JPanelLogin.add(JTextFieldBalance);
         JPanelLogin.add(JButtonRegister);

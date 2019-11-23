@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Producto extends Servicio implements Serializable {
+public class Producto implements Serializable {
     public int id;
     public String nombre;
     public int cantidad;

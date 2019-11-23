@@ -18,6 +18,7 @@ public class Proveedores {
     GridBagConstraints c = new GridBagConstraints();
     JDialog d;
     JPanel JPanelProviders = new JPanel();
+    JPanel JPanelAddProviderBorder = new JPanel();
     JPanel JPanelAddProvider = new JPanel();
     JLabel JLabelName = new JLabel("Nombre:");
     JTextField JTextFieldName = new JTextField();
@@ -45,7 +46,16 @@ public class Proveedores {
         TitledBorder title = BorderFactory.createTitledBorder(border, "Menú Proveedores");
         title.setTitlePosition(TitledBorder.ABOVE_TOP);
         JPanelProviders.setBorder(title);
+        TitledBorder title1 = BorderFactory.createTitledBorder(border, "Registrar Producto");
+        title1.setTitlePosition(TitledBorder.ABOVE_TOP);
+        JPanelAddProviderBorder.setBorder(title1);
+        JPanelAddProviderBorder.setPreferredSize(new Dimension(200, 235));
         JPanelAddProvider.setLayout(new BoxLayout(JPanelAddProvider, BoxLayout.Y_AXIS));
+        JPanelAddProvider.setPreferredSize(new Dimension(150, 195));
+        JPanelAddProvider.setOpaque(false);
+        Dimension d1 = new Dimension(150, 25);
+        JButtonRegister.setPreferredSize(d1);
+        JButtonRegister.setMaximumSize(d1);
         DefaultTableModel model = new DefaultTableModel();
         JTable tb = new JTable(model);
         tb.setRowHeight(38);
@@ -100,9 +110,9 @@ public class Proveedores {
         JPanelAddProvider.add(JLabelAddress);
         JPanelAddProvider.add(JTextFieldAddress);
         JPanelAddProvider.add(JButtonRegister);
-        JPanelAddProvider.setPreferredSize(new Dimension(150, 300));
         c.weightx = 0.5;
-        Interfaces.addPanel(JPanelProviders, JPanelAddProvider, c, 0, 0);
+        JPanelAddProviderBorder.add(JPanelAddProvider);
+        Interfaces.addPanel(JPanelProviders, JPanelAddProviderBorder, c, 0, 0);
         Interfaces.addScrollPane(JPanelProviders, sp, c, 1, 0);
         c.anchor = GridBagConstraints.LAST_LINE_START;
         Interfaces.addImageButton(JPanelProviders, JButtonReturn, c, 0, 0, "arrow-34.png");

@@ -23,7 +23,7 @@ public class MenuPrincipal {
     JPanel JPanelAdminister = new JPanel();
     JLabel JLabelAdministerTitle = new JLabel("Administrar");
     JButton JButtonInventory = new JButton();
-    JLabel JLabelInventory = new JLabel("Administrar");
+    JLabel JLabelInventory = new JLabel("Inventario");
     JPanel JPanelTransactions = new JPanel();
     JLabel JLabelTransactionsTitle = new JLabel("Transacciónes");
     JButton JButtonTransaction = new JButton();
@@ -119,9 +119,8 @@ public class MenuPrincipal {
         Interfaces.addLabel(JPanelAdminister, JLabelTransaction, c, 0, 2);
         Interfaces.addLabel(JPanelAdminister, JLabelInventory, c, 1, 2);
         Interfaces.addTitle(JPanelTransactions, JLabelTransactionsTitle, c, 0, 0);
-
-        Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 1, 1, "book-3.png");
-        Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 1, 2);
+        Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 0, 1, "receipt-5.png");
+        Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 0, 2);
         Interfaces.addTitle(JPanelContacts, JLabelContactsTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelContacts, JButtonClients, c, 0, 1, "add-user.png");
         Interfaces.addImageButton(JPanelContacts, JButtonProviders, c, 1, 1, "shop-5.png");
