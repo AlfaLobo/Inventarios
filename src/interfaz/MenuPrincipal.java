@@ -27,7 +27,7 @@ public class MenuPrincipal {
     JLabel JLabelInventory = new JLabel("Inventario");
     JLabel JLabelEmployees = new JLabel("Empleados");
     JPanel JPanelTransactions = new JPanel();
-    JLabel JLabelTransactionsTitle = new JLabel("Transacciónes");
+    JLabel JLabelTransactionsTitle = new JLabel("Transacciones");
     JButton JButtonTransaction = new JButton();
     JButton JButtonTransactionHistory = new JButton();
     JLabel JLabelTransaction = new JLabel("Nueva Transacción");
