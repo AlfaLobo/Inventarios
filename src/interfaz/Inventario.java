@@ -142,7 +142,12 @@ public class Inventario {
                 } else {
                     u.productos.add(new Producto(u, JTextFieldName.getText(), Float.parseFloat(JTextFieldCost.getText()), Float.parseFloat(JTextFieldPrice.getText()), JComboBoxProviders.getSelectedIndex()));
                     Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
-                    JOptionPane.showMessageDialog(d, "El producto ha sido añadido.");
+                    Object[] opciones = {"Si", "No"};
+                    int opcion = JOptionPane.showOptionDialog(d, "Producto añadido, desea registrar una compra de este producto?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+                    if (opcion == JOptionPane.YES_OPTION){
+                        d.dispose();
+                        new Compras(f, u, JComboBoxProviders.getSelectedIndex());
+                    }
                     JComboBoxProviders.setSelectedIndex(0);
                     JTextFieldName.setText("");
                     JTextFieldCost.setText("0");

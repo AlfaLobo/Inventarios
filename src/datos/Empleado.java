@@ -12,16 +12,7 @@ public class Empleado implements Serializable {
     public String correo;
     public GregorianCalendar nacimiento;
     public float inversion=0;
-    public float ganancia=0;
 
-    public Empleado(){
-
-    }
-    public Empleado(Usuario u){
-        id=u.empleados.size();
-        nombre=u.nombre;
-        apellidos=u.apellidos;
-    }
     public Empleado(Usuario u, String name, String lastname, float salary, String phone, String email, GregorianCalendar birthday) {
         id=u.empleados.size();
         nombre=name;

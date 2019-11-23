@@ -45,7 +45,7 @@ public class Archivos {
             e.printStackTrace();
         }
     }
-    public static Empleado cargarUsuario(String dir) {
+    public static Usuario cargarUsuario(String dir) {
         Usuario u = null;
         String directorio = System.getProperty("user.dir");
         try {

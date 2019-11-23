@@ -63,7 +63,6 @@ public class InfoProducto {
                         break;
                     }
                 }
-                new RegistroCompra(f, u, p.proveedor, i);
             }
         });
         JButtonEdit.addActionListener(new ActionListener(){

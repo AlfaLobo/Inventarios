@@ -30,7 +30,6 @@ public class CrearCuenta {
     JTextField JTextFieldBalance = new JTextField("0");
     JButton JButtonRegister = new JButton("Registrarse");
     JButton JButtonCancel = new JButton("Cancelar");
-    JLabel JLabelError = new JLabel();
     public CrearCuenta(JFrame f) {
         f.setEnabled(false);
         d = new JDialog(f);
@@ -50,7 +49,6 @@ public class CrearCuenta {
         JButtonCancel.setMaximumSize(d2);
         JButtonCancel.setContentAreaFilled(false);
         JButtonCancel.setBorderPainted(false);
-        JLabelError.setVisible(false);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
@@ -67,13 +65,10 @@ public class CrearCuenta {
                 cambio();
             }
             public void cambio() {
-                JLabelError.setText("Insertar un saldo valido.");
                 try {
                     float temp = Float.parseFloat(JTextFieldBalance.getText());
-                    JLabelError.setVisible(false);
                     JButtonRegister.setEnabled(true);
                 } catch (NumberFormatException i) {
-                    JLabelError.setVisible(true);
                     JButtonRegister.setEnabled(false);
                 }
             }
@@ -86,19 +81,16 @@ public class CrearCuenta {
         JButtonRegister.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (JTextFieldUser.getText().equals("")) {
-                    JLabelError.setText("Nombre de usuario no valido.");
-                    JLabelError.setVisible(true);
+                    JOptionPane.showMessageDialog(d, "Nombre de usuario no valido.");
                 } else if (Archivos.buscarDirectorio("\\Usuarios\\"+JTextFieldUser.getText())) {
-                    JLabelError.setText("El usuario ya existe.");
-                    JLabelError.setVisible(true);
+                    JOptionPane.showMessageDialog(d, "El usuario ya existe.");
                 } else if (String.valueOf(JPasswordFieldConfirmPassword.getPassword()).equals(String.valueOf(JPasswordFieldPassword.getPassword()))) {
                     Usuario u = new Usuario(JTextFieldUser.getText(),String.valueOf(JPasswordFieldPassword.getPassword()),JTextFieldName.getText(),JTextFieldLastName.getText(),Float.parseFloat(JTextFieldBalance.getText()));
                     Sesion s = new Sesion(JTextFieldUser.getText(), u.contraseña);
                     f.setEnabled(true);
                     d.dispose();
                 } else {
-                    JLabelError.setText("Las contraseñas no coinciden.");
-                    JLabelError.setVisible(true);
+                    JOptionPane.showMessageDialog(d, "Las contraseñas no coinciden.");
                 }
             }
         });
@@ -122,7 +114,6 @@ public class CrearCuenta {
         JPanelLogin.add(JTextFieldBalance);
         JPanelLogin.add(JButtonRegister);
         JPanelLogin.add(JButtonCancel);
-        JPanelLogin.add(JLabelError);
         d.add(JPanelLogin);
         d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         d.setVisible(true);

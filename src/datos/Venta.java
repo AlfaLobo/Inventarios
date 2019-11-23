@@ -9,9 +9,9 @@ public class Venta implements Serializable {
     public int cantidad;
     public float total;
     public int cliente;
+    public String formapago;
     public String notas;
     public GregorianCalendar fecha;
-    public String formapago;
     public Producto producto;
     public ArrayList<Venta> productos;
 
@@ -21,9 +21,11 @@ public class Venta implements Serializable {
         cantidad=quantity;
         this.total=total;
     }
-    public Venta(Usuario u, int client, ArrayList<Venta> sales) {
+    public Venta(Usuario u, int client, String payment, String notes, ArrayList<Venta> sales) {
         id=u.ventas.size();
         cliente=client;
+        notas=notes;
+        formapago=payment;
         productos=sales;
         fecha=new GregorianCalendar();
         for (int i=0;i<sales.size();i++){

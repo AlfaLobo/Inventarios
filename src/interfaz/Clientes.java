@@ -1,7 +1,6 @@
 package interfaz;
 
 import algoritmos.Archivos;
-import algoritmos.Busqueda;
 import algoritmos.Interfaces;
 import datos.Cliente;
 import datos.Usuario;

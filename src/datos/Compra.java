@@ -20,9 +20,10 @@ public class Compra implements Serializable {
         cantidad=quantity;
         this.total=total;
     }
-    public Compra(Usuario u, int provider, ArrayList<Compra> purchases) {
+    public Compra(Usuario u, int provider, String notes, ArrayList<Compra> purchases) {
         id=u.compras.size();
         proveedor=provider;
+        notas=notes;
         fecha=new GregorianCalendar();
         productos=purchases;
         for (int i=0;i<purchases.size();i++){

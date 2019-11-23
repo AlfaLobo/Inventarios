@@ -20,11 +20,9 @@ public class MenuPrincipal {
     JFrame f = new JFrame("Inventarios Conejo");
     JPanel JPanelMenu = new JPanel();
     JLabel JLabelLogo = new JLabel();
-    JPanel JPanelInventory = new JPanel();
-    JLabel JLabelInventoryTitle = new JLabel("Inventario");
-    JButton JButtonAddProduct = new JButton();
+    JPanel JPanelAdminister = new JPanel();
+    JLabel JLabelAdministerTitle = new JLabel("Administrar");
     JButton JButtonInventory = new JButton();
-    JLabel JLabelAddProduct = new JLabel("Añadir Producto");
     JLabel JLabelInventory = new JLabel("Administrar");
     JPanel JPanelTransactions = new JPanel();
     JLabel JLabelTransactionsTitle = new JLabel("Transacciónes");
@@ -53,7 +51,7 @@ public class MenuPrincipal {
         TitledBorder title = BorderFactory.createTitledBorder(border, "Menú Principal");
         title.setTitlePosition(TitledBorder.ABOVE_TOP);
         JPanelMenu.setBorder(title);
-        JPanelInventory.setLayout(new GridBagLayout());
+        JPanelAdminister.setLayout(new GridBagLayout());
         JPanelTransactions.setLayout(new GridBagLayout());
         JPanelContacts.setLayout(new GridBagLayout());
         JLabelLogo.addMouseListener(new MouseAdapter() {
@@ -67,11 +65,6 @@ public class MenuPrincipal {
                         ex.printStackTrace();
                     }
                 }
-            }
-        });
-        JButtonAddProduct.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                new RegistroProducto(f, u);
             }
         });
         JButtonInventory.addActionListener(new ActionListener(){
@@ -91,15 +84,19 @@ public class MenuPrincipal {
         });
         JButtonTransaction.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                Object[] opciones = {"Compra", "Venta"};
+                Object[] opciones = {"Venta", "Compra"};
                 int opcion = JOptionPane.showOptionDialog(f, "Que tipo de transacción quiere realizar?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
                 if (opcion == JOptionPane.YES_OPTION){
-                    new RegistroCompra(f, u);
-                } else if (opcion == JOptionPane.NO_OPTION) {
                     if (u.productos.size()!=0){
-                        new RegistroVenta(f, u);
+                        new Ventas(f, u);
                     } else {
                         JOptionPane.showMessageDialog(f, "No existen productos que vender.");
+                    }
+                } else if (opcion == JOptionPane.NO_OPTION) {
+                    if (u.productos.size()!=0){
+                        new Compras(f, u);
+                    } else {
+                        JOptionPane.showMessageDialog(f, "No existen productos que comprar.");
                     }
                 }
             }
@@ -116,15 +113,14 @@ public class MenuPrincipal {
         });
         c.weighty = 1;
         c.weightx = 0.5;
-        Interfaces.addTitle(JPanelInventory, JLabelInventoryTitle, c, 0, 0);
-        Interfaces.addImageButton(JPanelInventory, JButtonAddProduct, c, 0, 1, "addthis.png");
-        Interfaces.addImageButton(JPanelInventory, JButtonInventory, c, 1, 1, "book-3.png");
-        Interfaces.addLabel(JPanelInventory, JLabelAddProduct, c, 0, 2);
-        Interfaces.addLabel(JPanelInventory, JLabelInventory, c, 1, 2);
+        Interfaces.addTitle(JPanelAdminister, JLabelAdministerTitle, c, 0, 0);
+        Interfaces.addImageButton(JPanelAdminister, JButtonTransaction, c, 0, 1, "shopping-cart-8.png");
+        Interfaces.addImageButton(JPanelAdminister, JButtonInventory, c, 1, 1, "book-3.png");
+        Interfaces.addLabel(JPanelAdminister, JLabelTransaction, c, 0, 2);
+        Interfaces.addLabel(JPanelAdminister, JLabelInventory, c, 1, 2);
         Interfaces.addTitle(JPanelTransactions, JLabelTransactionsTitle, c, 0, 0);
-        Interfaces.addImageButton(JPanelTransactions, JButtonTransaction, c, 0, 1, "shopping-cart-8.png");
+
         Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 1, 1, "book-3.png");
-        Interfaces.addLabel(JPanelTransactions, JLabelTransaction, c, 0, 2);
         Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 1, 2);
         Interfaces.addTitle(JPanelContacts, JLabelContactsTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelContacts, JButtonClients, c, 0, 1, "add-user.png");
@@ -132,7 +128,7 @@ public class MenuPrincipal {
         Interfaces.addLabel(JPanelContacts, JLabelClients, c, 0, 2);
         Interfaces.addLabel(JPanelContacts, JLabelProviders, c, 1, 2);
         c.gridwidth=2;
-        Interfaces.addPanel(JPanelMenu, JPanelInventory, c, 0, 0);
+        Interfaces.addPanel(JPanelMenu, JPanelAdminister, c, 0, 0);
         c.gridwidth=1;
         c.anchor = GridBagConstraints.PAGE_START;
         Interfaces.addPanel(JPanelMenu, JPanelTransactions, c, 0, 1);

@@ -20,7 +20,6 @@ public class Inicio implements Runnable {
     JButton JButtonLogin = new JButton("Iniciar Sesión");
     JCheckBox JCheckBoxRemember = new JCheckBox("Recordar");
     JButton JButtonNewAccount = new JButton("Crear Nuevo Usuario");
-    JLabel JLabelError = new JLabel("La combinación de usuario y contraseña no fue encontrada.");
 
     public Inicio(){
         if (Archivos.buscarArchivo("\\sesion.txt")) {
@@ -61,7 +60,6 @@ public class Inicio implements Runnable {
         JButtonNewAccount.setMaximumSize(d2);
         JButtonNewAccount.setContentAreaFilled(false);
         JButtonNewAccount.setBorderPainted(false);
-        JLabelError.setVisible(false);
         JButtonLogin.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (Archivos.buscarArchivo("\\Usuarios\\"+JTextFieldUser.getText()+"\\datos.txt")){
@@ -78,10 +76,10 @@ public class Inicio implements Runnable {
                         new MenuPrincipal(u);
                         f.dispose();
                     } else {
-                        JLabelError.setVisible(true);
+                        JOptionPane.showMessageDialog(f, "La combinación de usuario y contraseña no fue encontrada.");
                     }
                 } else {
-                    JLabelError.setVisible(true);
+                    JOptionPane.showMessageDialog(f, "La combinación de usuario y contraseña no fue encontrada.");
                 }
             }
         });

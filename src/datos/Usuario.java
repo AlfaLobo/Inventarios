@@ -4,12 +4,15 @@ import algoritmos.Archivos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
-public class Usuario extends Empleado implements Serializable {
+public class Usuario implements Serializable {
     public String usuario;
     public String contraseña;
+    public String nombre;
+    public String apellidos;
     public float saldo;
+    public float inversion;
+    public float ganancia;
     public ArrayList<Proveedor> proveedores;
     public ArrayList<Empleado> empleados;
     public ArrayList<Cliente> clientes;
@@ -34,8 +37,7 @@ public class Usuario extends Empleado implements Serializable {
         compras = new ArrayList<>();
         ventas = new ArrayList<>();
         usuarios = new ArrayList<>();
-        clientes.add(new Cliente(this, "Generico "));
-        empleados.add(this);
+        clientes.add(new Cliente(this, "Generico"));
         proveedores.add(new Proveedor(this, "Generico", null, null, null));
         Archivos.guardarArchivo(this, "\\Usuarios\\"+user+"\\datos.txt");
     }
