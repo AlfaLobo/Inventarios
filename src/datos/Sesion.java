@@ -11,8 +11,8 @@ public class Sesion implements Serializable {
     public Sesion(String ID, String password) {
         id=ID;
         contraseña=password;
-        String directorio = System.getProperty("user.dir");
-        directorio = directorio + "\\sesion.txt";
+        String directorio = System.getProperty("user.home");
+        directorio = directorio + "/Documents/AlfaLoboAdministrador/sesion.txt";
         try {
             FileOutputStream fos = new FileOutputStream(directorio);
             ObjectOutputStream oos = new ObjectOutputStream(fos);

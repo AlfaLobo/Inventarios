@@ -22,10 +22,10 @@ public class Inicio implements Runnable {
     JButton JButtonNewAccount = new JButton("Crear Nuevo Usuario");
 
     public Inicio(){
-        if (Archivos.buscarArchivo("\\sesion.txt")) {
+        if (Archivos.buscarArchivo("sesion.txt")) {
             Sesion s;
-            String directorio = System.getProperty("user.dir");
-            directorio = directorio + "\\sesion.txt";
+            String directorio = System.getProperty("user.home");
+            directorio = directorio + "/Documents/AlfaLoboAdministrador/sesion.txt";
             try {
                 FileInputStream fis = new FileInputStream(directorio);
                 ObjectInputStream ois = new ObjectInputStream(fis);
@@ -40,8 +40,9 @@ public class Inicio implements Runnable {
             } catch (IOException i) {
                 i.printStackTrace();
             }
-        } else if (Archivos.buscarDirectorio("Usuarios")==false){
-            Archivos.crearDirectorio("\\Usuarios");
+        } else if (Archivos.buscarDirectorio("AlfaLoboAdministrador/Usuarios")==false){
+            Archivos.crearDirectorio("AlfaLoboAdministrador");
+            Archivos.crearDirectorio("AlfaLoboAdministrador/Usuarios");
             new CrearCuenta(f);
         }
         f.setSize(375,275);
@@ -62,24 +63,21 @@ public class Inicio implements Runnable {
         JButtonNewAccount.setBorderPainted(false);
         JButtonLogin.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if (Archivos.buscarArchivo("\\Usuarios\\"+JTextFieldUser.getText()+"\\datos.txt")){
-                    Usuario u = (Usuario) Archivos.cargarUsuario("\\Usuarios\\"+JTextFieldUser.getText()+"\\datos.txt");
+                if (Archivos.buscarArchivo("Usuarios/"+JTextFieldUser.getText()+"/datos.txt")){
+                    Usuario u = (Usuario) Archivos.cargarUsuario(JTextFieldUser.getText()+"/datos.txt");
                     if (u.contraseña.equals(String.valueOf(JPasswordFieldPassword.getPassword()))){
                         if (JCheckBoxRemember.isSelected()){
                             Sesion s = new Sesion(JTextFieldUser.getText(), u.contraseña);
-                        } else if (Archivos.buscarArchivo("\\sesion.txt")){
-                            String directorio = System.getProperty("user.dir");
-                            directorio = directorio + "\\sesion.txt";
-                            File f = new File(directorio);
-                            f.delete();
+                        } else if (Archivos.buscarArchivo("sesion.txt")){
+                            Archivos.eliminarArchivo("sesion.txt");
                         }
                         new MenuPrincipal(u);
                         f.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(f, "La combinación de usuario y contraseña no fue encontrada.");
+                        JOptionPane.showMessageDialog(f, "Contraseña incorrecta.");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(f, "La combinación de usuario y contraseña no fue encontrada.");
+                    JOptionPane.showMessageDialog(f, "El usuario no fue encontrado.");
                 }
             }
         });

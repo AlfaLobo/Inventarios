@@ -1,7 +1,6 @@
 package datos;
 
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 
 public class Cliente implements Serializable  {
     public int id;
@@ -9,8 +8,8 @@ public class Cliente implements Serializable  {
     public String apellidos;
     public String telefono;
     public String correo;
-    public String notas;
     public float ganancia=0;
+    public String notas;
 
     public Cliente(Usuario u, String name) {
         id=u.clientes.size();

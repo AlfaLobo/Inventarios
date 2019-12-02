@@ -13,8 +13,8 @@ public class Producto implements Serializable {
     public float inversion=0;
     public float ganancia=0;
     public int proveedor;
-    public String notas;
     public List<Expirable> expirables = new ArrayList<>();
+    public String notas;
 
     public Producto(){
 

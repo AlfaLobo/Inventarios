@@ -1,5 +1,7 @@
 package datos;
 
+import algoritmos.Funciones;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -8,7 +10,7 @@ public class Venta implements Serializable {
     public int id;
     public int cantidad;
     public float total;
-    public int cliente;
+    public String cliente;
     public String formapago;
     public String notas;
     public GregorianCalendar fecha;
@@ -23,7 +25,7 @@ public class Venta implements Serializable {
     }
     public Venta(Usuario u, int client, String payment, String notes, ArrayList<Venta> sales) {
         id=u.ventas.size();
-        cliente=client;
+        cliente=u.clientes.get(client).nombre;
         notas=notes;
         formapago=payment;
         productos=sales;
@@ -31,6 +33,9 @@ public class Venta implements Serializable {
         for (int i=0;i<sales.size();i++){
             if (sales.get(i).producto instanceof Expirable){
                 u.productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad-=sales.get(i).cantidad;
+                if (u.productos.get(sales.get(i).producto.id).expirables.get(((Expirable) sales.get(i).producto).ap).cantidad<=0) {
+                    Funciones.eliminarExpirable(u, sales.get(i).producto, ((Expirable) sales.get(i).producto).ap);
+                }
             }
             u.productos.get(sales.get(i).id).cantidad-=sales.get(i).cantidad;
             u.productos.get(sales.get(i).id).ganancia+=sales.get(i).total;
@@ -38,6 +43,7 @@ public class Venta implements Serializable {
             total+=sales.get(i).total;
         }
         u.clientes.get(client).ganancia+=total;
+        u.ganancia+=total;
         u.saldo+=total;
     }
 }

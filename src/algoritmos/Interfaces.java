@@ -3,7 +3,6 @@ package algoritmos;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
 public class Interfaces {
     public static void addPanel(JPanel p, JPanel p1, GridBagConstraints c, int x, int y){
@@ -35,9 +34,22 @@ public class Interfaces {
     }
     public static void addImageButton(JPanel p, JButton b, GridBagConstraints c, int x, int y, String dir){
         try {
-            String directorio = System.getProperty("user.dir");
-            Image img = ImageIO.read(new File(directorio+"\\resources\\"+dir));
+            Image img = ImageIO.read(Interfaces.class.getResource("resources/"+dir));
             b.setIcon(new ImageIcon(img));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        b.setContentAreaFilled(false);
+        b.setBorderPainted(false);
+        c.gridx=x;
+        c.gridy=y;
+        p.add(b, c);
+    }
+    public static void addImageButton(JPanel p, JButton b, GridBagConstraints c, int x, int y, int width, int height, String dir){
+        try {
+            Image img = ImageIO.read(Interfaces.class.getResource("resources/"+dir));
+            Image newImage = img.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+            b.setIcon(new ImageIcon(newImage));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -61,8 +73,7 @@ public class Interfaces {
     }
     public static  void  addImage(JPanel p, JLabel l, GridBagConstraints c, int x, int y, String dir){
         try {
-            String directorio = System.getProperty("user.dir");
-            Image img = ImageIO.read(new File(directorio+"\\resources\\"+dir));
+            Image img = ImageIO.read(Interfaces.class.getResource("resources/"+dir));
             l.setIcon(new ImageIcon(img));
         } catch (Exception e) {
             System.out.println(e);

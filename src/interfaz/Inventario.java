@@ -3,6 +3,7 @@ package interfaz;
 import algoritmos.Archivos;
 import algoritmos.Busqueda;
 import algoritmos.Interfaces;
+import algoritmos.Ordenamiento;
 import datos.Producto;
 import datos.Usuario;
 
@@ -11,8 +12,6 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -67,6 +66,7 @@ public class Inventario {
             };
         };
         tb.setRowHeight(38);
+        model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Cantidad");
         model.addColumn("Costo");
@@ -75,7 +75,7 @@ public class Inventario {
         model.addColumn("Ganancias");
         model.addColumn("Proveedor");
         for (int i = 0;i<u.productos.size();i++){
-            model.addRow(new Object[]{u.productos.get(i).nombre, u.productos.get(i).cantidad, u.productos.get(i).costo, u.productos.get(i).precio, u.productos.get(i).inversion,  u.productos.get(i).ganancia, u.proveedores.get(u.productos.get(i).proveedor).nombre});
+            model.addRow(new Object[]{u.productos.get(i).id, u.productos.get(i).nombre, u.productos.get(i).cantidad, u.productos.get(i).costo, u.productos.get(i).precio, u.productos.get(i).inversion,  u.productos.get(i).ganancia, u.proveedores.get(u.productos.get(i).proveedor).nombre});
         }
         JScrollPane sp = new JScrollPane(tb);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -88,12 +88,17 @@ public class Inventario {
                 f.setEnabled(true);
             }
         });
-        tb.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            public void valueChanged(ListSelectionEvent event) {
-                try {
-                    new InfoProducto(f, d, u, u.productos.get(tb.getSelectedRow()));
-                } catch (IndexOutOfBoundsException e) {
-
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                Ordenamiento.ordenarTabla(tb, model, tb.columnAtPoint(e.getPoint()));
+            }
+        });
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                for(int i=0;i<tb.getColumnCount();i++){
+                    if(tb.getColumnName(i).equals("ID")){
+                        new Informacion(d, u, u.productos.get((Integer) model.getValueAt(tb.rowAtPoint(evt.getPoint()), i)), model, tb);
+                    }
                 }
             }
         });
@@ -184,18 +189,17 @@ public class Inventario {
                     JOptionPane.showMessageDialog(d, "El producto ya existe.");
                 } else {
                     u.productos.add(new Producto(u, JTextFieldName.getText(), Float.parseFloat(JTextFieldCost.getText()), Float.parseFloat(JTextFieldPrice.getText()), JComboBoxProviders.getSelectedIndex(), notes));
-                    Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
+                    Archivos.guardarArchivo(u);
                     Object[] opciones = {"Si", "No"};
                     int opcion = JOptionPane.showOptionDialog(d, "Producto añadido, desea registrar una compra de este producto?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
                     if (opcion == JOptionPane.YES_OPTION){
                         d.dispose();
                         new Compras(f, u, JComboBoxProviders.getSelectedIndex());
                     }
-                    JComboBoxProviders.setSelectedIndex(0);
                     JTextFieldName.setText("");
                     JTextFieldCost.setText("0");
                     JTextFieldPrice.setText("0");
-                    model.addRow(new Object[]{u.productos.get(u.productos.size()-1).nombre, u.productos.get(u.productos.size()-1).cantidad, u.productos.get(u.productos.size()-1).costo, u.productos.get(u.productos.size()-1).precio, u.productos.get(u.productos.size()-1).inversion,  u.productos.get(u.productos.size()-1).ganancia, u.proveedores.get(u.productos.get(u.productos.size()-1).proveedor).nombre});
+                    model.addRow(new Object[]{u.productos.get(u.productos.size()-1).id, u.productos.get(u.productos.size()-1).nombre, u.productos.get(u.productos.size()-1).cantidad, u.productos.get(u.productos.size()-1).costo, u.productos.get(u.productos.size()-1).precio, u.productos.get(u.productos.size()-1).inversion,  u.productos.get(u.productos.size()-1).ganancia, u.proveedores.get(u.productos.get(u.productos.size()-1).proveedor).nombre});
                     sp.repaint();
                 }
             }

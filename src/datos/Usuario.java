@@ -23,7 +23,7 @@ public class Usuario implements Serializable {
     public ArrayList<Usuario> usuarios;
 
     public Usuario(String user, String password, String name, String lastname, String business, float balance){
-        Archivos.crearDirectorio("\\Usuarios\\"+user);
+        Archivos.crearDirectorio("AlfaLoboAdministrador/Usuarios/"+user);
         usuario=user;
         contraseña=password;
         nombre=name;
@@ -40,6 +40,6 @@ public class Usuario implements Serializable {
         clientes.add(new Cliente(this, "Generico"));
         proveedores.add(new Proveedor(this, "Propio", null, null, null, null));
         proveedores.add(new Proveedor(this, "Generico", null, null, null, null));
-        Archivos.guardarArchivo(this, "\\Usuarios\\"+user+"\\datos.txt");
+        Archivos.guardarArchivo(this);
     }
 }

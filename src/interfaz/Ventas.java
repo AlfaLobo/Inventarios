@@ -2,6 +2,7 @@ package interfaz;
 
 import algoritmos.Archivos;
 import algoritmos.Interfaces;
+import algoritmos.Ordenamiento;
 import datos.Usuario;
 import datos.Venta;
 
@@ -18,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Ventas {
     String notes = "";
@@ -76,7 +78,7 @@ public class Ventas {
             } catch (NullPointerException e) {
 
             }
-            model.addRow(new Object[]{u.ventas.get(i).id, u.clientes.get(u.ventas.get(i).cliente).nombre, u.ventas.get(i).formapago, u.ventas.get(i).total +"$", fecha});
+            model.addRow(new Object[]{u.ventas.get(i).id, u.ventas.get(i).cliente, u.ventas.get(i).formapago, u.ventas.get(i).total +"$", fecha});
         }
         JScrollPane sp = new JScrollPane(tb);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -97,6 +99,32 @@ public class Ventas {
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
+            }
+        });
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (tb.getColumnName(tb.columnAtPoint(e.getPoint())).equals("Nacimiento")){
+                    ArrayList<GregorianCalendar> arr = new ArrayList<>();
+                    for(int i=0;i<tb.getColumnCount();i++){
+                        if(tb.getColumnName(i).equals("ID")){
+                            for (int j=0;j<u.ventas.size();j++){
+                                arr.add(u.ventas.get((Integer) tb.getValueAt(j, i)).fecha);
+                            }
+                            Ordenamiento.ordenarFechas(tb, model, arr);
+                        }
+                    }
+                } else {
+                    Ordenamiento.ordenarTabla(tb, model, tb.columnAtPoint(e.getPoint()));
+                }
+            }
+        });
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                for(int i=0;i<tb.getColumnCount();i++){
+                    if(tb.getColumnName(i).equals("ID")){
+                        new Informacion(d, u, u.ventas.get((Integer) model.getValueAt(tb.rowAtPoint(evt.getPoint()), i)), model, tb);
+                    }
+                }
             }
         });
         JComboBoxProducts.addActionListener (new ActionListener() {
@@ -194,12 +222,8 @@ public class Ventas {
             public void actionPerformed(ActionEvent e){
                 if (ventas.size()!=0){
                     u.ventas.add(new Venta(u, JComboBoxClients.getSelectedIndex(), JTextFieldPaymentMethod.getText(), notes, ventas));
-                    Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
-                    Object[] opciones = {"Si", "No"};
-                    int opcion = JOptionPane.showOptionDialog(d, "Venta registrada, desea imprimir el recibo?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-                    if (opcion == JOptionPane.YES_OPTION){
-
-                    }
+                    Archivos.guardarArchivo(u);
+                    JOptionPane.showMessageDialog(d, "Venta registrada.");
                     ventas.clear();
                     JComboBoxClients.setEnabled(true);
                     JComboBoxClients.setSelectedIndex(0);
@@ -208,7 +232,7 @@ public class Ventas {
                     JTextFieldTotal.setText("0");
                     ta.setText("");
                     JTextFieldPaymentMethod.setText("");
-                    model.addRow(new Object[]{u.ventas.get(u.ventas.size()-1).id, u.clientes.get(u.ventas.get(u.ventas.size()-1).cliente).nombre, u.ventas.get(u.ventas.size()-1).formapago, u.ventas.get(u.ventas.size()-1).total +"$", u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.DAY_OF_MONTH)+"-"+u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.MONTH)+"-"+u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.YEAR)});
+                    model.addRow(new Object[]{u.ventas.get(u.ventas.size()-1).id, u.ventas.get(u.ventas.size()-1).cliente, u.ventas.get(u.ventas.size()-1).formapago, u.ventas.get(u.ventas.size()-1).total +"$", u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.DAY_OF_MONTH)+"-"+u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.MONTH)+"-"+u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.YEAR)});
                     sp.repaint();
                 } else {
                     JOptionPane.showMessageDialog(d, "Añadir al menos un producto a vender.");

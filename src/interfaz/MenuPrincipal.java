@@ -9,11 +9,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class MenuPrincipal {
     GridBagConstraints c = new GridBagConstraints();
@@ -27,17 +22,16 @@ public class MenuPrincipal {
     JLabel JLabelInventory = new JLabel("Inventario");
     JLabel JLabelEmployees = new JLabel("Empleados");
     JPanel JPanelTransactions = new JPanel();
-    JLabel JLabelTransactionsTitle = new JLabel("Transacciones");
+    JLabel JLabelTransactionsTitle = new JLabel("Transacciónes");
     JButton JButtonTransaction = new JButton();
-    JButton JButtonTransactionHistory = new JButton();
     JLabel JLabelTransaction = new JLabel("Nueva Transacción");
-    JLabel JLabelTransactionHistory = new JLabel("Historial");
     JPanel JPanelContacts = new JPanel();
     JLabel JLabelContactsTitle = new JLabel("Contactos");
     JButton JButtonClients = new JButton();
     JButton JButtonProviders = new JButton();
     JLabel JLabelClients = new JLabel("Clientes");
     JLabel JLabelProviders = new JLabel("Proveedores");
+    JButton JButtonUser = new JButton();
     JButton JButtonExit = new JButton();
 
     public MenuPrincipal(Usuario u) {
@@ -56,19 +50,6 @@ public class MenuPrincipal {
         JPanelAdminister.setLayout(new GridBagLayout());
         JPanelTransactions.setLayout(new GridBagLayout());
         JPanelContacts.setLayout(new GridBagLayout());
-        JLabelLogo.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                    try {
-                        Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=oCmMbil5wCY"));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    } catch (URISyntaxException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        });
         JButtonInventory.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 new Inventario(f, u);
@@ -91,7 +72,7 @@ public class MenuPrincipal {
         });
         JButtonTransaction.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                Object[] opciones = {"Venta", "Pago"};
+                Object[] opciones = {"Venta", "Compra"};
                 int opcion = JOptionPane.showOptionDialog(f, "Que tipo de transacción quiere realizar?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
                 if (u.productos.size()!=0){
                     if (opcion == JOptionPane.YES_OPTION){
@@ -108,9 +89,9 @@ public class MenuPrincipal {
                 }
             }
         });
-        JButtonTransactionHistory.addActionListener(new ActionListener(){
+        JButtonUser.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                JOptionPane.showMessageDialog(f, "No está implementado UnU");
+                new InfoUsuario(f, u);
             }
         });
         JButtonExit.addActionListener(new ActionListener(){
@@ -122,14 +103,12 @@ public class MenuPrincipal {
         c.weightx = 0.5;
         Interfaces.addTitle(JPanelAdminister, JLabelAdministerTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelAdminister, JButtonInventory, c, 0, 1, "book-3.png");
-        Interfaces.addImageButton(JPanelAdminister, JButtonEmployees, c, 1, 1, "book-3.png");
+        Interfaces.addImageButton(JPanelAdminister, JButtonEmployees, c, 1, 1,  "empleados1.png");
         Interfaces.addLabel(JPanelAdminister, JLabelInventory, c, 0, 2);
         Interfaces.addLabel(JPanelAdminister, JLabelEmployees, c, 1, 2);
         Interfaces.addTitle(JPanelTransactions, JLabelTransactionsTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelTransactions, JButtonTransaction, c, 0, 1, "shopping-cart-8.png");
-        Interfaces.addImageButton(JPanelTransactions, JButtonTransactionHistory, c, 1, 1, "receipt-5.png");
         Interfaces.addLabel(JPanelTransactions, JLabelTransaction, c, 0, 2);
-        Interfaces.addLabel(JPanelTransactions, JLabelTransactionHistory, c, 1, 2);
         Interfaces.addTitle(JPanelContacts, JLabelContactsTitle, c, 0, 0);
         Interfaces.addImageButton(JPanelContacts, JButtonClients, c, 0, 1, "add-user.png");
         Interfaces.addImageButton(JPanelContacts, JButtonProviders, c, 1, 1, "shop-5.png");
@@ -143,6 +122,8 @@ public class MenuPrincipal {
         Interfaces.addPanel(JPanelMenu, JPanelContacts, c, 1, 1);
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         Interfaces.addImage(JPanelMenu, JLabelLogo, c, 0, 0, "image(1).png");
+        c.anchor = GridBagConstraints.FIRST_LINE_END;
+        Interfaces.addImageButton(JPanelMenu, JButtonUser,c, 1, 0, "usuario1.png");
         c.anchor = GridBagConstraints.LAST_LINE_START;
         Interfaces.addImageButton(JPanelMenu, JButtonExit, c, 0, 1, "arrow-34.png");
         f.add(JPanelMenu);

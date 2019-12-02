@@ -1,8 +1,6 @@
 package interfaz;
 
-import algoritmos.Archivos;
-import algoritmos.Busqueda;
-import algoritmos.Interfaces;
+import algoritmos.*;
 import datos.Proveedor;
 import datos.Usuario;
 
@@ -13,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Proveedores {
     String notes = "";
@@ -59,20 +59,35 @@ public class Proveedores {
         DefaultTableModel model = new DefaultTableModel();
         JTable tb = new JTable(model);
         tb.setRowHeight(38);
+        model.addColumn("ID");
         model.addColumn("Nombre");
-        model.addColumn("Telefono");
+        model.addColumn("Teléfono");
         model.addColumn("Correo");
         model.addColumn("Dirección");
         model.addColumn("Total Invertido");
-        model.addColumn("Ganancias Generadas");
+        model.addColumn("Ganancia Generada");
         for (int i = 0;i<u.proveedores.size();i++){
-            model.addRow(new Object[]{u.proveedores.get(i).nombre, u.proveedores.get(i).telefono, u.proveedores.get(i).correo, u.proveedores.get(i).direccion, Float.toString(u.proveedores.get(i).inversion), Float.toString(u.proveedores.get(i).ganancia)});
+            model.addRow(new Object[]{u.proveedores.get(i).id, u.proveedores.get(i).nombre, u.proveedores.get(i).telefono, u.proveedores.get(i).correo, u.proveedores.get(i).direccion, Float.toString(u.proveedores.get(i).inversion), Float.toString(u.proveedores.get(i).ganancia)});
         }
         JScrollPane sp = new JScrollPane(tb);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
+            }
+        });
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                Ordenamiento.ordenarTabla(tb, model, tb.columnAtPoint(e.getPoint()));
+            }
+        });
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                for(int i=0;i<tb.getColumnCount();i++){
+                    if(tb.getColumnName(i).equals("ID")){
+                        new Informacion(d, u, u.proveedores.get((Integer) model.getValueAt(tb.rowAtPoint(evt.getPoint()), i)), model, tb);
+                    }
+                }
             }
         });
         JButtonNotes.addActionListener(new ActionListener(){
@@ -89,7 +104,7 @@ public class Proveedores {
                     JOptionPane.showMessageDialog(d, "El proveedor ya existe.");
                 } else {
                     u.proveedores.add(new Proveedor(u, JTextFieldName.getText(), JTextFieldPhone.getText(), JTextFieldEmail.getText(), JTextFieldAddress.getText(), notes));
-                    Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
+                    Archivos.guardarArchivo(u);
                     Object[] opciones = {"Si", "No"};
                     int opcion = JOptionPane.showOptionDialog(d, "Registro exitoso, desea añadir un producto a este proveedor?", "Elegir una opción", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
                     if (opcion == JOptionPane.YES_OPTION){
@@ -100,7 +115,7 @@ public class Proveedores {
                     JTextFieldPhone.setText("");
                     JTextFieldEmail.setText("");
                     JTextFieldAddress.setText("");
-                    model.addRow(new Object[]{u.proveedores.get(u.proveedores.size()-1).nombre, u.proveedores.get(u.proveedores.size()-1).telefono, u.proveedores.get(u.proveedores.size()-1).correo, u.proveedores.get(u.proveedores.size()-1).direccion, Float.toString(u.proveedores.get(u.proveedores.size()-1).inversion), Float.toString(u.proveedores.get(u.proveedores.size()-1).ganancia)});
+                    model.addRow(new Object[]{u.proveedores.get(u.proveedores.size()-1).id, u.proveedores.get(u.proveedores.size()-1).nombre, u.proveedores.get(u.proveedores.size()-1).telefono, u.proveedores.get(u.proveedores.size()-1).correo, u.proveedores.get(u.proveedores.size()-1).direccion, Float.toString(u.proveedores.get(u.proveedores.size()-1).inversion), Float.toString(u.proveedores.get(u.proveedores.size()-1).ganancia)});
                     sp.repaint();
                 }
             }

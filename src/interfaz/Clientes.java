@@ -2,6 +2,7 @@ package interfaz;
 
 import algoritmos.Archivos;
 import algoritmos.Interfaces;
+import algoritmos.Ordenamiento;
 import datos.Cliente;
 import datos.Usuario;
 
@@ -12,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Clientes {
     String notes = "";
@@ -55,19 +58,34 @@ public class Clientes {
         DefaultTableModel model = new DefaultTableModel();
         JTable tb = new JTable(model);
         tb.setRowHeight(38);
+        model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Apellidos");
-        model.addColumn("Telefono");
+        model.addColumn("Teléfono");
         model.addColumn("Correo");
         model.addColumn("Ganancias");
         for (int i = 0;i<u.clientes.size();i++){
-            model.addRow(new Object[]{u.clientes.get(i).nombre, u.clientes.get(i).apellidos, u.clientes.get(i).telefono, u.clientes.get(i).correo, Float.toString(u.clientes.get(i).ganancia)});
+            model.addRow(new Object[]{u.clientes.get(i).id, u.clientes.get(i).nombre, u.clientes.get(i).apellidos, u.clientes.get(i).telefono, u.clientes.get(i).correo, u.clientes.get(i).ganancia});
         }
         JScrollPane sp = new JScrollPane(tb);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
+            }
+        });
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                Ordenamiento.ordenarTabla(tb, model, tb.columnAtPoint(e.getPoint()));
+            }
+        });
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                for(int i=0;i<tb.getColumnCount();i++){
+                    if(tb.getColumnName(i).equals("ID")){
+                        new Informacion(d, u, u.clientes.get((Integer) model.getValueAt(tb.rowAtPoint(evt.getPoint()), i)), model, tb);
+                    }
+                }
             }
         });
         JButtonNotes.addActionListener(new ActionListener(){
@@ -82,13 +100,13 @@ public class Clientes {
                     JOptionPane.showMessageDialog(d, "Nombre no valido.");
                 } else {
                     u.clientes.add(new Cliente(u, JTextFieldName.getText(), JTextFieldLastName.getText(), JTextFieldPhone.getText(), JTextFieldEmail.getText(), notes));
-                    Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
+                    Archivos.guardarArchivo(u);
                     JOptionPane.showMessageDialog(d, "El cliente ha sido añadido.");
                     JTextFieldName.setText("");
                     JTextFieldLastName.setText("");
                     JTextFieldPhone.setText("");
                     JTextFieldEmail.setText("");
-                    model.addRow(new Object[]{u.clientes.get(u.clientes.size()-1).nombre, u.clientes.get(u.clientes.size()-1).apellidos, u.clientes.get(u.clientes.size()-1).telefono, u.clientes.get(u.clientes.size()-1).correo, Float.toString(u.clientes.get(u.clientes.size()-1).ganancia)});
+                    model.addRow(new Object[]{u.clientes.get(u.clientes.size()-1).id, u.clientes.get(u.clientes.size()-1).nombre, u.clientes.get(u.clientes.size()-1).apellidos, u.clientes.get(u.clientes.size()-1).telefono, u.clientes.get(u.clientes.size()-1).correo, Float.toString(u.clientes.get(u.clientes.size()-1).ganancia)});
                     sp.repaint();
                 }
             }

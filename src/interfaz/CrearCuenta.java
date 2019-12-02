@@ -84,7 +84,7 @@ public class CrearCuenta {
             public void actionPerformed(ActionEvent e){
                 if (JTextFieldUser.getText().equals("")) {
                     JOptionPane.showMessageDialog(d, "Nombre de usuario no valido.");
-                } else if (Archivos.buscarDirectorio("\\Usuarios\\"+JTextFieldUser.getText())) {
+                } else if (Archivos.buscarDirectorio("/Usuarios/"+JTextFieldUser.getText())) {
                     JOptionPane.showMessageDialog(d, "El usuario ya existe.");
                 } else if (String.valueOf(JPasswordFieldConfirmPassword.getPassword()).equals(String.valueOf(JPasswordFieldPassword.getPassword()))) {
                     Usuario u = new Usuario(JTextFieldUser.getText(),String.valueOf(JPasswordFieldPassword.getPassword()),JTextFieldName.getText(),JTextFieldLastName.getText(),JTextFieldBusiness.getText(),Float.parseFloat(JTextFieldBalance.getText()));

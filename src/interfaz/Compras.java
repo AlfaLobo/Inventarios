@@ -2,6 +2,7 @@ package interfaz;
 
 import algoritmos.Archivos;
 import algoritmos.Interfaces;
+import algoritmos.Ordenamiento;
 import datos.Compra;
 import datos.Expirable;
 import datos.Usuario;
@@ -71,19 +72,19 @@ public class Compras {
         model.addColumn("Proveedor");
         model.addColumn("Total");
         model.addColumn("Fecha");
-        for (int i = 0;i<u.compras.size();i++){
-            String fecha = "";
-            try {
-                fecha = u.compras.get(i).fecha.get(Calendar.DAY_OF_MONTH)+"/"+u.compras.get(i).fecha.get(Calendar.MONTH)+"/"+u.compras.get(i).fecha.get(Calendar.YEAR);
-            } catch (NullPointerException e) {
-
-            }
-            model.addRow(new Object[]{u.compras.get(i).id, u.clientes.get(u.compras.get(i).proveedor).nombre, u.compras.get(i).total +"$", fecha});
+        for (int i = 0; i<u.compras.size(); i++){
+            model.addRow(new Object[]{u.compras.get(i).id, u.compras.get(i).proveedor, u.compras.get(i).total +"$", u.compras.get(i).fecha.get(Calendar.DAY_OF_MONTH)+"/"+u.compras.get(i).fecha.get(Calendar.MONTH)+"/"+u.compras.get(i).fecha.get(Calendar.YEAR)});
         }
         JScrollPane sp = new JScrollPane(tb);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         for (int i=0;i<u.proveedores.size();i++) {
             JComboBoxProviders.addItem(u.proveedores.get(i).nombre);
+        }
+        for (int i=0;i<u.proveedores.size();i++) {
+            if (u.proveedores.get(i).productos.size()>0){
+                JComboBoxProviders.setSelectedIndex(i);
+                break;
+            }
         }
         for (int i=0;i<u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.size();i++) {
             JComboBoxProducts.addItem(u.productos.get(u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.get(i)).nombre);
@@ -102,11 +103,40 @@ public class Compras {
                 f.setEnabled(true);
             }
         });
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (tb.getColumnName(tb.columnAtPoint(e.getPoint())).equals("Nacimiento")){
+                    ArrayList<GregorianCalendar> arr = new ArrayList<>();
+                    for(int i=0;i<tb.getColumnCount();i++){
+                        if(tb.getColumnName(i).equals("ID")){
+                            for (int j=0;j<u.compras.size();j++){
+                                arr.add(u.compras.get((Integer) tb.getValueAt(j, i)).fecha);
+                            }
+                            Ordenamiento.ordenarFechas(tb, model, arr);
+                        }
+                    }
+                } else {
+                    Ordenamiento.ordenarTabla(tb, model, tb.columnAtPoint(e.getPoint()));
+                }
+            }
+        });
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                for(int i=0;i<tb.getColumnCount();i++){
+                    if(tb.getColumnName(i).equals("ID")){
+                        new Informacion(d, u, u.compras.get((Integer) model.getValueAt(tb.rowAtPoint(evt.getPoint()), i)), model, tb);
+                    }
+                }
+            }
+        });
         JComboBoxProviders.addActionListener (new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JComboBoxProducts.removeAllItems();
                 for (int i=0;i<u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.size();i++) {
                     JComboBoxProducts.addItem(u.productos.get(u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.get(i)).nombre);
+                }
+                if(u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.size()==0){
+                    JComboBoxProducts.addItem("Sin productos");
                 }
             }
         });
@@ -163,15 +193,15 @@ public class Compras {
         });
         JButtonAdd.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if (JComboBoxProducts.getItemCount()!=0) {
-                    JComboBoxProviders.setEnabled(false);
+                try {
                     if (JCheckBoxExpiration.isSelected()){
-                        compras.add(new Compra(new Expirable(u.productos.get(u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.get(JComboBoxProducts.getSelectedIndex())), new GregorianCalendar((Integer) JComboBoxYear.getItemAt(JComboBoxYear.getSelectedIndex()), JComboBoxMonth.getSelectedIndex(), JComboBoxDay.getSelectedIndex())), Integer.parseInt(JTextFieldQuantity.getText()), Float.parseFloat(JTextFieldTotal.getText())));
+                        compras.add(new Compra(new Expirable(u.productos.get(u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.get(JComboBoxProducts.getSelectedIndex())), new GregorianCalendar((Integer) JComboBoxYear.getItemAt(JComboBoxYear.getSelectedIndex()), (Integer) JComboBoxMonth.getItemAt(JComboBoxMonth.getSelectedIndex()), (Integer) JComboBoxDay.getItemAt(JComboBoxDay.getSelectedIndex()))), Integer.parseInt(JTextFieldQuantity.getText()), Float.parseFloat(JTextFieldTotal.getText())));
                     } else {
                         compras.add(new Compra(u.productos.get(u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.get(JComboBoxProducts.getSelectedIndex())), Integer.parseInt(JTextFieldQuantity.getText()), Float.parseFloat(JTextFieldTotal.getText())));
                     }
                     ta.append(JTextFieldQuantity.getText()+" "+u.productos.get(u.proveedores.get(JComboBoxProviders.getSelectedIndex()).productos.get(JComboBoxProducts.getSelectedIndex())).nombre+" - "+JTextFieldTotal.getText()+"$\n");
-                } else {
+                    JComboBoxProviders.setEnabled(false);
+                } catch (IndexOutOfBoundsException ie) {
                     JOptionPane.showMessageDialog(d, "Elegir un producto valido.");
                 }
             }
@@ -193,16 +223,20 @@ public class Compras {
             public void actionPerformed(ActionEvent e){
                 if (compras.size()!=0){
                     u.compras.add(new Compra(u, JComboBoxProviders.getSelectedIndex(), notas, compras));
-                    Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
+                    Archivos.guardarArchivo(u);
                     JOptionPane.showMessageDialog(d, "La compra ha sido registrada.");
                     compras.clear();
+                    for (int i=0;i<u.proveedores.size();i++) {
+                        if (u.proveedores.get(i).productos.size()>0){
+                            JComboBoxProviders.setSelectedIndex(i);
+                            break;
+                        }
+                    }
                     JComboBoxProviders.setEnabled(true);
-                    JComboBoxProviders.setSelectedIndex(0);
-                    JComboBoxProducts.setSelectedIndex(0);
                     JTextFieldQuantity.setText("0");
                     JTextFieldTotal.setText("0");
                     ta.setText("");
-                    model.addRow(new Object[]{u.ventas.get(u.ventas.size()-1).id, u.clientes.get(u.ventas.get(u.ventas.size()-1).cliente).nombre, u.ventas.get(u.ventas.size()-1).formapago, u.ventas.get(u.ventas.size()-1).total +"$", u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.DAY_OF_MONTH)+"-"+u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.MONTH)+"-"+u.ventas.get(u.ventas.size()-1).fecha.get(Calendar.YEAR)});
+                    model.addRow(new Object[]{u.compras.get(u.compras.size()-1).id, u.compras.get(u.compras.size()-1).proveedor, u.compras.get(u.compras.size()-1).total +"$", u.compras.get(u.compras.size()-1).fecha.get(Calendar.DAY_OF_MONTH)+"/"+u.compras.get(u.compras.size()-1).fecha.get(Calendar.MONTH)+"/"+u.compras.get(u.compras.size()-1).fecha.get(Calendar.YEAR)});
                     sp.repaint();
                 } else {
                     JOptionPane.showMessageDialog(d, "Añadir al menos un producto a comprar.");

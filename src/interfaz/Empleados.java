@@ -2,6 +2,7 @@ package interfaz;
 
 import algoritmos.Archivos;
 import algoritmos.Interfaces;
+import algoritmos.Ordenamiento;
 import datos.Empleado;
 import datos.Usuario;
 
@@ -16,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -66,15 +68,19 @@ public class Empleados {
         JPanelAddEmployeeBorder.setBorder(title1);
         JPanelAddEmployeeBorder.add(JPanelAddEmployee);
         DefaultTableModel model = new DefaultTableModel();
-        JTable tb = new JTable(model);
+        JTable tb = new JTable(model){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };
+        };
         tb.setRowHeight(38);
+        model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Apellidos");
-        model.addColumn("Salario");
-        model.addColumn("Telefono");
+        model.addColumn("Teléfono");
         model.addColumn("Correo");
         model.addColumn("Nacimiento");
-        model.addColumn("Total Invertido");
+        model.addColumn("Salario");
         for (int i = 0;i<u.empleados.size();i++){
             String fecha = "";
             try {
@@ -82,7 +88,7 @@ public class Empleados {
             } catch (NullPointerException e) {
 
             }
-            model.addRow(new Object[]{u.empleados.get(i).nombre, u.empleados.get(i).apellidos, u.empleados.get(i).salario, u.empleados.get(i).telefono, u.empleados.get(i).correo, fecha, u.empleados.get(i).inversion});
+            model.addRow(new Object[]{u.empleados.get(i).id, u.empleados.get(i).nombre, u.empleados.get(i).apellidos, u.empleados.get(i).telefono, u.empleados.get(i).correo, fecha, u.empleados.get(i).salario});
         }
         JScrollPane sp = new JScrollPane(tb);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -98,6 +104,32 @@ public class Empleados {
         d.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 f.setEnabled(true);
+            }
+        });
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (tb.getColumnName(tb.columnAtPoint(e.getPoint())).equals("Nacimiento")){
+                    ArrayList<GregorianCalendar> arr = new ArrayList<>();
+                    for(int i=0;i<tb.getColumnCount();i++){
+                        if(tb.getColumnName(i).equals("ID")){
+                            for (int j=0;j<u.empleados.size();j++){
+                                arr.add(u.empleados.get((Integer) tb.getValueAt(j, i)).nacimiento);
+                            }
+                            Ordenamiento.ordenarFechas(tb, model, arr);
+                        }
+                    }
+                } else {
+                    Ordenamiento.ordenarTabla(tb, model, tb.columnAtPoint(e.getPoint()));
+                }
+            }
+        });
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                for(int i=0;i<tb.getColumnCount();i++){
+                    if(tb.getColumnName(i).equals("ID")){
+                        new Informacion(d, u, u.empleados.get((Integer) model.getValueAt(tb.rowAtPoint(evt.getPoint()), i)), model, tb);
+                    }
+                }
             }
         });
         JTextFieldSalary.getDocument().addDocumentListener(new DocumentListener() {
@@ -141,16 +173,17 @@ public class Empleados {
                     JOptionPane.showMessageDialog(d, "Nombre no valido.");
                 } else {
                     u.empleados.add(new Empleado(u, JTextFieldName.getText(), JTextFieldLastName.getText(), Float.parseFloat(JTextFieldSalary.getText()), JTextFieldPhone.getText(), JTextFieldEmail.getText(), new GregorianCalendar((int) JComboBoxYear.getItemAt(JComboBoxYear.getSelectedIndex()), (int) JComboBoxMonth.getItemAt(JComboBoxMonth.getSelectedIndex()), (int) JComboBoxDay.getItemAt(JComboBoxDay.getSelectedIndex())), notes));
-                    Archivos.guardarArchivo(u,  "\\Usuarios\\"+u.usuario+"\\datos.txt");
+                    Archivos.guardarArchivo(u);
                     JOptionPane.showMessageDialog(d, "El empleado ha sido añadido.");
                     JTextFieldName.setText("");
                     JTextFieldLastName.setText("");
                     JTextFieldPhone.setText("");
                     JTextFieldEmail.setText("");
+                    JTextFieldSalary.setText("0");
                     JComboBoxDay.setSelectedIndex(0);
                     JComboBoxMonth.setSelectedIndex(0);
                     JComboBoxYear.setSelectedIndex(0);
-                    model.addRow(new Object[]{u.empleados.get(u.empleados.size()-1).nombre, u.empleados.get(u.empleados.size()-1).apellidos, u.empleados.get(u.empleados.size()-1).salario, u.empleados.get(u.empleados.size()-1).telefono, u.empleados.get(u.empleados.size()-1).correo, u.empleados.get(u.empleados.size()-1).nacimiento.get(Calendar.DAY_OF_MONTH)+"/"+u.empleados.get(u.empleados.size()-1).nacimiento.get(Calendar.MONTH)+"/"+u.empleados.get(u.empleados.size()-1).nacimiento.get(Calendar.YEAR), u.empleados.get(u.empleados.size()-1).inversion});
+                    model.addRow(new Object[]{u.empleados.get(u.empleados.size()-1).id, u.empleados.get(u.empleados.size()-1).nombre, u.empleados.get(u.empleados.size()-1).apellidos, u.empleados.get(u.empleados.size()-1).telefono, u.empleados.get(u.empleados.size()-1).correo, u.empleados.get(u.empleados.size()-1).nacimiento.get(Calendar.DAY_OF_MONTH)+"/"+u.empleados.get(u.empleados.size()-1).nacimiento.get(Calendar.MONTH)+"/"+u.empleados.get(u.empleados.size()-1).nacimiento.get(Calendar.YEAR), u.empleados.get(u.empleados.size()-1).salario});
                     sp.repaint();
                 }
             }

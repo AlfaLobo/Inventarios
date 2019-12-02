@@ -12,8 +12,8 @@ public class Expirable extends Producto implements Serializable {
         nombre=p.nombre;
         expiracion=expiration;
     }
-    public Expirable(Producto p, int quantity, GregorianCalendar expiration){
-        ap=p.expirables.size();
+    public Expirable(Usuario u, Producto p, int quantity, GregorianCalendar expiration){
+        ap=u.productos.get(p.id).expirables.size();
         id=p.id;
         nombre=p.nombre;
         cantidad=quantity;
